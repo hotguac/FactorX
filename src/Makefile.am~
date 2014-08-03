@@ -1,0 +1,7 @@
+bin_PROGRAMS = refactor
+
+refactor_CPPFLAGS = $(GTKMM_CFLAGS)
+refactor_LDADD = $(GTKMM_LIBS)
+
+refactor_SOURCES = main.cc jack_stuff.c jack_stuff.h
+ 

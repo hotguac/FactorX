@@ -1,0 +1,43 @@
+AC_INIT([refactor],[0.1.0],[hotguac@comcast.net])
+AM_INIT_AUTOMAKE([foreign -Wall -Werror])
+
+AC_PROG_CC
+AC_PROG_CXX
+
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_FILES([Makefile src/Makefile])
+
+AC_CHECK_FUNCS([memset])
+AC_FUNC_MALLOC
+AC_TYPE_SIZE_T
+AC_CHECK_HEADER_STDBOOL
+
+#AX_PTHREAD
+
+AC_CHECK_LIB(pthread, pthread_create)
+# need to add check for JACK
+
+PKG_CHECK_MODULES([GTKMM], [gtkmm-3.0])
+
+############
+### JACK ###
+############
+PKG_CHECK_MODULES(JACK, jack >= 0.50.0, true,
+                  AC_MSG_ERROR([you need jack >= 0.50.0  see http://sf.net/projects/jackit]))
+JACK_VERSION=$( pkg-config --modversion jack )
+
+AC_DEFINE_UNQUOTED(JACK_VERSION, "$JACK_VERSION", [The version of jack we're compiling against])
+AC_SUBST(JACK_CFLAGS)
+AC_SUBST(JACK_LIBS)
+
+AC_CHECK_HEADER(jack/session.h, JACK_SESSION_FOUND="yes", JACK_SESSION_FOUND="no")
+if test "$JACK_SESSION_FOUND" = "yes"; then
+                 AC_DEFINE(HAVE_JACK_SESSION, 1, [whether jack/session.h is available])
+fi
+
+#sound file
+#PKG_CHECK_MODELS([sf],[sf])
+AC_CHECK_LIB(sndfile,sf_open,,AC_MSG_ERROR(Required library SNDFILE not found.))
+AC_CHECK_HEADER(sndfile.h,,AC_MSG_ERROR(Headers for SNDFILE not found.))
+
+AC_OUTPUT

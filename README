@@ -1,0 +1,7 @@
+reFactor Patch Librarian for Eventide's modFactor pedal
+
+to do
+- in main.cc add signal handler code stubs for all the buttons and all the menu choices
+- in jack_stuff.c change it from reading audio to reading midi using jack2 example midi_dump.c
+  an example
+- pass midi info back to main.c and display in the GTK windows
