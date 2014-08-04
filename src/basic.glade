@@ -2,25 +2,12 @@
 <!-- Generated with glade 3.16.1 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
-  <object class="GtkTextBuffer" id="textbuffer2">
-    <property name="text" translatable="yes">this is the beginning of the end
-So sayeth the Joe
-
-So How does this work??
-So How does this work??
-So How does this work??
-So How does this work??
-So How does this work??
-So How does this work??
-So How does this work??
-So How does this work??</property>
-  </object>
   <object class="GtkWindow" id="RefactorWindow">
     <property name="name">RefactorWindow</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">reFactor Patch Librarian </property>
     <child>
-      <object class="GtkBox" id="box1">
+      <object class="GtkBox" id="boxTop">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
@@ -548,7 +535,6 @@ So How does this work??</property>
                       <object class="GtkTextView" id="txtOutput">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="buffer">textbuffer2</property>
                       </object>
                     </child>
                   </object>

@@ -1,4 +1,4 @@
-refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
+refactor-refactor.o: refactor.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/gtkmm-3.0/gtkmm/button.h \
  /usr/include/glibmm-2.4/glibmm/ustring.h \
  /usr/lib/x86_64-linux-gnu/glibmm-2.4/include/glibmmconfig.h \

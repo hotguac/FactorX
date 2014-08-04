@@ -1,0 +1,89 @@
+#ifndef GTKMM_REFACTOR_H
+#define GTKMM_REFACTOR_H
+
+#include <gtkmm/button.h>
+#include <gtkmm/window.h>
+#include <gtkmm/statusbar.h>
+#include <gtkmm/builder.h>
+#include <gtkmm/eventbox.h>
+#include <gtkmm/imagemenuitem.h>
+#include <gtkmm/textview.h>
+#include <gtkmm/textbuffer.h>
+
+#include <glibmm.h>
+
+#include <iostream>
+
+
+class Refactor : public Gtk::Window
+{
+
+public:
+  Refactor();
+  virtual ~Refactor();
+
+protected:
+  Glib::RefPtr<Gtk::Builder> builder;
+
+  //Signal handlers event buttons
+  static bool on_pull_current(GdkEventButton *ev);
+  static bool on_push_current(GdkEventButton *ev);
+  static bool on_pull_all(GdkEventButton *ev);
+  static bool on_push_all(GdkEventButton *ev);
+
+  bool attach_signal_handlers();
+
+//
+// Signal Handlers for the Menu Items
+//
+void on_open_clicked();
+void on_new_clicked();
+void on_save_clicked();
+void on_saveas_clicked();
+void on_quit_clicked();
+void on_copy_clicked();
+void on_cut_clicked();
+void on_paste_clicked();
+void on_delete_clicked();
+void on_about_clicked();
+
+
+  //Member widgets:
+  Gtk::Button* pButton;
+
+  // copied over
+  Gtk::Statusbar* pStatusBar;
+
+  Gtk::EventBox* pPullCurrentPatch;
+  Gtk::EventBox* pPushCurrentPatch;
+  Gtk::EventBox* pPullAllPatches;    
+  Gtk::EventBox* pPushAllPatches;
+    
+  Gtk::ImageMenuItem* pNew;
+  Gtk::ImageMenuItem* pOpen;
+  Gtk::ImageMenuItem* pSave;
+  Gtk::ImageMenuItem* pSaveAs;
+  Gtk::ImageMenuItem* pQuit;
+
+  Gtk::ImageMenuItem* pCopy;
+  Gtk::ImageMenuItem* pCut;
+  Gtk::ImageMenuItem* pCaste;
+  Gtk::ImageMenuItem* pCelete;
+
+  Gtk::ImageMenuItem* pAbout;
+
+  Glib::RefPtr<Gtk::TextBuffer>* pOutputBuffer;
+  Gtk::TextView* pOutput; 
+  
+  Gtk::Box* pTop;
+
+};
+
+
+
+extern "C" {
+  int old_main(const char *, int , int);
+}
+
+
+#endif // GTKMM_REFACTOR_H

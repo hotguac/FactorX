@@ -20,7 +20,7 @@ So How does this work??</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">reFactor Patch Librarian </property>
     <child>
-      <object class="GtkBox" id="box1">
+      <object class="GtkBox" id="boxTop">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
@@ -545,7 +545,7 @@ So How does this work??</property>
                     <property name="can_focus">True</property>
                     <property name="shadow_type">in</property>
                     <child>
-                      <object class="GtkTextView" id="textview1">
+                      <object class="GtkTextView" id="txtOutput">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="buffer">textbuffer2</property>
