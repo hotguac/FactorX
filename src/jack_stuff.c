@@ -46,13 +46,11 @@ jack_nframes_t nframes;
 
 const size_t sample_size = sizeof(jack_default_audio_sample_t);
 
-
 jack_ringbuffer_t *rb;
 pthread_mutex_t disk_thread_lock = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t  data_ready = PTHREAD_COND_INITIALIZER;
 
 long overruns = 0;
-
 
 void *
 disk_thread (void *arg)
@@ -134,7 +132,6 @@ process (jack_nframes_t nframes, void *arg)
 					      sample_size)
 			    < sample_size)
 				overruns++;
-
 		}
 	}
 

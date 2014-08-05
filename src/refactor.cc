@@ -8,8 +8,6 @@ Refactor::Refactor()
   set_border_width(12);
 
   // load UI from glade file.  Skip the top level window container because Refactor is a top level window
-  //Glib::RefPtr<Gtk::Builder> 
-  
   builder = Gtk::Builder::create_from_file("basic.glade", "boxTop");
   
   builder->get_widget("boxTop",pTop);
@@ -31,14 +29,12 @@ Refactor::attach_signal_handlers()
   builder->get_widget("evbPullCurrentPatch",pPullCurrentPatch);
   if (pPullCurrentPatch)
     {
-      //pPullCurrentPatch->signal_button_press_event().connect( sigc::ptr_fun(on_pull_current) );
       pPullCurrentPatch->signal_button_press_event().connect( sigc::mem_fun(*this, &Refactor::on_pull_current) );
     }
 
   builder->get_widget("mnuQuit",pQuit);
   if (pQuit)
     {
-      //pQuit->signal_button_press_event().connect( sigc::ptr_fun(on_quit_clicked) );
       pQuit->signal_button_press_event().connect( sigc::mem_fun(*this, &Refactor::on_quit_clicked) );
     }
 
@@ -53,7 +49,7 @@ Refactor::on_pull_current(GdkEventButton *ev)
   return result;
 }
 
-void 
+bool 
 Refactor::on_open_clicked(GdkEventButton *ev)
 {
   std::cerr << "on_open_clicked()" << std::endl;
@@ -62,20 +58,20 @@ Refactor::on_open_clicked(GdkEventButton *ev)
 //
 // Signal Handlers for the Menu Items
 //
-void 
+bool 
 Refactor::on_new_clicked(GdkEventButton *ev)
 {
   std::cerr << "on_new_clicked()" << std::endl;
 }
 
 
-void 
+bool 
 Refactor::on_save_clicked(GdkEventButton *ev)
 {
   std::cerr << "on_save_clicked()" << std::endl;
 }
 
-void 
+bool 
 Refactor::on_saveas_clicked(GdkEventButton *ev)
 {
   std::cerr << "on_saveas_clicked()" << std::endl;
@@ -91,31 +87,31 @@ Refactor::on_quit_clicked(GdkEventButton *ev)
   return 0;
 }
 
-void 
+bool 
 Refactor::on_copy_clicked(GdkEventButton *ev)
 {
   std::cerr << "on_copy_clicked()" << std::endl;
 }
 
-void 
+bool 
 Refactor::on_cut_clicked(GdkEventButton *ev)
 {
   std::cerr << "on_cut_clicked()" << std::endl;
 }
 
-void 
+bool 
 Refactor::on_paste_clicked(GdkEventButton *ev)
 {
   std::cerr << "on_paste_clicked()" << std::endl;
 }
 
-void 
+bool 
 Refactor::on_delete_clicked(GdkEventButton *ev)
 {
   std::cerr << "on_delete_clicked()" << std::endl;
 }
 
-void 
+bool 
 Refactor::on_about_clicked(GdkEventButton *ev)
 {
   std::cerr << "on_about_clicked()" << std::endl;

@@ -36,16 +36,16 @@ protected:
   //
   // Signal Handlers for the Menu Items
   //
-  void on_open_clicked(GdkEventButton *ev);
-  void on_new_clicked(GdkEventButton *ev);
-  void on_save_clicked(GdkEventButton *ev);
-  void on_saveas_clicked(GdkEventButton *ev);
+  bool on_open_clicked(GdkEventButton *ev);
+  bool on_new_clicked(GdkEventButton *ev);
+  bool on_save_clicked(GdkEventButton *ev);
+  bool on_saveas_clicked(GdkEventButton *ev);
   bool on_quit_clicked(GdkEventButton *ev);
-  void on_copy_clicked(GdkEventButton *ev);
-  void on_cut_clicked(GdkEventButton *ev);
-  void on_paste_clicked(GdkEventButton *ev);
-  void on_delete_clicked(GdkEventButton *ev);
-  void on_about_clicked(GdkEventButton *ev);
+  bool on_copy_clicked(GdkEventButton *ev);
+  bool on_cut_clicked(GdkEventButton *ev);
+  bool on_paste_clicked(GdkEventButton *ev);
+  bool on_delete_clicked(GdkEventButton *ev);
+  bool on_about_clicked(GdkEventButton *ev);
 
 
   //Member widgets:

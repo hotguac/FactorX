@@ -17,7 +17,6 @@
 
 */
 
-
 #ifndef __jack_stuff_h__
 #define __jack_stuff_h__
 
@@ -28,8 +27,6 @@
 #  define BEGIN_C_DECLS
 #  define END_C_DECLS
 #endif /* __cplusplus */
-
-
 
 typedef struct _thread_info {
     pthread_t thread_id;
