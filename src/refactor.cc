@@ -38,13 +38,26 @@ Refactor::attach_signal_handlers()
       pQuit->signal_button_press_event().connect( sigc::mem_fun(*this, &Refactor::on_quit_clicked) );
     }
 
+  builder->get_widget("mnuOpen",pOpen);
+  if (pOpen)
+    {
+      pOpen->signal_button_press_event().connect( sigc::mem_fun(*this, &Refactor::on_open_clicked) );
+    }
+
+  builder->get_widget("mnuQuit",pQuit);
+  if (pQuit)
+    {
+      pQuit->signal_button_press_event().connect( sigc::mem_fun(*this, &Refactor::on_quit_clicked) );
+    }
+
   return 0;
 }
 
 bool 
 Refactor::on_pull_current(GdkEventButton *ev)
 {
-  int result = old_main("test.wav", 4, 16);
+  // int result = old_main("test.wav", 4, 16);
+  int result = get_current_patch();
 
   return result;
 }
@@ -52,6 +65,7 @@ Refactor::on_pull_current(GdkEventButton *ev)
 bool 
 Refactor::on_open_clicked(GdkEventButton *ev)
 {
+  int result = init();
   std::cerr << "on_open_clicked()" << std::endl;
 }
 

@@ -34,6 +34,5 @@ main(int argc, char *argv[])
   app->run(refactor);
 
   return 0;
-  
 }
 

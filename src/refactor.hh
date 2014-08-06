@@ -14,7 +14,6 @@
 
 #include <iostream>
 
-
 class Refactor : public Gtk::Window
 {
 
@@ -47,7 +46,6 @@ protected:
   bool on_delete_clicked(GdkEventButton *ev);
   bool on_about_clicked(GdkEventButton *ev);
 
-
   //Member widgets:
   Gtk::Button* pButton;
 
@@ -76,14 +74,11 @@ protected:
   Gtk::TextView* pOutput; 
   
   Gtk::Box* pTop;
-
 };
 
-
-
 extern "C" {
-  int old_main(const char *, int , int);
+  int get_current_patch();
+  int init();
 }
-
 
 #endif // GTKMM_REFACTOR_H

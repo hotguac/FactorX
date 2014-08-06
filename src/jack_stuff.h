@@ -29,19 +29,19 @@
 #endif /* __cplusplus */
 
 typedef struct _thread_info {
-    pthread_t thread_id;
-    SNDFILE *sf;
+  pthread_t thread_id;
+  SNDFILE *sf;
 
-    jack_nframes_t duration;
-    jack_nframes_t rb_size;
-    jack_client_t *client;
+  jack_nframes_t duration;
+  jack_nframes_t rb_size;
+  jack_client_t *client;
 
-    unsigned int channels;
-    int bitdepth;
-    char *path;
-    volatile int can_capture;
-    volatile int can_process;
-    volatile int status;
+  unsigned int channels;
+  int bitdepth;
+  char *path;
+  volatile int can_capture;
+  volatile int can_process;
+  volatile int status;
 } jack_thread_info_t;
 
 BEGIN_C_DECLS
