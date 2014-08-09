@@ -17,20 +17,49 @@
 
 */
 
+// copied some code from mididuino.googlecode.com/midi.h
+#include <inttypes.h>
+
+extern int canSendSysex;
+extern int waitingForBootloader;
+extern int exitMainLoop;
+
+void listInputMidiDevices (void);
+void listOutputMidiDevices (void);
+void midiSendLong (unsigned char *buf, unsigned long len);
+void midiSendShort (unsigned char status, unsigned char byte1, unsigned char byte2);
+
+void midiInitialize (char *inputDevice, char *outputDevice);
+void midiReceive (unsigned char c);
+void midiMainLoop (void);
+void midiTimeout (void);
+void midiClose (void);
+
+typedef void (*midi_ack_callback_t) (uint8_t * ptr);
+extern midi_ack_callback_t midi_ack_callback;
+
+// end of copied code from mididuino.googlecode.com/midi.h
+
 #ifndef __jack_stuff_h__
 #define __jack_stuff_h__
 
 #ifdef __cplusplus
-#  define BEGIN_C_DECLS extern "C" {
-#  define END_C_DECLS   }
+#define BEGIN_C_DECLS extern "C" {
+#define END_C_DECLS   }
 #else /* !__cplusplus */
-#  define BEGIN_C_DECLS
-#  define END_C_DECLS
+#define BEGIN_C_DECLS
+#define END_C_DECLS
 #endif /* __cplusplus */
 
+typedef struct
+{
+    int overruns;
+    unsigned int size;
+    char buffer[1024];
+} sysex_msg;
 
-
-typedef struct _thread_info {
+typedef struct _thread_info
+{
     pthread_t thread_id;
     SNDFILE *sf;
 
@@ -46,22 +75,20 @@ typedef struct _thread_info {
     volatile int status;
 } jack_thread_info_t;
 
-BEGIN_C_DECLS
-void *
-disk_thread (void *);
-END_C_DECLS
+BEGIN_C_DECLS 
 
-BEGIN_C_DECLS
-int
-process (jack_nframes_t , void *);
-END_C_DECLS
+void *disk_thread (void *);
+int process (jack_nframes_t, void *);
+void jack_shutdown ();
 
-BEGIN_C_DECLS
-void
-jack_shutdown (void *);
 END_C_DECLS
 
 /* Synchronization between process thread and disk thread. */
-#define DEFAULT_RB_SIZE 16384		/* ringbuffer size in frames */
+//#define DEFAULT_RB_SIZE 16384	/* ringbuffer size in frames */
+#define DEFAULT_RB_SIZE 20	/* ringbuffer size in frames */
+
+#ifndef MAX
+#define MAX(a,b) ( (a) < (b) ? (b) : (a) )
+#endif
 
 #endif /* __jack_h__ */

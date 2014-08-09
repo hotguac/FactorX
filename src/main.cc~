@@ -1,122 +1,36 @@
-// TODO: this includes entire gtkmm headers
-// replace with only the ones needed
-//#include <gtkmm.h>
+#include "refactor.hh"
+
+/*
 #include <gtkmm/window.h>
 #include <gtkmm/statusbar.h>
 #include <gtkmm/builder.h>
 #include <gtkmm/eventbox.h>
 #include <gtkmm/imagemenuitem.h>
-#include <glibmm.h>
+#include <gtkmm/textview.h>
 
+#include <glibmm.h>
+*/
+
+#include <gtkmm/application.h>
 #include <iostream>
 
-extern "C" {
-  int old_main(const char *, int , int);
-}
-
-//static
-bool on_pull_current(GdkEventButton *)
+int
+main (int argc, char *argv[])
 {
-  int result = old_main("test.wav", 4, 16);
 
-  return result;
+    /* 
+       creates a Gtk::Application object, stored in a RefPtr smartpointer. This is needed
+       in all gtkmm applications. The create() method for this object initializes gtkmm, 
+       and checks the arguments passed to your application on the command line, looking 
+       for standard options such as --display. It takes these from the argument list, 
+       leaving anything it does not recognize for your application to parse or ignore. 
+       This ensures that all gtkmm applications accept the same set of standard arguments.
+     */
+
+    Glib::RefPtr < Gtk::Application > app = Gtk::Application::create (argc, argv, "com.hotguac.refactor");
+
+    Refactor refactor;
+    app->run (refactor);
+
+    return 0;
 }
-
-Gtk::Window* pWindow = 0;
-Gtk::Statusbar* pStatusBar = 0;
-Gtk::EventBox* pPullCurrentPatch = 0;
-
-static
-void on_button_clicked()
-{
-  std::cerr << "on_button_clicked()" << std::endl;
-
-  if (pWindow)
-    pWindow->hide(); //hide() will cause main::run() to end.
-}
-
-
-int main(int argc, char *argv[])
-{
-  /* 
-     creates a Gtk::Application object, stored in a RefPtr smartpointer. This is needed
-     in all gtkmm applications. The create() method for this object initializes gtkmm, 
-     and checks the arguments passed to your application on the command line, looking 
-     for standard options such as --display. It takes these from the argument list, 
-     leaving anything it does not recognize for your application to parse or ignore. 
-     This ensures that all gtkmm applications accept the same set of standard arguments.
-   */
-  Glib::RefPtr<Gtk::Application> app = 
-    Gtk::Application::create(argc, argv,"org.gtkmm.examples.base");
-
-  /*
-    Load the GtkBuilder file and instantiate its widgets:
-   */
-  
-  Glib::RefPtr<Gtk::Builder> refBuilder = Gtk::Builder::create();
-  try
-  {
-    refBuilder->add_from_file("basic.glade");
-  }
-  catch(const Glib::FileError& ex)
-  {
-    std::cerr << "FileError: " << ex.what() << std::endl;
-    return 1;
-  }
-  catch(const Glib::MarkupError& ex)
-  {
-    std::cerr << "MarkupError: " << ex.what() << std::endl;
-    return 1;
-  }
-  catch(const Gtk::BuilderError& ex)
-  {
-    std::cerr << "BuilderError: " << ex.what() << std::endl;
-    return 1;
-  }
-
-
-  // Get status bar
-  refBuilder->get_widget("StatusBar", pStatusBar);
-  if (pStatusBar)
-    {
-      guint context = pStatusBar->get_context_id("reFactor");
-      pStatusBar->push("Starting",context);
-    }
-
-  // Get retrieve image
-
-  refBuilder->get_widget("evbPullCurrentPatch", pPullCurrentPatch);
-
-  pPullCurrentPatch->signal_button_press_event().connect( sigc::ptr_fun(&on_pull_current) );
-
-  /*
-    Get the GtkBuilder-instantiated main Window:
-   */
-
-  refBuilder->get_widget("RefactorWindow", pWindow);
-  
-  // Check that the window was successfully found before using
-  if (pWindow)
-  {
-    //Set the default window size
-    pWindow->resize(400,400);
-
-    //Get the GtkBuilder-instantiated menu item, and connect a signal handler:
-    Gtk::ImageMenuItem* pQuit = 0;
-    refBuilder->get_widget("mnuQuit", pQuit);
-
-    if (pQuit)
-    {   
-      pQuit->signal_activate().connect( sigc::ptr_fun(&on_button_clicked) );
-    }
-
-    app->run(*pWindow);
-  }
-
-  delete pWindow;
-
-  return 0;
-
-  
-}
-

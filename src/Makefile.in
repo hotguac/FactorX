@@ -91,7 +91,8 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_refactor_OBJECTS = refactor-main.$(OBJEXT) \
-	refactor-jack_stuff.$(OBJEXT) refactor-refactor.$(OBJEXT)
+	refactor-jack_stuff.$(OBJEXT) refactor-refactor.$(OBJEXT) \
+	refactor-midi.$(OBJEXT)
 refactor_OBJECTS = $(am_refactor_OBJECTS)
 am__DEPENDENCIES_1 =
 refactor_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
@@ -270,7 +271,7 @@ refactor_LDADD = $(GTKMM_LIBS) $(JACK_LIBS)
 
 #refactor_CPPFLAGS = $(JACK_CFLAGS)
 #refactor_LDADD = $(JACK_LIBS)
-refactor_SOURCES = main.cc jack_stuff.c jack_stuff.h refactor.cc refactor.hh
+refactor_SOURCES = main.cc jack_stuff.c jack_stuff.h refactor.cc refactor.hh midi.cc midi.hh
 all: all-am
 
 .SUFFIXES:
@@ -360,6 +361,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/refactor-jack_stuff.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/refactor-main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/refactor-midi.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/refactor-refactor.Po@am__quote@
 
 .c.o:
@@ -431,6 +433,20 @@ refactor-refactor.obj: refactor.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='refactor.cc' object='refactor-refactor.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(refactor_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o refactor-refactor.obj `if test -f 'refactor.cc'; then $(CYGPATH_W) 'refactor.cc'; else $(CYGPATH_W) '$(srcdir)/refactor.cc'; fi`
+
+refactor-midi.o: midi.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(refactor_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT refactor-midi.o -MD -MP -MF $(DEPDIR)/refactor-midi.Tpo -c -o refactor-midi.o `test -f 'midi.cc' || echo '$(srcdir)/'`midi.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/refactor-midi.Tpo $(DEPDIR)/refactor-midi.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='midi.cc' object='refactor-midi.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(refactor_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o refactor-midi.o `test -f 'midi.cc' || echo '$(srcdir)/'`midi.cc
+
+refactor-midi.obj: midi.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(refactor_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT refactor-midi.obj -MD -MP -MF $(DEPDIR)/refactor-midi.Tpo -c -o refactor-midi.obj `if test -f 'midi.cc'; then $(CYGPATH_W) 'midi.cc'; else $(CYGPATH_W) '$(srcdir)/midi.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/refactor-midi.Tpo $(DEPDIR)/refactor-midi.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='midi.cc' object='refactor-midi.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(refactor_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o refactor-midi.obj `if test -f 'midi.cc'; then $(CYGPATH_W) 'midi.cc'; else $(CYGPATH_W) '$(srcdir)/midi.cc'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
