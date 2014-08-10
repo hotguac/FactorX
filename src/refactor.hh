@@ -112,6 +112,7 @@ class Refactor:public
     Glib::RefPtr <
     Gtk::TextBuffer > *
 	pOutputBuffer;
+
     Gtk::TextView *
 	pOutput;
 
@@ -124,6 +125,7 @@ extern
 {
     int
     get_current_patch ();
+
     int
     init ();
 }

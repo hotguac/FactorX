@@ -89,17 +89,23 @@ process (jack_nframes_t nframes, void *arg)
 
 	  result = jack_midi_event_get (&event, buffer, msg_num);
 
-	  fprintf(stderr,"in process jack midi get event result = %d\n", result);
-
 	  if (result == 0 && jack_ringbuffer_write_space (ring_buffer) >= sizeof (sysex_msg))
 	    {
 		sysex_msg m;
 		m.size = event.size;
 
-		if (event.buffer[0] == 0xF7)
+		if ((event.buffer[0] == 0xF0) || (waiting_for_more))
 		  {
 		      memcpy (m.buffer, event.buffer, MAX (sizeof (m.buffer), event.size));
 		      jack_ringbuffer_write (ring_buffer, (void *) &m, sizeof (sysex_msg));
+
+		      waiting_for_more = 1;
+		      for (i = 0; i < event.size; i++) {
+			  if (m.buffer[i] == 0xF7) {
+			      waiting_for_more = 0;
+			  }
+		      }
+
 		  }
 	    }
       }
@@ -131,6 +137,8 @@ jack_end ()
 void
 jack_shutdown ()
 {
+    jack_ringbuffer_free(ring_buffer);
+
     fprintf (stderr, "JACK shutdown\n");
 
     outputPort = NULL;
@@ -168,6 +176,8 @@ get_midi_ports ()
 int
 setup_ports ()
 {
+    fprintf (stderr, "\treFactor: in setup_ports()\n");
+ 
     get_midi_ports ();
 
     inputPort = jack_port_register (client, "input", JACK_DEFAULT_MIDI_TYPE, JackPortIsInput, 0);
@@ -188,6 +198,8 @@ setup_ports ()
 int
 init ()
 {
+    fprintf (stderr, "\treFactor: in init()\n");
+ 
     client = jack_client_open (JACK_CLIENT_NAME, JackNullOption, NULL);
 
     if (client == NULL)
@@ -197,8 +209,19 @@ init ()
       }
 
     ring_buffer = jack_ringbuffer_create (DEFAULT_RB_SIZE * sizeof (sysex_msg));
+    
+    if (ring_buffer) {
+	fprintf(stderr,"reFactor: created ring_buffer\n");
+	jack_ringbuffer_mlock(ring_buffer);
+    } else {
+	fprintf(stderr, "reFactor: Error allocating ringbuffer\n");
+	exit(1);
+    }
 
-    jack_set_process_callback (client, process, NULL);
+    if (jack_set_process_callback (client, process, NULL)) {
+	fprintf(stderr, "reFactor: error setting callback\n");
+    }
+
     jack_on_shutdown (client, jack_shutdown, NULL);
 
     if (jack_activate (client))
@@ -225,6 +248,8 @@ get_current_patch ()
       {
 	  size_t j;
 	  sysex_msg m;
+	  
+	  fprintf (stderr, "\treFactor: in get_current_patch for loop()\n");
 
 	  jack_ringbuffer_read (ring_buffer, (char *) &m, sizeof (sysex_msg));
 
@@ -242,146 +267,4 @@ get_current_patch ()
 }
 
 /// copied from mididuino.googlecode.com/midi-jack.h
-
-jack_client_t *jack_client = NULL;	// the jack client
-jack_port_t *jack_midi_output_port = NULL;	// jack midi output port
-jack_port_t *jack_midi_input_port = NULL;	// jack midi input port
-
-void
-listJackPorts (const char *port_name_pattern, const char *type_name_pattern, unsigned long flags)
-{
-    const char **ports;
-
-    //jack_begin();
-
-    if ((ports = jack_get_ports (jack_client, port_name_pattern, type_name_pattern, flags)) == NULL)
-      {
-	  fprintf (stderr, "Cannot find any physical capture ports\n");
-	  exit (1);
-      }
-
-    int i = 0;
-    while (ports[i] != NULL)
-      {
-	  const char *port_name = ports[i];	//jack_port_name((jack_port_t *)ports[i]);
-	  printf ("%s\n", port_name);
-	  i++;
-      }
-
-    free (ports);		// free ports
-    jack_end ();
-}
-
-void
-listInputMidiDevices (void)
-{
-    listJackPorts (NULL, "midi", JackPortIsPhysical | JackPortIsInput);
-}
-
-void
-listOutputMidiDevices (void)
-{
-    listJackPorts (NULL, "midi", JackPortIsPhysical | JackPortIsOutput);
-}
-
-/* **************************************************************************** */
-
-void
-printhex (const unsigned char *prefix, unsigned char *buf, unsigned long len)
-{
-    printf ("%s", prefix);
-    unsigned long i = 0;
-    for (; i < len; i++)
-	printf ("%X ", buf[i]);
-    printf ("\n");
-}
-
-void
-midiSendLong (unsigned char *buf, unsigned long len)
-{
-    if (jack_midi_output_port == NULL)
-      {
-	  fprintf (stderr, "midiSendLong failed: output port closed\n");
-	  exit (1);
-      }
-
-    void *output_buf = jack_port_get_buffer (jack_midi_output_port, 1);
-    jack_midi_clear_buffer (output_buf);
-
-    printhex ("send:", buf, len);
-
-    int err = jack_midi_event_write (output_buf, 0, buf, len);
-    if (err != 0)
-      {
-	  if (err == ENOBUFS)
-	    {			// if there's not enough space in buffer for event
-	    }
-	  fprintf (stderr, "could not write %ld byte to output, return: %d\n", len, err);
-	  exit (1);
-      }
-}
-
-void
-midiSendShort (unsigned char status, unsigned char byte1, unsigned char byte2)
-{
-    unsigned char buf[3];
-    buf[0] = status;
-    buf[1] = byte1;
-    buf[2] = byte2;
-    midiSendLong (buf, 3);
-}
-
-void
-midiMainLoop (void)
-{
-    fprintf (stderr, "midiMainLoop\n");
-
-    jack_midi_event_t input_event;
-
-    int timeout = 10 * 1000 * 1000 + time_us ();	// 10 seconds in microseconds
-    int exitMainLoop = 0;
-
-    while (!exitMainLoop)
-      {
-	  jack_nframes_t nframes = jack_cycle_wait (jack_client);
-
-	  /* Get input and output buffer pointers. */
-	  void *input_buf = jack_port_get_buffer (jack_midi_input_port, nframes);
-
-	  //void* output_buf = jack_port_get_buffer (jack_midi_output_port, nframes);
-
-	  jack_nframes_t input_event_count = jack_midi_get_event_count (input_buf);
-	  if (input_event_count > 0)
-	    {
-		unsigned int event_index = 0;
-
-		for (; event_index < input_event_count; event_index++)
-		  {
-		      if (0 == jack_midi_event_get (&input_event, input_buf, event_index))
-			{
-			    if (input_event.size > 0)
-			      {
-				  printhex ("receive:", input_event.buffer, input_event.size);
-
-				  int i = 0;
-				  for (; i < input_event.size; i++)
-				    {
-					//midiReceive(input_event.buffer[i]);
-				    }
-			      }
-			}
-		  }
-	    }
-
-	  if (time_us () > timeout)
-	    {
-		fprintf (stderr, "timeout\n");
-		exit (1);
-	    }
-      }
-
-    jack_end ();
-    fprintf (stderr, "midiMainLoop:end\n");
-}
-
 // end of copied code

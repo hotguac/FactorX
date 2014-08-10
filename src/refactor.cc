@@ -15,8 +15,6 @@ Refactor::Refactor ()
 
     // Now set up the signal handlers
     attach_signal_handlers ();
-
-    init();
 }
 
 Refactor::~Refactor ()
@@ -42,12 +40,6 @@ bool Refactor::attach_signal_handlers ()
     if (pOpen)
       {
 	  pOpen->signal_button_press_event ().connect (sigc::mem_fun (*this, &Refactor::on_open_clicked));
-      }
-
-    builder->get_widget ("mnuQuit", pQuit);
-    if (pQuit)
-      {
-	  pQuit->signal_button_press_event ().connect (sigc::mem_fun (*this, &Refactor::on_quit_clicked));
       }
 
     return 0;

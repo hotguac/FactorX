@@ -80,10 +80,16 @@ int process (jack_nframes_t, void *);
 void jack_shutdown ();
 
 END_C_DECLS
+
 /* Synchronization between process thread and disk thread. */
 //#define DEFAULT_RB_SIZE 16384 /* ringbuffer size in frames */
 #define DEFAULT_RB_SIZE 20	/* ringbuffer size in frames */
+
 #ifndef MAX
 #define MAX(a,b) ( (a) < (b) ? (b) : (a) )
 #endif
+
+static uint64_t monotonic_cnt = 0;
+static uint64_t waiting_for_more = 0;
+
 #endif /* __jack_h__ */
