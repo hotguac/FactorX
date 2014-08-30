@@ -1,5 +1,12 @@
 #include "refactor.hh"
+#include "sysex.hh"
+
 #include <iostream>
+#include <glibmm/ustring.h>
+#include <sstream>
+#include <string>
+
+using std::cout;
 
 Refactor::Refactor ()
 {
@@ -15,6 +22,7 @@ Refactor::Refactor ()
 
     // Now set up the signal handlers
     attach_signal_handlers ();
+    attachOutput ();
 }
 
 Refactor::~Refactor ()
@@ -45,20 +53,103 @@ bool Refactor::attach_signal_handlers ()
     return 0;
 }
 
+bool Refactor::attachOutput ()
+{
+    builder->get_widget ("txtOutput", pOutput);
+
+    pOutputBuffer = Gtk::TextBuffer::create();
+    pOutput->set_buffer(pOutputBuffer);
+
+}
+
 bool Refactor::on_pull_current (GdkEventButton * ev)
 {
-    // int result = old_main("test.wav", 4, 16);
-    //int result = get_current_patch();
+    int bsize = 4096;
+    char* buffer = new char[bsize];
 
-    bool result;
-    result = midiFactor.pull_current ();
+    int result;
+    result = midiFactor.pull_current (buffer, bsize);
 
-    return result;
+    Glib::ustring text;
+    std::string s;
+    std::stringstream strStream (std::stringstream::in | std::stringstream::out);
+
+    int i;
+    short asc;
+    bool started;
+
+    started = true;
+
+    if (result > 5)
+	{
+	    if (buffer[0] != -16)
+		{
+		    strStream << "Expected a SYSEX message" << '\n';
+		}
+	    else if ((buffer[1] != 28) || (buffer[2] != 'p') || (buffer[3] != 1))			
+		{
+		    strStream << "Unknown Device" << '\n';
+		}
+		
+	    switch (buffer[4])
+		{
+		case 'I':
+		    strStream << "Presets" << '\n';
+		    break;
+		case 'O':
+		    strStream << "Current" << '\n';
+		    break;
+		case 'M':
+		    strStream << "System" << '\n';
+		    break;
+		case 'Q':
+		    strStream << "All" << '\n';
+		    break;
+		}
+	}
+
+    for (i = 5; i < result; i++) 
+	{
+
+	    if (isprint(buffer[i]))
+		{
+		    if (!started) 
+			{
+			    strStream << '\n' << "[" << i << "]" << '\t' << "'";
+			    started = true;
+			}
+		    
+		    strStream << buffer[i];			    
+		} else
+		{
+		    if (started)
+			{
+			    strStream << "'";
+			    started = false;
+			    strStream << '\n' << "[" << i << "]" << '\t';
+			}
+		    
+		    asc = buffer[i];
+		    strStream << "<" << asc << ">";
+		}
+	}
+
+    if (started)
+	{
+	    strStream << "'";
+	}
+
+    strStream << '\n';
+    s = strStream.str();
+
+    std::cout << '\n' << "strStream = " << '\n' << s << '\n';
+    pOutputBuffer->set_text (s);
+
+    return 0;
 }
 
 bool Refactor::on_open_clicked (GdkEventButton * ev)
 {
-
     std::cerr << "on_open_clicked()" << std::endl;
 }
 

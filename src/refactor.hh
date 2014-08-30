@@ -29,8 +29,9 @@ class Refactor:public
     Glib::RefPtr <
 	Gtk::Builder >
 	builder;
-    MidiFactor
-	midiFactor;
+    MidiFactor midiFactor;
+
+    Parser parser;
 
     //Signal handlers event buttons
     bool
@@ -44,6 +45,9 @@ class Refactor:public
 
     bool
     attach_signal_handlers ();
+
+    bool 
+    attachOutput ();
 
     //
     // Signal Handlers for the Menu Items
@@ -110,7 +114,7 @@ class Refactor:public
 	pAbout;
 
     Glib::RefPtr <
-    Gtk::TextBuffer > *
+    Gtk::TextBuffer > 
 	pOutputBuffer;
 
     Gtk::TextView *
@@ -124,7 +128,7 @@ extern
     "C"
 {
     int
-    get_current_patch ();
+    get_current_patch (char* buffer, int bsize);
 
     int
     init ();

@@ -92,7 +92,7 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_refactor_OBJECTS = refactor-main.$(OBJEXT) \
 	refactor-jack_stuff.$(OBJEXT) refactor-refactor.$(OBJEXT) \
-	refactor-midi.$(OBJEXT)
+	refactor-sysex_parser.$(OBJEXT) refactor-midi.$(OBJEXT)
 refactor_OBJECTS = $(am_refactor_OBJECTS)
 am__DEPENDENCIES_1 =
 refactor_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
@@ -271,7 +271,7 @@ refactor_LDADD = $(GTKMM_LIBS) $(JACK_LIBS)
 
 #refactor_CPPFLAGS = $(JACK_CFLAGS)
 #refactor_LDADD = $(JACK_LIBS)
-refactor_SOURCES = main.cc jack_stuff.c jack_stuff.h refactor.cc refactor.hh midi.cc midi.hh
+refactor_SOURCES = main.cc jack_stuff.c jack_stuff.h refactor.cc sysex_parser.cc refactor.hh midi.cc midi.hh sysex_parser.hh
 all: all-am
 
 .SUFFIXES:
@@ -363,6 +363,7 @@ include ./$(DEPDIR)/refactor-jack_stuff.Po
 include ./$(DEPDIR)/refactor-main.Po
 include ./$(DEPDIR)/refactor-midi.Po
 include ./$(DEPDIR)/refactor-refactor.Po
+include ./$(DEPDIR)/refactor-sysex_parser.Po
 
 .c.o:
 	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -433,6 +434,20 @@ refactor-refactor.obj: refactor.cc
 #	$(AM_V_CXX)source='refactor.cc' object='refactor-refactor.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(refactor_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o refactor-refactor.obj `if test -f 'refactor.cc'; then $(CYGPATH_W) 'refactor.cc'; else $(CYGPATH_W) '$(srcdir)/refactor.cc'; fi`
+
+refactor-sysex_parser.o: sysex_parser.cc
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(refactor_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT refactor-sysex_parser.o -MD -MP -MF $(DEPDIR)/refactor-sysex_parser.Tpo -c -o refactor-sysex_parser.o `test -f 'sysex_parser.cc' || echo '$(srcdir)/'`sysex_parser.cc
+	$(AM_V_at)$(am__mv) $(DEPDIR)/refactor-sysex_parser.Tpo $(DEPDIR)/refactor-sysex_parser.Po
+#	$(AM_V_CXX)source='sysex_parser.cc' object='refactor-sysex_parser.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(refactor_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o refactor-sysex_parser.o `test -f 'sysex_parser.cc' || echo '$(srcdir)/'`sysex_parser.cc
+
+refactor-sysex_parser.obj: sysex_parser.cc
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(refactor_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT refactor-sysex_parser.obj -MD -MP -MF $(DEPDIR)/refactor-sysex_parser.Tpo -c -o refactor-sysex_parser.obj `if test -f 'sysex_parser.cc'; then $(CYGPATH_W) 'sysex_parser.cc'; else $(CYGPATH_W) '$(srcdir)/sysex_parser.cc'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/refactor-sysex_parser.Tpo $(DEPDIR)/refactor-sysex_parser.Po
+#	$(AM_V_CXX)source='sysex_parser.cc' object='refactor-sysex_parser.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(refactor_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o refactor-sysex_parser.obj `if test -f 'sysex_parser.cc'; then $(CYGPATH_W) 'sysex_parser.cc'; else $(CYGPATH_W) '$(srcdir)/sysex_parser.cc'; fi`
 
 refactor-midi.o: midi.cc
 	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(refactor_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT refactor-midi.o -MD -MP -MF $(DEPDIR)/refactor-midi.Tpo -c -o refactor-midi.o `test -f 'midi.cc' || echo '$(srcdir)/'`midi.cc

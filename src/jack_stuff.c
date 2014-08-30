@@ -235,8 +235,10 @@ init ()
 }
 
 int
-get_current_patch ()
+get_current_patch (char* buffer, int bsize)
 {
+    int level = 0;
+
     printf ("in jack_stuff.c get_current_patch\n");
     pthread_mutex_lock (&msg_thread_lock);
 
@@ -255,15 +257,23 @@ get_current_patch ()
 
 	  for (j = 0; j < m.size && j < sizeof (m.buffer); ++j)
 	    {
+		if (level < bsize)
+		    {
+			buffer[level++] = m.buffer[j];
+		    }
 		printf (" %02x", m.buffer[j]);
 	    }
 
-	  printf ("\n");
+	  printf ("\nProcessed %d of %d\n", i+1, mqlen);
       }
 
     fflush (stdout);
 
     pthread_mutex_unlock (&msg_thread_lock);
+
+    printf("returning from jack_stuff.c get_current_patch()\n");
+
+    return level;
 }
 
 /// copied from mididuino.googlecode.com/midi-jack.h

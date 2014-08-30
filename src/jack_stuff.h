@@ -75,9 +75,15 @@ typedef struct _thread_info
     volatile int status;
 } jack_thread_info_t;
 
-BEGIN_C_DECLS void *disk_thread (void *);
+BEGIN_C_DECLS 
+
+void *disk_thread (void *);
+
 int process (jack_nframes_t, void *);
+
 void jack_shutdown ();
+
+int get_current_patch (char* buffer, int bsize);
 
 END_C_DECLS
 
