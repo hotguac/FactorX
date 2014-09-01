@@ -26,16 +26,11 @@
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
-#include <sndfile.h>
 #include <pthread.h>
 #include <time.h>
 #include <sys/time.h>
 
 #include <getopt.h>
-
-#include <jack/jack.h>
-#include <jack/midiport.h>
-#include <jack/ringbuffer.h>
 
 #include "jack_stuff.h"
 
@@ -239,11 +234,9 @@ get_current_patch (char* buffer, int bsize)
 {
     int level = 0;
 
-    printf ("in jack_stuff.c get_current_patch\n");
     pthread_mutex_lock (&msg_thread_lock);
 
     const int mqlen = jack_ringbuffer_read_space (ring_buffer) / sizeof (sysex_msg);
-    fprintf (stderr, "mqlen = %d\n", mqlen);
 
     int i;
     for (i = 0; i < mqlen; ++i)
@@ -251,7 +244,7 @@ get_current_patch (char* buffer, int bsize)
 	  size_t j;
 	  sysex_msg m;
 	  
-	  fprintf (stderr, "\treFactor: in get_current_patch for loop()\n");
+	  //fprintf (stderr, "reFactor: in get_current_patch for loop()\n");
 
 	  jack_ringbuffer_read (ring_buffer, (char *) &m, sizeof (sysex_msg));
 
@@ -261,17 +254,14 @@ get_current_patch (char* buffer, int bsize)
 		    {
 			buffer[level++] = m.buffer[j];
 		    }
-		printf (" %02x", m.buffer[j]);
+		//fprintf (stderr, " %02x", m.buffer[j]);
 	    }
-
-	  printf ("\nProcessed %d of %d\n", i+1, mqlen);
       }
+    //fprintf(stderr, "\n");
 
-    fflush (stdout);
+    // fflush (stdout);
 
     pthread_mutex_unlock (&msg_thread_lock);
-
-    printf("returning from jack_stuff.c get_current_patch()\n");
 
     return level;
 }

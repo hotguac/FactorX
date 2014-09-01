@@ -38,16 +38,17 @@ refactor-jack_stuff.o: jack_stuff.c /usr/include/stdc-predef.h \
  /usr/include/unistd.h /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h /usr/include/getopt.h \
- /usr/include/x86_64-linux-gnu/bits/unistd.h /usr/include/sndfile.h \
- /usr/include/pthread.h /usr/include/sched.h \
- /usr/include/x86_64-linux-gnu/bits/sched.h \
+ /usr/include/x86_64-linux-gnu/bits/unistd.h /usr/include/pthread.h \
+ /usr/include/sched.h /usr/include/x86_64-linux-gnu/bits/sched.h \
  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
- /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/jack/jack.h \
- /usr/include/jack/systemdeps.h /usr/include/inttypes.h \
+ /usr/include/x86_64-linux-gnu/sys/time.h jack_stuff.h \
+ /usr/include/inttypes.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h /usr/include/stdint.h \
- /usr/include/x86_64-linux-gnu/bits/wchar.h /usr/include/jack/types.h \
- /usr/include/jack/transport.h /usr/include/jack/weakmacros.h \
- /usr/include/jack/midiport.h /usr/include/jack/ringbuffer.h jack_stuff.h
+ /usr/include/x86_64-linux-gnu/bits/wchar.h /usr/include/sndfile.h \
+ /usr/include/jack/jack.h /usr/include/jack/systemdeps.h \
+ /usr/include/jack/types.h /usr/include/jack/transport.h \
+ /usr/include/jack/weakmacros.h /usr/include/jack/midiport.h \
+ /usr/include/jack/ringbuffer.h
 
 /usr/include/stdc-predef.h:
 
@@ -159,8 +160,6 @@ refactor-jack_stuff.o: jack_stuff.c /usr/include/stdc-predef.h \
 
 /usr/include/x86_64-linux-gnu/bits/unistd.h:
 
-/usr/include/sndfile.h:
-
 /usr/include/pthread.h:
 
 /usr/include/sched.h:
@@ -171,9 +170,7 @@ refactor-jack_stuff.o: jack_stuff.c /usr/include/stdc-predef.h \
 
 /usr/include/x86_64-linux-gnu/sys/time.h:
 
-/usr/include/jack/jack.h:
-
-/usr/include/jack/systemdeps.h:
+jack_stuff.h:
 
 /usr/include/inttypes.h:
 
@@ -182,6 +179,12 @@ refactor-jack_stuff.o: jack_stuff.c /usr/include/stdc-predef.h \
 /usr/include/stdint.h:
 
 /usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+/usr/include/sndfile.h:
+
+/usr/include/jack/jack.h:
+
+/usr/include/jack/systemdeps.h:
 
 /usr/include/jack/types.h:
 
@@ -192,5 +195,3 @@ refactor-jack_stuff.o: jack_stuff.c /usr/include/stdc-predef.h \
 /usr/include/jack/midiport.h:
 
 /usr/include/jack/ringbuffer.h:
-
-jack_stuff.h:

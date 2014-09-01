@@ -1,5 +1,5 @@
 #include "refactor.hh"
-#include "sysex.hh"
+#include "sysex_parser.hh"
 
 #include <iostream>
 #include <glibmm/ustring.h>
@@ -59,90 +59,20 @@ bool Refactor::attachOutput ()
 
     pOutputBuffer = Gtk::TextBuffer::create();
     pOutput->set_buffer(pOutputBuffer);
-
 }
 
 bool Refactor::on_pull_current (GdkEventButton * ev)
 {
     int bsize = 4096;
     char* buffer = new char[bsize];
+    std::string s;
 
     int result;
+
     result = midiFactor.pull_current (buffer, bsize);
 
-    Glib::ustring text;
-    std::string s;
-    std::stringstream strStream (std::stringstream::in | std::stringstream::out);
+    s = parser.parse_message (buffer, result);
 
-    int i;
-    short asc;
-    bool started;
-
-    started = true;
-
-    if (result > 5)
-	{
-	    if (buffer[0] != -16)
-		{
-		    strStream << "Expected a SYSEX message" << '\n';
-		}
-	    else if ((buffer[1] != 28) || (buffer[2] != 'p') || (buffer[3] != 1))			
-		{
-		    strStream << "Unknown Device" << '\n';
-		}
-		
-	    switch (buffer[4])
-		{
-		case 'I':
-		    strStream << "Presets" << '\n';
-		    break;
-		case 'O':
-		    strStream << "Current" << '\n';
-		    break;
-		case 'M':
-		    strStream << "System" << '\n';
-		    break;
-		case 'Q':
-		    strStream << "All" << '\n';
-		    break;
-		}
-	}
-
-    for (i = 5; i < result; i++) 
-	{
-
-	    if (isprint(buffer[i]))
-		{
-		    if (!started) 
-			{
-			    strStream << '\n' << "[" << i << "]" << '\t' << "'";
-			    started = true;
-			}
-		    
-		    strStream << buffer[i];			    
-		} else
-		{
-		    if (started)
-			{
-			    strStream << "'";
-			    started = false;
-			    strStream << '\n' << "[" << i << "]" << '\t';
-			}
-		    
-		    asc = buffer[i];
-		    strStream << "<" << asc << ">";
-		}
-	}
-
-    if (started)
-	{
-	    strStream << "'";
-	}
-
-    strStream << '\n';
-    s = strStream.str();
-
-    std::cout << '\n' << "strStream = " << '\n' << s << '\n';
     pOutputBuffer->set_text (s);
 
     return 0;
@@ -173,9 +103,7 @@ bool Refactor::on_saveas_clicked (GdkEventButton * ev)
 
 bool Refactor::on_quit_clicked (GdkEventButton * ev)
 {
-    std::cerr << "on_button_clicked()" << std::endl;
-
-    hide ();			//hide() will cause main::run() to end.
+    hide ();	//hide will cause main::run() to end.
 
     return 0;
 }

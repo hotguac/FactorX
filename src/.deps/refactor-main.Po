@@ -951,7 +951,7 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/glibmm-2.4/glibmm/uriutils.h \
  /usr/include/glibmm-2.4/glibmm/valuearray.h \
  /usr/include/glibmm-2.4/glibmm/vectorutils.h \
- /usr/include/c++/4.8/iostream midi.hh
+ /usr/include/c++/4.8/iostream midi.hh sysex_parser.hh
 
 /usr/include/stdc-predef.h:
 
@@ -3042,3 +3042,5 @@ refactor.hh:
 /usr/include/c++/4.8/iostream:
 
 midi.hh:
+
+sysex_parser.hh:

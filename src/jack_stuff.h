@@ -17,8 +17,13 @@
 
 */
 
-// copied some code from mididuino.googlecode.com/midi.h
 #include <inttypes.h>
+#include <pthread.h>
+#include <sndfile.h>
+
+#include <jack/jack.h>
+#include <jack/midiport.h>
+#include <jack/ringbuffer.h>
 
 extern int canSendSysex;
 extern int waitingForBootloader;
@@ -84,6 +89,8 @@ int process (jack_nframes_t, void *);
 void jack_shutdown ();
 
 int get_current_patch (char* buffer, int bsize);
+
+int init ();
 
 END_C_DECLS
 

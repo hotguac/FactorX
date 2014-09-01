@@ -1,10 +1,15 @@
-#include "parser.hh"
-#include <iostream>
+#include "sysex_parser.hh"
+
 #include <glibmm/ustring.h>
+
+#include <cstdlib>
+#include <iostream>
 #include <sstream>
 #include <string>
 
 using std::cout;
+using std::string;
+using Glib::ustring;
 
 Parser::Parser ()
 {
@@ -16,83 +21,270 @@ Parser::~Parser ()
     // delete pTop;
 }
 
-bool Parserr::parse_message (char* buffer, int length)
+HeaderType Parser::parse_header ()
 {
-    Glib::ustring text;
-    std::string s;
+    string s;
+    HeaderType result;
+
+    result = header_type_bad_message;
+    if (length > 5)
+	{
+	    result = header_type_unknown;
+	    if (buffer[0] != -16)
+		{
+		    result = header_type_not_sysex;
+		}
+	    else if ((buffer[1] != 28) || (buffer[2] != 'p') || (buffer[3] != 1))
+		{
+		    result = header_type_bad_device; 
+		}
+	    else
+		{
+		    switch (buffer[4])
+			{
+			case 'I':
+			    result = header_type_presets;
+			    break;
+			case 'O':
+			    result = header_type_current;
+			    break;
+			case 'M':
+			    result = header_type_system;
+			    break;
+			case 'Q':
+			    result = header_type_all;
+			    break;
+			}
+		}
+	}
+
+    position = 5;
+
+    return result;
+}
+
+string Parser::parse_current()
+{
+    string s;
+    string param_value;
+
     std::stringstream strStream (std::stringstream::in | std::stringstream::out);
 
     int i;
     short asc;
+
     bool started;
 
-    started = true;
+    s = segment_get_next ();
+    std::cout << "next segment = " << s << '\n';
+    strStream << "Seg1: '" << s << "'" << '\n';
+    
+    s = segment_get_next ();
+    std::cout << "next segment = " << s << '\n';
+    strStream << "Seg2: '" << s << "'" << '\n';
+    
+    s = segment_get_next ();
+    std::cout << "next segment = " << s << '\n';
+    strStream << "Seg3: '" << s << "'" << '\n';
+    
+    s = segment_get_next ();
+    std::cout << "next segment = " << s << '\n';
+    strStream << "Seg4: '" << s << "'" << '\n';
+    
+    s = segment_get_next ();
+    std::cout << "next segment = " << s << '\n';
+    param_value = segment_get_next_field ();
+    strStream << "Seg5: [unknown:'" << param_value << "'] ";
 
-    if (length > 5)
+    param_value = segment_get_next_field ();
+    strStream << "[unknown:'" << param_value << "'] ";
+    
+    param_value = segment_get_next_field ();
+    strStream << "[unknown:'" << param_value << "'] ";
+    
+    param_value = segment_get_next_field ();
+    strStream << "[unknown:'" << param_value << "'] ";
+    
+    param_value = segment_get_next_field ();
+    strStream << "[xnob FLT:'" << param_value << "'] ";
+    
+    param_value = segment_get_next_field ();
+    strStream << "[unknown:'" << param_value << "'] ";
+    
+    param_value = segment_get_next_field ();
+    strStream << "[SPEED:'" << param_value << "'] ";
+    
+    param_value = segment_get_next_field ();
+    strStream << "[DEPTH:'" << param_value << "'] ";
+    
+    param_value = segment_get_next_field ();
+    strStream << "[TYPE:'";
+
+    int x = atoi(param_value.c_str ());
+    
+    switch (x)
 	{
-	    if (buffer[0] != -16)
-		{
-		    strStream << "Expected a SYSEX message" << '\n';
-		}
-	    else if ((buffer[1] != 28) || (buffer[2] != 'p') || (buffer[3] != 1))
-		{
-		    strStream << "Unknown Device" << '\n';
-		}
-		
-	    switch (buffer[4])
-		{
-		case 'I':
-		    strStream << "Presets" << '\n';
-		    break;
-		case 'O':
-		    strStream << "Current" << '\n';
-		    break;
-		case 'M':
-		    strStream << "System" << '\n';
-		    break;
-		case 'Q':
-		    strStream << "All" << '\n';
-		    break;
-		}
+	case 0:
+	    strStream << "liquid";
+	    break;
+	case 1:
+	    strStream << "organic";
+	    break;
+	case 2:
+	    strStream << "shimmer";
+	    break;
+	case 3:
+	    strStream << "classic";
+	    break;
 	}
 
-    for (i = 5; i < result; i++) 
-	{
+    strStream << "'] ";
+    
+    param_value = segment_get_next_field ();
+    strStream << "[INTENSITY:'" << param_value << "'] ";
+    
+    // Seg 6
+    s = segment_get_next ();
+    std::cout << "next segment = " << s << '\n';
+    strStream << "Seg6: '" << s << "'" << '\n';
+    
+    s = segment_get_next ();
+    std::cout << "next segment = " << s << '\n';
+    strStream << "Seg7: '" << s << "'" << '\n';
+    
+    return strStream.str ();
+}
 
-	    if (isprint(buffer[i]))
+/*
+Seg1: '[2] 0 3'
+Seg2: ' 0 0 0 20 20 2ce0 de0 7fe0 19a0 7fe0 d40 0'
+Seg3: ' 0 0 0 0 0 0 0 0 0 3f20 0 20 0 0 0 0 0 0 0 0'
+Seg4: ' 0 1009 0 0'
+Seg5: [unknown:'0'] [unknown:'0'] [unknown:'0.13'] [unknown:'0'] [unknown:'34.74'] [unknown:'0.98'] [SPEED:'5'] [DEPTH:'19.84'] [unknown:'3'] [INTENSITY:'10.26'] Seg6: 'C_ad00'
+Seg7: 'Big Clone'
+
+Seg1: '[2] 0 3'
+Seg2: ' 0 0 0 20 20 5500 de0 7fe0 19a0 7fe0 d40 0'
+Seg3: ' 0 0 0 0 0 0 0 0 0 3f20 0 20 0 0 0 0 0 0 0 0'
+Seg4: ' 0 1009 0 0'
+Seg5: [unknown:'0'] [unknown:'0'] [unknown:'0.13'] [unknown:'0'] [unknown:'65.81'] [unknown:'0.98'] [SPEED:'5'] [DEPTH:'19.84'] [unknown:'3'] [INTENSITY:'10.26'] Seg6: 'C_d53f'
+Seg7: 'Big Clone'
+
+
+1:'[2] 0 3'
+2:' 0 0 0 20 20 0 20 20 7fe0 0 40a0 0'
+3:' 0 0 0 0 0 0 0 0 0 3f20 0 20 0 0 0 0 0 0 0 0'
+4:' 0 1009 0 0'
+5:' 0 0 0.13 0 0 0 [SPEED:0.1] [DEPTH:99] 0.79 [INTENISTY:50.03] 65000 65000'
+6:'C_cae'
+7:'Big Clone'
+
+[172]	<13><10><0><-9>
+ */
+
+std::string Parser::segment_get_next_field ()
+{
+    string temp;
+    std::size_t position;
+    string result;
+
+    temp = current_segment;
+
+    position = temp.find(" ");
+
+    result = temp.substr (0, position);
+
+    current_segment = temp.substr (position + 1, string::npos);
+    
+    if ((position == 0) && (current_segment.length() > 0))
+	{
+	    result = segment_get_next_field ();
+	}
+
+    return result;
+}
+
+std::string Parser::segment_get_next ()
+{
+    string result = "";
+    std::stringstream strStream (std::stringstream::in | std::stringstream::out);
+    int i;
+    int j;
+    short asc;
+
+    i = position;
+
+    while ((buffer[i] != 0) && (buffer[i] != 13) && (i < length))
+	{
+	    ++i;
+	}
+
+    for (j = position; j < i; ++j) 
+	{
+	    if (isprint(buffer[j]))
 		{
-		    if (!started) 
-			{
-			    strStream << '\n' << "[" << i << "]" << '\t' << "'";
-			    started = true;
-			}
-		    
-		    strStream << buffer[i];			    
+		    strStream << buffer[j];
 		} else
 		{
-		    if (started)
-			{
-			    strStream << "'";
-			    started = false;
-			    strStream << '\n' << "[" << i << "]" << '\t';
-			}
-		    
-		    asc = buffer[i];
+		    asc = buffer[j];
 		    strStream << "<" << asc << ">";
 		}
 	}
 
-    if (started)
+    result = strStream.str ();
+    current_segment = result;
+
+    if (buffer[i] == 0)
 	{
-	    strStream << "'";
+	    i = length + 1;
 	}
 
-    strStream << '\n';
-    s = strStream.str();
+    if (i + 2 < length)
+	{
+	    position = i + 2;
+	}
 
-    std::cout << '\n' << "strStream = " << '\n' << s << '\n';
-    pOutputBuffer->set_text (s);
+    return result;
+}
 
-    return 0;
+string Parser::parse_message (char* in_buffer, int in_length)
+{
+    buffer = in_buffer;
+    length = in_length;
+
+    std::stringstream strStream (std::stringstream::in | std::stringstream::out);
+
+    HeaderType message_type;
+
+    message_type = parse_header();
+
+    switch (message_type)
+	{
+	case header_type_current:
+	    strStream << parse_current();
+	    break;
+	case header_type_presets:
+	    break;
+	case header_type_system:
+	    break;
+	case header_type_all:
+	    break;
+	case header_type_unknown:
+	    strStream << "Unknown error" << '\n';
+	    break;
+	case header_type_bad_message:
+	    strStream << "Bad message" << '\n';
+	    break;
+	case header_type_bad_device:
+	    strStream << "Bad device" << '\n';
+	    break;
+	case header_type_not_sysex:
+	    strStream << "Expecting sysex message" << '\n';
+	    break;
+	}
+
+    position = 5; // point the current position past the header
+
+    return strStream.str();
 }
 

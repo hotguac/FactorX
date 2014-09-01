@@ -15,6 +15,7 @@
 #include <iostream>
 
 #include "midi.hh"
+#include "sysex_parser.hh"
 
 class Refactor:public
     Gtk::Window
