@@ -17,25 +17,25 @@
 
 //#include <iostream>
 
-char* buffer;
+char *buffer;
 int bsize;
 
-MidiFactor::MidiFactor ()
+MidiFactor::MidiFactor()
 {
-    // initialize the jack midi connection
-    int result = init ();
+	// initialize the jack midi connection
+	int result = init();
 }
 
-MidiFactor::~MidiFactor ()
+MidiFactor::~MidiFactor()
 {
-    delete buffer;
+	delete buffer;
 }
 
-int MidiFactor::pull_current (char* buffer, int bsize)
+int MidiFactor::pull_current(char *buffer, int bsize)
 {
-    int result;
+	int result;
 
-    result = get_current_patch (buffer, bsize);
+	result = get_current_patch(buffer, bsize);
 
-    return result;
+	return result;
 }

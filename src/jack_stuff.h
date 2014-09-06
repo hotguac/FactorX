@@ -29,16 +29,17 @@ extern int canSendSysex;
 extern int waitingForBootloader;
 extern int exitMainLoop;
 
-void listInputMidiDevices (void);
-void listOutputMidiDevices (void);
-void midiSendLong (unsigned char *buf, unsigned long len);
-void midiSendShort (unsigned char status, unsigned char byte1, unsigned char byte2);
+void listInputMidiDevices(void);
+void listOutputMidiDevices(void);
+void midiSendLong(unsigned char *buf, unsigned long len);
+void midiSendShort(unsigned char status, unsigned char byte1,
+		   unsigned char byte2);
 
-void midiInitialize (char *inputDevice, char *outputDevice);
-void midiReceive (unsigned char c);
-void midiMainLoop (void);
-void midiTimeout (void);
-void midiClose (void);
+void midiInitialize(char *inputDevice, char *outputDevice);
+void midiReceive(unsigned char c);
+void midiMainLoop(void);
+void midiTimeout(void);
+void midiClose(void);
 
 typedef void (*midi_ack_callback_t) (uint8_t * ptr);
 extern midi_ack_callback_t midi_ack_callback;
@@ -56,52 +57,45 @@ extern midi_ack_callback_t midi_ack_callback;
 #define END_C_DECLS
 #endif /* __cplusplus */
 
-typedef struct
-{
-    int overruns;
-    unsigned int size;
-    char buffer[1024];
+typedef struct {
+	int overruns;
+	unsigned int size;
+	char buffer[1024];
 } sysex_msg;
 
-typedef struct _thread_info
-{
-    pthread_t thread_id;
-    SNDFILE *sf;
+typedef struct _thread_info {
+	pthread_t thread_id;
+	SNDFILE *sf;
 
-    jack_nframes_t duration;
-    jack_nframes_t rb_size;
-    jack_client_t *client;
+	jack_nframes_t duration;
+	jack_nframes_t rb_size;
+	jack_client_t *client;
 
-    unsigned int channels;
-    int bitdepth;
-    char *path;
-    volatile int can_capture;
-    volatile int can_process;
-    volatile int status;
+	unsigned int channels;
+	int bitdepth;
+	char *path;
+	volatile int can_capture;
+	volatile int can_process;
+	volatile int status;
 } jack_thread_info_t;
 
-BEGIN_C_DECLS 
+BEGIN_C_DECLS void *disk_thread(void *);
 
-void *disk_thread (void *);
+int process(jack_nframes_t, void *);
 
-int process (jack_nframes_t, void *);
+void jack_shutdown();
 
-void jack_shutdown ();
+int get_current_patch(char *buffer, int bsize);
 
-int get_current_patch (char* buffer, int bsize);
-
-int init ();
+int init();
 
 END_C_DECLS
-
 /* Synchronization between process thread and disk thread. */
 //#define DEFAULT_RB_SIZE 16384 /* ringbuffer size in frames */
 #define DEFAULT_RB_SIZE 20	/* ringbuffer size in frames */
-
 #ifndef MAX
 #define MAX(a,b) ( (a) < (b) ? (b) : (a) )
 #endif
-
 static uint64_t monotonic_cnt = 0;
 static uint64_t waiting_for_more = 0;
 
