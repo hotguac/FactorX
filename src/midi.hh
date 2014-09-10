@@ -9,6 +9,8 @@ public:
 
 	//Signal handlers event buttons
 	int pull_current(char *buffer, int bsize);
+    
+    int send_sysex(char *buffer, int bsize);
 
 protected:
 	static const char F7 = 0xF7;

@@ -40,14 +40,14 @@ bool Refactor::attach_signal_handlers()
 
 	builder->get_widget("mnuQuit", pQuit);
 	if (pQuit) {
-		pQuit->signal_button_press_event().
-		    connect(sigc::mem_fun(*this, &Refactor::on_quit_clicked));
+		pQuit->signal_button_press_event().connect(sigc::mem_fun(*this,
+									 &Refactor::on_quit_clicked));
 	}
 
 	builder->get_widget("mnuOpen", pOpen);
 	if (pOpen) {
-		pOpen->signal_button_press_event().
-		    connect(sigc::mem_fun(*this, &Refactor::on_open_clicked));
+		pOpen->signal_button_press_event().connect(sigc::mem_fun(*this,
+									 &Refactor::on_open_clicked));
 	}
 
 	return 0;
@@ -68,6 +68,21 @@ bool Refactor::on_pull_current(GdkEventButton * ev)
 	std::string s;
 
 	int result;
+
+	buffer[0] = 0xF0; // start of sysex message
+	buffer[1] = 0x1C; // EVENTIDE
+	buffer[2] = 0x70; // H4000 formats
+	buffer[3] = 0;    // any matching device
+	buffer[4] = 0x4e; // SYSEXC_TJ_PROGRAM_WANT
+	buffer[5] = 0xF7; // end of sysex message
+
+	cout << "calling midifactor send_immediate" << '\n';
+
+	result = midiFactor.send_sysex(buffer, 6);
+
+	// need to wait here
+
+	sleep(5);
 
 	result = midiFactor.pull_current(buffer, bsize);
 

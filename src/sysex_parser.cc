@@ -78,40 +78,40 @@ string Parser::parse_current()
 	std::cout << "next segment = " << s << '\n';
 
 	param_value = segment_get_next_field();
-	strStream << "Seg2: [Unknown1:'" << param_value  << "] ";
+	strStream << "Seg2: [Unknown1:'" << param_value << "] ";
 
 	param_value = segment_get_next_field();
-	strStream << "[DMOD:'" << param_value  << "] ";
+	strStream << "[DMOD:'" << param_value << "] ";
 
 	param_value = segment_get_next_field();
-	strStream << "[SMOD:'" << param_value  << "] ";
+	strStream << "[SMOD:'" << param_value << "] ";
 
 	param_value = segment_get_next_field();
-	strStream << "[ModRate:'" << param_value  << "] ";
+	strStream << "[ModRate:'" << param_value << "] ";
 
 	param_value = segment_get_next_field();
-	strStream << "[ModSource:'" << param_value  << "] ";
+	strStream << "[ModSource:'" << param_value << "] ";
 
 	param_value = segment_get_next_field();
-	strStream << "[xnob:'" << param_value  << "] ";
+	strStream << "[xnob:'" << param_value << "] ";
 
 	param_value = segment_get_next_field();
-	strStream << "[unknown:'" << param_value  << "] ";
+	strStream << "[unknown:'" << param_value << "] ";
 
 	param_value = segment_get_next_field();
-	strStream << "[SPEED:'" << param_value  << "] ";
+	strStream << "[SPEED:'" << param_value << "] ";
 
 	param_value = segment_get_next_field();
-	strStream << "[DEPTH:'" << param_value  << "] ";
+	strStream << "[DEPTH:'" << param_value << "] ";
 
 	param_value = segment_get_next_field();
-	strStream << "[TYPE:'" << param_value  << "] ";
+	strStream << "[TYPE:'" << param_value << "] ";
 
 	param_value = segment_get_next_field();
-	strStream << "[ITENSITY:'" << param_value  << "] ";
+	strStream << "[ITENSITY:'" << param_value << "] ";
 
 	param_value = segment_get_next_field();
-	strStream << "[Unknown2:'" << param_value  << "]";
+	strStream << "[Unknown2:'" << param_value << "]";
 
 	strStream << '\n';
 
@@ -142,38 +142,38 @@ string Parser::parse_current()
 
 	switch (x) {
 	case 0:
-	    strStream << "Sine";
-	    break;
+		strStream << "Sine";
+		break;
 	case 1:
-	    strStream << "Triangle";
-	    break;
+		strStream << "Triangle";
+		break;
 	case 2:
-	    strStream << "Peak";
-	    break;
+		strStream << "Peak";
+		break;
 	case 3:
-	    strStream << "Random";
-	    break;
+		strStream << "Random";
+		break;
 	case 4:
-	    strStream << "Ramp";
-	    break;
+		strStream << "Ramp";
+		break;
 	case 5:
-	    strStream << "Square";
-	    break;
+		strStream << "Square";
+		break;
 	case 6:
-	    strStream << "Sample/Hold";
-	    break;
+		strStream << "Sample/Hold";
+		break;
 	case 7:
-	    strStream << "Envelope";
-	    break;
+		strStream << "Envelope";
+		break;
 	case 8:
-	    strStream << "ADSR";
-	    break;
+		strStream << "ADSR";
+		break;
 	case 9:
-	    strStream << "Expression Pedal";
-	    break;
+		strStream << "Expression Pedal";
+		break;
 	default:
-	    strStream << "Unknown:" << param_value;
-	    break;
+		strStream << "Unknown:" << param_value;
+		break;
 	}
 
 	strStream << "'] ";

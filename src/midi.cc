@@ -15,7 +15,7 @@
 
 //#include "refactor.hh"
 
-//#include <iostream>
+#include <iostream>
 
 char *buffer;
 int bsize;
@@ -38,4 +38,15 @@ int MidiFactor::pull_current(char *buffer, int bsize)
 	result = get_current_patch(buffer, bsize);
 
 	return result;
+}
+
+int MidiFactor::send_sysex(char *buffer, int bsize)
+{
+    int result;
+
+    std::cout << "in midifactor send_immediate" << '\n';
+
+    result = send_immediate(buffer, bsize);
+
+    return result;
 }

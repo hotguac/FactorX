@@ -89,6 +89,8 @@ int get_current_patch(char *buffer, int bsize);
 
 int init();
 
+int send_immediate(char *buffer, int bsize);
+
 END_C_DECLS
 /* Synchronization between process thread and disk thread. */
 //#define DEFAULT_RB_SIZE 16384 /* ringbuffer size in frames */

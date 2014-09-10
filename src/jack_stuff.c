@@ -43,12 +43,15 @@ jack_port_t *inputPort;
 jack_port_t *outputPort;
 
 jack_nframes_t nframes;
-jack_ringbuffer_t *ring_buffer;
+jack_ringbuffer_t *recv_buffer;
+jack_ringbuffer_t *send_buffer;
 
 const char **port_names;
 
 pthread_mutex_t msg_thread_lock = PTHREAD_MUTEX_INITIALIZER;
-pthread_cond_t data_ready = PTHREAD_COND_INITIALIZER;
+
+pthread_cond_t recv_ready = PTHREAD_COND_INITIALIZER;
+pthread_cond_t send_ready = PTHREAD_COND_INITIALIZER;
 
 long overruns = 0;
 
@@ -71,6 +74,7 @@ int process(jack_nframes_t nframes, void *arg)
 	jack_nframes_t num_messages;
 	jack_nframes_t msg_num;
 
+	/* First receive data */
 	buffer = jack_port_get_buffer(inputPort, nframes);
 
 	num_messages = jack_midi_get_event_count(buffer);
@@ -82,7 +86,7 @@ int process(jack_nframes_t nframes, void *arg)
 		result = jack_midi_event_get(&event, buffer, msg_num);
 
 		if (result == 0
-		    && jack_ringbuffer_write_space(ring_buffer) >=
+		    && jack_ringbuffer_write_space(recv_buffer) >=
 		    sizeof(sysex_msg)) {
 			sysex_msg m;
 			m.size = event.size;
@@ -90,7 +94,7 @@ int process(jack_nframes_t nframes, void *arg)
 			if ((event.buffer[0] == 0xF0) || (waiting_for_more)) {
 				memcpy(m.buffer, event.buffer,
 				       MAX(sizeof(m.buffer), event.size));
-				jack_ringbuffer_write(ring_buffer, (void *)&m,
+				jack_ringbuffer_write(recv_buffer, (void *)&m,
 						      sizeof(sysex_msg));
 
 				waiting_for_more = 1;
@@ -104,31 +108,78 @@ int process(jack_nframes_t nframes, void *arg)
 		}
 	}
 
-	/* Tell the disk thread there is work to do.  If it is already
-	 * running, the lock will not be available.  We can't wait
-	 * here in the process() thread, but we don't need to signal
-	 * in that case, because the disk thread will read all the
-	 * data queued before waiting again. */
-	if (pthread_mutex_trylock(&msg_thread_lock) == 0) {
-		pthread_cond_signal(&data_ready);
-		pthread_mutex_unlock(&msg_thread_lock);
+	/* Now do the send if necessary */
+	void *port_buf = jack_port_get_buffer(outputPort, nframes);
+
+	jack_midi_clear_buffer(port_buf);
+
+	const int mqlen =
+	    jack_ringbuffer_read_space(send_buffer) / sizeof(sysex_msg);
+
+	sysex_msg m;
+
+	if (mqlen > 0) {
+	    printf("now read ringbuffer send_buffer\n");
+		jack_ringbuffer_read(send_buffer, (char *)&m,
+				     sizeof(sysex_msg));
+
+		printf("get another_buffer\n");
+		unsigned char *another_buffer =
+		    jack_midi_event_reserve(port_buf, 0, m.size);
+
+		int i;
+
+		printf("copy buffers\n");
+		for (i = 0; i < m.size; ++i)
+			another_buffer[i] = m.buffer[i];
 	}
 
 	return 0;
+}
+
+int send_immediate(char *buffer, int bsize)
+{
+    printf("in send_immediate\n");
+
+	pthread_mutex_lock(&msg_thread_lock);
+
+	sysex_msg m;
+
+	m.size = bsize;
+
+	int i;
+	int n;
+
+	if (bsize > sizeof(m.buffer))
+		n = sizeof(m.buffer);
+	else
+		n = bsize;
+
+	for (i = 0; i < n; ++i) {
+		m.buffer[i] = buffer[i];
+	}
+
+	printf("before writing to send_buffer\n");
+	jack_ringbuffer_write(send_buffer, (void *)&m, sizeof(sysex_msg));
+	printf("wrote to send_buffer\n");
+
+	pthread_mutex_unlock(&msg_thread_lock);
 }
 
 void jack_end()
 {
 	jack_deactivate(client);
 	jack_client_close(client);	// close the client
-	jack_ringbuffer_free(ring_buffer);
+	jack_ringbuffer_free(recv_buffer);
+	jack_ringbuffer_free(send_buffer);
 
 	client = NULL;
 }
 
 void jack_shutdown()
 {
-	jack_ringbuffer_free(ring_buffer);
+	jack_ringbuffer_free(recv_buffer);
+	jack_ringbuffer_free(send_buffer);
 
 	fprintf(stderr, "JACK shutdown\n");
 
@@ -197,14 +248,25 @@ int init()
 		exit(1);
 	}
 
-	ring_buffer =
+	recv_buffer =
 	    jack_ringbuffer_create(DEFAULT_RB_SIZE * sizeof(sysex_msg));
 
-	if (ring_buffer) {
-		fprintf(stderr, "reFactor: created ring_buffer\n");
-		jack_ringbuffer_mlock(ring_buffer);
+	if (recv_buffer) {
+		fprintf(stderr, "reFactor: created recv_buffer\n");
+		jack_ringbuffer_mlock(recv_buffer);
 	} else {
-		fprintf(stderr, "reFactor: Error allocating ringbuffer\n");
+		fprintf(stderr, "reFactor: Error allocating recv_buffer\n");
+		exit(1);
+	}
+
+	send_buffer =
+	    jack_ringbuffer_create(DEFAULT_RB_SIZE * sizeof(sysex_msg));
+
+	if (send_buffer) {
+		fprintf(stderr, "reFactor: created send_buffer\n");
+		jack_ringbuffer_mlock(send_buffer);
+	} else {
+		fprintf(stderr, "reFactor: Error allocating send_buffer\n");
 		exit(1);
 	}
 
@@ -230,28 +292,22 @@ int get_current_patch(char *buffer, int bsize)
 	pthread_mutex_lock(&msg_thread_lock);
 
 	const int mqlen =
-	    jack_ringbuffer_read_space(ring_buffer) / sizeof(sysex_msg);
+	    jack_ringbuffer_read_space(recv_buffer) / sizeof(sysex_msg);
 
 	int i;
 	for (i = 0; i < mqlen; ++i) {
 		size_t j;
 		sysex_msg m;
 
-		//fprintf (stderr, "reFactor: in get_current_patch for loop()\n");
-
-		jack_ringbuffer_read(ring_buffer, (char *)&m,
+		jack_ringbuffer_read(recv_buffer, (char *)&m,
 				     sizeof(sysex_msg));
 
 		for (j = 0; j < m.size && j < sizeof(m.buffer); ++j) {
 			if (level < bsize) {
 				buffer[level++] = m.buffer[j];
 			}
-			//fprintf (stderr, " %02x", m.buffer[j]);
 		}
 	}
-	//fprintf(stderr, "\n");
-
-	// fflush (stdout);
 
 	pthread_mutex_unlock(&msg_thread_lock);
 
