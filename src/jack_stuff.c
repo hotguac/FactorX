@@ -119,17 +119,17 @@ int process(jack_nframes_t nframes, void *arg)
 	sysex_msg m;
 
 	if (mqlen > 0) {
-	    printf("now read ringbuffer send_buffer\n");
+	    /*printf("now read ringbuffer send_buffer\n");*/
 		jack_ringbuffer_read(send_buffer, (char *)&m,
 				     sizeof(sysex_msg));
 
-		printf("get another_buffer\n");
+		/* printf("get another_buffer\n"); */
 		unsigned char *another_buffer =
 		    jack_midi_event_reserve(port_buf, 0, m.size);
 
 		int i;
 
-		printf("copy buffers\n");
+		/* printf("copy buffers\n"); */
 		for (i = 0; i < m.size; ++i)
 			another_buffer[i] = m.buffer[i];
 	}
@@ -294,8 +294,10 @@ int get_current_patch(char *buffer, int bsize)
 	const int mqlen =
 	    jack_ringbuffer_read_space(recv_buffer) / sizeof(sysex_msg);
 
-	int i;
-	for (i = 0; i < mqlen; ++i) {
+	printf("get_current patch mqlen = %d messages\n", mqlen);
+
+	int msg_num;
+	for (msg_num = 0; msg_num < mqlen; ++msg_num) {
 		size_t j;
 		sysex_msg m;
 

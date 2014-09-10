@@ -68,6 +68,7 @@ bool Refactor::on_pull_current(GdkEventButton * ev)
 	std::string s;
 
 	int result;
+	int offset;
 
 	buffer[0] = 0xF0; // start of sysex message
 	buffer[1] = 0x1C; // EVENTIDE
@@ -85,8 +86,24 @@ bool Refactor::on_pull_current(GdkEventButton * ev)
 	sleep(5);
 
 	result = midiFactor.pull_current(buffer, bsize);
+	cout << "back from pull_current with result = " << result << '\n';
 
-	s = parser.parse_message(buffer, result);
+	offset = 0;
+	int i;
+	// calculate the offset of the second sysex message
+	// until I figure out how to not get the echoed request
+	for (i = 1; i < result; ++i)
+	    {
+		if (buffer[i] == -16)
+		    {
+			offset = i;
+			std::cout << "found F0" << '\n';
+		    }
+	    }
+
+	std::cout << "offset = " << offset << '\n';
+
+	s = parser.parse_message(buffer + offset, result - offset);
 
 	//pOutputBuffer->set_text(s);
 	pOutputBuffer->insert_at_cursor(s);
