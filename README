@@ -1,10 +1,12 @@
 reFactor Patch Librarian for Eventide's modFactor pedal
 
 done
-- in main.cc add signal handler code stubs for all the buttons and all the menu choices
+- sends a sysex message requesting the current patch
+- receives and parses (somewhat) the returned patch
 
 to do
-- refactor the main routing in main.cc - create a class inherited from Gtk::Window and move most code into it
-- in jack_stuff.c change it from reading audio to reading midi using jack2 example midi_dump.c
-  an example
-- pass midi info back to main.c and display in the GTK windows
+- a whole bunch of stuff, including figuring out the fields that I don't
+understand yet
+- modify patches
+- store and retrieve patches to disk
+- send the retrieved patch back to the pedal
