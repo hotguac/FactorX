@@ -31,10 +31,12 @@ HeaderType Parser::parse_header()
 		result = header_type_unknown;
 		if (buffer[0] != -16) {
 			result = header_type_not_sysex;
-		} else if ((buffer[1] != 28) || (buffer[2] != 112)) { //'p')
-		    //|| (buffer[3] != 1)) {
+		} else if ((buffer[1] != 28) || (buffer[2] != 112)) {	//'p')
+			//|| (buffer[3] != 1)) {
 			result = header_type_bad_device;
-			std::stringstream strStream(std::stringstream::in | std::stringstream::out);
+			std::stringstream strStream(std::
+						    stringstream::in | std::
+						    stringstream::out);
 			short asc;
 
 			asc = buffer[1];
@@ -338,10 +340,10 @@ string Parser::parse_message(char *in_buffer, int in_length)
 	message_type = parse_header();
 
 	/*
-	std::cout << "parse message length " << length << '\n';
-	std::cout << "with buffer " << buffer << '\n';
-	std::cout << "parse header returned " << message_type << '\n';
-	*/
+	   std::cout << "parse message length " << length << '\n';
+	   std::cout << "with buffer " << buffer << '\n';
+	   std::cout << "parse header returned " << message_type << '\n';
+	 */
 
 	switch (message_type) {
 	case header_type_current:

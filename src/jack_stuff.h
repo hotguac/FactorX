@@ -18,33 +18,12 @@
 */
 
 #include <inttypes.h>
-#include <pthread.h>
+//#include <pthread.h>
 #include <sndfile.h>
 
 #include <jack/jack.h>
 #include <jack/midiport.h>
 #include <jack/ringbuffer.h>
-
-extern int canSendSysex;
-extern int waitingForBootloader;
-extern int exitMainLoop;
-
-void listInputMidiDevices(void);
-void listOutputMidiDevices(void);
-void midiSendLong(unsigned char *buf, unsigned long len);
-void midiSendShort(unsigned char status, unsigned char byte1,
-		   unsigned char byte2);
-
-void midiInitialize(char *inputDevice, char *outputDevice);
-void midiReceive(unsigned char c);
-void midiMainLoop(void);
-void midiTimeout(void);
-void midiClose(void);
-
-typedef void (*midi_ack_callback_t) (uint8_t * ptr);
-extern midi_ack_callback_t midi_ack_callback;
-
-// end of copied code from mididuino.googlecode.com/midi.h
 
 #ifndef __jack_stuff_h__
 #define __jack_stuff_h__
@@ -90,6 +69,12 @@ int get_current_patch(char *buffer, int bsize);
 int init();
 
 int send_immediate(char *buffer, int bsize);
+
+char *input_port_name(int port);
+char *output_port_name(int port);
+
+int input_port(char *buffer);
+int output_port(char *buffer);
 
 END_C_DECLS
 /* Synchronization between process thread and disk thread. */

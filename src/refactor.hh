@@ -1,6 +1,8 @@
 #ifndef GTKMM_REFACTOR_H
 #define GTKMM_REFACTOR_H
 
+#include <glibmm.h>
+
 #include <gtkmm/button.h>
 #include <gtkmm/window.h>
 #include <gtkmm/statusbar.h>
@@ -9,10 +11,6 @@
 #include <gtkmm/imagemenuitem.h>
 #include <gtkmm/textview.h>
 #include <gtkmm/textbuffer.h>
-
-#include <glibmm.h>
-
-#include <iostream>
 
 #include "midi.hh"
 #include "sysex_parser.hh"
@@ -26,7 +24,6 @@ public:
 protected:
 	Glib::RefPtr < Gtk::Builder > builder;
 	MidiFactor midiFactor;
-
 	Parser parser;
 
 	//Signal handlers event buttons
@@ -36,8 +33,8 @@ protected:
 	bool on_push_all(GdkEventButton * ev);
 
 	bool attach_signal_handlers();
-
 	bool attachOutput();
+	bool populate_jack_io_menu();
 
 	//
 	// Signal Handlers for the Menu Items
@@ -84,12 +81,4 @@ protected:
 	Gtk::Box * pTop;
 };
 
-extern
- "C" {
-	int
-	 get_current_patch(char *buffer, int bsize);
-
-	int
-	 init();
-}
-#endif				// GTKMM_REFACTOR_H
+#endif // GTKMM_REFACTOR_H

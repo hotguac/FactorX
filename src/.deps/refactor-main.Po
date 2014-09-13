@@ -1,8 +1,7 @@
 refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
- /usr/include/gtkmm-3.0/gtkmm/button.h \
- /usr/include/glibmm-2.4/glibmm/ustring.h \
+ /usr/include/glibmm-2.4/glibmm.h \
  /usr/lib/x86_64-linux-gnu/glibmm-2.4/include/glibmmconfig.h \
- /usr/include/glibmm-2.4/glibmm/unicode.h /usr/include/glib-2.0/glib.h \
+ /usr/include/glibmm-2.4/glibmm/thread.h /usr/include/glib-2.0/glib.h \
  /usr/include/glib-2.0/glib/galloca.h /usr/include/glib-2.0/glib/gtypes.h \
  /usr/lib/x86_64-linux-gnu/glib-2.0/include/glibconfig.h \
  /usr/include/glib-2.0/glib/gmacros.h \
@@ -105,7 +104,11 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/x86_64-linux-gnu/bits/select2.h \
  /usr/include/x86_64-linux-gnu/sys/sysmacros.h /usr/include/pthread.h \
  /usr/include/sched.h /usr/include/x86_64-linux-gnu/bits/sched.h \
- /usr/include/x86_64-linux-gnu/bits/setjmp.h /usr/include/c++/4.8/cctype \
+ /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+ /usr/include/glibmm-2.4/glibmm/error.h \
+ /usr/include/glibmm-2.4/glibmm/exception.h \
+ /usr/include/glibmm-2.4/glibmm/ustring.h \
+ /usr/include/glibmm-2.4/glibmm/unicode.h /usr/include/c++/4.8/cctype \
  /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h \
  /usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h \
@@ -167,6 +170,7 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/c++/4.8/bits/istream.tcc \
  /usr/include/c++/4.8/bits/stream_iterator.h /usr/include/c++/4.8/sstream \
  /usr/include/c++/4.8/bits/sstream.tcc \
+ /usr/include/glibmm-2.4/glibmm/timeval.h \
  /usr/include/sigc++-2.0/sigc++/sigc++.h \
  /usr/include/sigc++-2.0/sigc++/signal.h /usr/include/c++/4.8/list \
  /usr/include/c++/4.8/bits/stl_list.h /usr/include/c++/4.8/bits/list.tcc \
@@ -201,22 +205,12 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/sigc++-2.0/sigc++/adaptors/lambda/operator.h \
  /usr/include/sigc++-2.0/sigc++/adaptors/lambda/group.h \
  /usr/include/sigc++-2.0/sigc++/functors/functors.h \
- /usr/include/gtkmm-3.0/gtkmm/bin.h \
- /usr/include/gtkmm-3.0/gtkmm/container.h /usr/include/c++/4.8/vector \
- /usr/include/c++/4.8/bits/stl_construct.h \
- /usr/include/c++/4.8/ext/alloc_traits.h \
- /usr/include/c++/4.8/bits/stl_uninitialized.h \
- /usr/include/c++/4.8/bits/stl_vector.h \
- /usr/include/c++/4.8/bits/stl_bvector.h \
- /usr/include/c++/4.8/bits/vector.tcc \
- /usr/include/gtkmm-3.0/gtkmm/widget.h \
- /usr/lib/x86_64-linux-gnu/gtkmm-3.0/include/gtkmmconfig.h \
- /usr/lib/x86_64-linux-gnu/gdkmm-3.0/include/gdkmmconfig.h \
- /usr/lib/x86_64-linux-gnu/pangomm-1.4/include/pangommconfig.h \
- /usr/include/pangomm-1.4/pangomm/context.h \
- /usr/include/glibmm-2.4/glibmm/object.h \
- /usr/include/glibmm-2.4/glibmm/objectbase.h \
- /usr/include/glibmm-2.4/glibmm/class.h \
+ /usr/include/glibmm-2.4/glibmm/threads.h \
+ /usr/include/glibmm-2.4/glibmm/arrayhandle.h \
+ /usr/include/glibmm-2.4/glibmm/containerhandle_shared.h \
+ /usr/include/glibmm-2.4/glibmm/refptr.h \
+ /usr/include/glibmm-2.4/glibmm/variant.h \
+ /usr/include/glibmm-2.4/glibmm/varianttype.h \
  /usr/include/glib-2.0/glib-object.h \
  /usr/include/glib-2.0/gobject/gbinding.h \
  /usr/include/glib-2.0/gobject/gobject.h \
@@ -234,36 +228,37 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/glib-2.0/gobject/gtypemodule.h \
  /usr/include/glib-2.0/gobject/gtypeplugin.h \
  /usr/include/glib-2.0/gobject/gvaluearray.h \
- /usr/include/glib-2.0/gobject/gvaluetypes.h \
+ /usr/include/glib-2.0/gobject/gvaluetypes.h /usr/include/c++/4.8/vector \
+ /usr/include/c++/4.8/bits/stl_construct.h \
+ /usr/include/c++/4.8/ext/alloc_traits.h \
+ /usr/include/c++/4.8/bits/stl_uninitialized.h \
+ /usr/include/c++/4.8/bits/stl_vector.h \
+ /usr/include/c++/4.8/bits/stl_bvector.h \
+ /usr/include/c++/4.8/bits/vector.tcc \
+ /usr/include/glibmm-2.4/glibmm/variantiter.h \
+ /usr/include/c++/4.8/utility /usr/include/c++/4.8/bits/stl_relops.h \
+ /usr/include/c++/4.8/map /usr/include/c++/4.8/bits/stl_tree.h \
+ /usr/include/c++/4.8/bits/stl_map.h \
+ /usr/include/c++/4.8/bits/stl_multimap.h /usr/include/c++/4.8/stdexcept \
+ /usr/include/c++/4.8/typeinfo \
+ /usr/include/glibmm-2.4/glibmm/variant_basictypes.h \
+ /usr/include/glibmm-2.4/glibmm/wrap.h \
+ /usr/include/glibmm-2.4/glibmm/objectbase.h \
+ /usr/include/glibmm-2.4/glibmm/class.h \
  /usr/include/glibmm-2.4/glibmm/signalproxy.h \
  /usr/include/glibmm-2.4/glibmm/signalproxy_connectionnode.h \
  /usr/include/glibmm-2.4/glibmm/propertyproxy.h \
  /usr/include/glibmm-2.4/glibmm/propertyproxy_base.h \
  /usr/include/glibmm-2.4/glibmm/value.h \
- /usr/include/glibmm-2.4/glibmm/refptr.h \
  /usr/include/glibmm-2.4/glibmm/value_custom.h \
- /usr/include/c++/4.8/typeinfo \
  /usr/include/glibmm-2.4/glibmm/value_basictypes.h \
  /usr/include/glibmm-2.4/glibmm/quark.h \
- /usr/include/glibmm-2.4/glibmm/debug.h /usr/include/c++/4.8/map \
- /usr/include/c++/4.8/bits/stl_tree.h /usr/include/c++/4.8/bits/stl_map.h \
- /usr/include/c++/4.8/bits/stl_multimap.h /usr/include/c++/4.8/memory \
+ /usr/include/glibmm-2.4/glibmm/debug.h /usr/include/c++/4.8/memory \
  /usr/include/c++/4.8/bits/stl_tempbuf.h \
  /usr/include/c++/4.8/bits/stl_raw_storage_iter.h \
- /usr/include/c++/4.8/backward/auto_ptr.h \
- /usr/include/glibmm-2.4/glibmm/wrap.h \
- /usr/include/glibmm-2.4/glibmm/utility.h \
- /usr/include/glibmm-2.4/glibmm/containerhandle_shared.h \
- /usr/include/glibmm-2.4/glibmm/variant.h \
- /usr/include/glibmm-2.4/glibmm/varianttype.h \
- /usr/include/glibmm-2.4/glibmm/variantiter.h \
- /usr/include/glibmm-2.4/glibmm/error.h \
- /usr/include/glibmm-2.4/glibmm/exception.h /usr/include/c++/4.8/utility \
- /usr/include/c++/4.8/bits/stl_relops.h /usr/include/c++/4.8/stdexcept \
- /usr/include/glibmm-2.4/glibmm/variant_basictypes.h \
- /usr/include/c++/4.8/algorithm /usr/include/c++/4.8/bits/stl_algo.h \
- /usr/include/c++/4.8/cstdlib /usr/include/stdlib.h \
- /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+ /usr/include/c++/4.8/backward/auto_ptr.h /usr/include/c++/4.8/algorithm \
+ /usr/include/c++/4.8/bits/stl_algo.h /usr/include/c++/4.8/cstdlib \
+ /usr/include/stdlib.h /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h /usr/include/alloca.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
@@ -272,8 +267,61 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/c++/4.8/bits/stl_heap.h /usr/include/c++/4.8/deque \
  /usr/include/c++/4.8/bits/stl_deque.h \
  /usr/include/c++/4.8/bits/deque.tcc \
- /usr/include/glibmm-2.4/glibmm/arrayhandle.h \
+ /usr/include/glibmm-2.4/glibmm/balancedtree.h \
+ /usr/include/glibmm-2.4/glibmm/base64.h \
+ /usr/include/glibmm-2.4/glibmm/bytearray.h \
+ /usr/include/sigc++-2.0/sigc++/slot.h \
+ /usr/include/glibmm-2.4/glibmm/bytes.h \
+ /usr/include/glibmm-2.4/glibmm/checksum.h \
+ /usr/include/glibmm-2.4/glibmm/convert.h \
+ /usr/include/glibmm-2.4/glibmm/date.h /usr/include/c++/4.8/ctime \
+ /usr/include/glibmm-2.4/glibmm/datetime.h \
+ /usr/include/glibmm-2.4/glibmm/dispatcher.h \
+ /usr/include/glibmm-2.4/glibmm/main.h \
+ /usr/include/glibmm-2.4/glibmm/priorities.h \
+ /usr/include/glibmm-2.4/glibmm/iochannel.h \
+ /usr/include/glibmm-2.4/glibmm/exceptionhandler.h \
+ /usr/include/glibmm-2.4/glibmm/fileutils.h \
+ /usr/include/glibmm-2.4/glibmm/helperlist.h \
+ /usr/include/glibmm-2.4/glibmm/containers.h \
+ /usr/include/glibmm-2.4/glibmm/sarray.h \
+ /usr/include/glibmm-2.4/glibmm/interface.h \
+ /usr/include/glibmm-2.4/glibmm/object.h \
+ /usr/include/glibmm-2.4/glibmm/utility.h \
+ /usr/include/glibmm-2.4/glibmm/init.h \
+ /usr/include/glibmm-2.4/glibmm/keyfile.h \
+ /usr/include/glibmm-2.4/glibmm/streamiochannel.h \
  /usr/include/glibmm-2.4/glibmm/listhandle.h \
+ /usr/include/glibmm-2.4/glibmm/markup.h \
+ /usr/include/glibmm-2.4/glibmm/miscutils.h \
+ /usr/include/glibmm-2.4/glibmm/module.h \
+ /usr/include/glibmm-2.4/glibmm/nodetree.h /usr/include/c++/4.8/stack \
+ /usr/include/c++/4.8/bits/stl_stack.h \
+ /usr/include/glibmm-2.4/glibmm/optioncontext.h \
+ /usr/include/glibmm-2.4/glibmm/optionentry.h \
+ /usr/include/glibmm-2.4/glibmm/optiongroup.h \
+ /usr/include/glibmm-2.4/glibmm/pattern.h \
+ /usr/include/glibmm-2.4/glibmm/property.h \
+ /usr/include/glibmm-2.4/glibmm/random.h \
+ /usr/include/glibmm-2.4/glibmm/regex.h \
+ /usr/include/glibmm-2.4/glibmm/shell.h \
+ /usr/include/glibmm-2.4/glibmm/slisthandle.h \
+ /usr/include/glibmm-2.4/glibmm/spawn.h \
+ /usr/include/glibmm-2.4/glibmm/stringutils.h \
+ /usr/include/glibmm-2.4/glibmm/threadpool.h \
+ /usr/include/glibmm-2.4/glibmm/timer.h \
+ /usr/include/glibmm-2.4/glibmm/timezone.h \
+ /usr/include/glibmm-2.4/glibmm/uriutils.h \
+ /usr/include/glibmm-2.4/glibmm/valuearray.h \
+ /usr/include/glibmm-2.4/glibmm/variantdict.h \
+ /usr/include/glibmm-2.4/glibmm/vectorutils.h \
+ /usr/include/gtkmm-3.0/gtkmm/button.h /usr/include/gtkmm-3.0/gtkmm/bin.h \
+ /usr/include/gtkmm-3.0/gtkmm/container.h \
+ /usr/include/gtkmm-3.0/gtkmm/widget.h \
+ /usr/lib/x86_64-linux-gnu/gtkmm-3.0/include/gtkmmconfig.h \
+ /usr/lib/x86_64-linux-gnu/gdkmm-3.0/include/gdkmmconfig.h \
+ /usr/lib/x86_64-linux-gnu/pangomm-1.4/include/pangommconfig.h \
+ /usr/include/pangomm-1.4/pangomm/context.h \
  /usr/include/pangomm-1.4/pangomm/fontdescription.h \
  /usr/include/pango-1.0/pango/pango-font.h \
  /usr/include/pango-1.0/pango/pango-coverage.h \
@@ -301,14 +349,12 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/pangomm-1.4/pangomm/item.h \
  /usr/include/pangomm-1.4/pangomm/attributes.h \
  /usr/include/pangomm-1.4/pangomm/color.h \
- /usr/include/glibmm-2.4/glibmm/slisthandle.h \
  /usr/include/pangomm-1.4/pangomm/attrlist.h \
  /usr/include/pangomm-1.4/pangomm/attriter.h \
  /usr/include/pangomm-1.4/pangomm/types.h \
  /usr/include/pango-1.0/pango/pango-context.h \
  /usr/include/cairomm-1.0/cairomm/context.h \
  /usr/include/cairomm-1.0/cairomm/surface.h \
- /usr/include/sigc++-2.0/sigc++/slot.h \
  /usr/include/cairomm-1.0/cairomm/enums.h /usr/include/cairo/cairo.h \
  /usr/include/cairo/cairo-version.h /usr/include/cairo/cairo-features.h \
  /usr/include/cairo/cairo-deprecated.h \
@@ -371,7 +417,6 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/pangomm-1.4/pangomm/layoutrun.h \
  /usr/include/atkmm-1.6/atkmm/object.h \
  /usr/include/atkmm-1.6/atkmm/component.h \
- /usr/include/glibmm-2.4/glibmm/interface.h \
  /usr/include/atkmm-1.6/atkmm/relation.h \
  /usr/include/atkmm-1.6/atkmm/implementor.h \
  /usr/include/gtkmm-3.0/gtkmm/object.h \
@@ -566,8 +611,6 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/gdkmm-3.0/gdkmm/pixbuf.h \
  /usr/include/gdkmm-3.0/gdkmm/pixbufformat.h \
  /usr/include/giomm-2.4/giomm/inputstream.h \
- /usr/include/glibmm-2.4/glibmm/priorities.h \
- /usr/include/glibmm-2.4/glibmm/bytes.h \
  /usr/include/giomm-2.4/giomm/asyncresult.h \
  /usr/include/giomm-2.4/giomm/cancellable.h \
  /usr/include/giomm-2.4/giomm/icon.h \
@@ -861,11 +904,8 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/giomm-2.4/giomm/fileattributeinfo.h \
  /usr/include/giomm-2.4/giomm/fileenumerator.h \
  /usr/include/giomm-2.4/giomm/fileinfo.h \
- /usr/include/glibmm-2.4/glibmm/datetime.h \
- /usr/include/glibmm-2.4/glibmm/timeval.h \
  /usr/include/giomm-2.4/giomm/fileinputstream.h \
  /usr/include/giomm-2.4/giomm/seekable.h \
- /usr/include/glibmm-2.4/glibmm/iochannel.h \
  /usr/include/giomm-2.4/giomm/fileiostream.h \
  /usr/include/giomm-2.4/giomm/iostream.h \
  /usr/include/giomm-2.4/giomm/outputstream.h \
@@ -875,8 +915,6 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/giomm-2.4/giomm/drive.h \
  /usr/include/giomm-2.4/giomm/mount.h \
  /usr/include/giomm-2.4/giomm/error.h \
- /usr/include/glibmm-2.4/glibmm/variantdict.h \
- /usr/include/glibmm-2.4/glibmm/optiongroup.h \
  /usr/include/giomm-2.4/giomm/dbusconnection.h \
  /usr/include/giomm-2.4/giomm/initable.h \
  /usr/include/giomm-2.4/giomm/asyncinitable.h \
@@ -910,60 +948,20 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/gtkmm-3.0/gtkmm/textchildanchor.h \
  /usr/include/gtkmm-3.0/gtkmm/textmark.h \
  /usr/include/gtkmm-3.0/gtkmm/textiter.h \
- /usr/include/glibmm-2.4/glibmm/exceptionhandler.h \
  /usr/include/gtkmm-3.0/gtkmm/textattributes.h \
  /usr/include/gtkmm-3.0/gtkmm/menu.h \
- /usr/include/gtkmm-3.0/gtkmm/menushell.h \
- /usr/include/glibmm-2.4/glibmm.h /usr/include/glibmm-2.4/glibmm/thread.h \
- /usr/include/glibmm-2.4/glibmm/threads.h \
- /usr/include/glibmm-2.4/glibmm/balancedtree.h \
- /usr/include/glibmm-2.4/glibmm/base64.h \
- /usr/include/glibmm-2.4/glibmm/bytearray.h \
- /usr/include/glibmm-2.4/glibmm/checksum.h \
- /usr/include/glibmm-2.4/glibmm/convert.h \
- /usr/include/glibmm-2.4/glibmm/date.h /usr/include/c++/4.8/ctime \
- /usr/include/glibmm-2.4/glibmm/dispatcher.h \
- /usr/include/glibmm-2.4/glibmm/main.h \
- /usr/include/glibmm-2.4/glibmm/fileutils.h \
- /usr/include/glibmm-2.4/glibmm/helperlist.h \
- /usr/include/glibmm-2.4/glibmm/containers.h \
- /usr/include/glibmm-2.4/glibmm/sarray.h \
- /usr/include/glibmm-2.4/glibmm/init.h \
- /usr/include/glibmm-2.4/glibmm/keyfile.h \
- /usr/include/glibmm-2.4/glibmm/streamiochannel.h \
- /usr/include/glibmm-2.4/glibmm/markup.h \
- /usr/include/glibmm-2.4/glibmm/miscutils.h \
- /usr/include/glibmm-2.4/glibmm/module.h \
- /usr/include/glibmm-2.4/glibmm/nodetree.h /usr/include/c++/4.8/stack \
- /usr/include/c++/4.8/bits/stl_stack.h \
- /usr/include/glibmm-2.4/glibmm/optioncontext.h \
- /usr/include/glibmm-2.4/glibmm/optionentry.h \
- /usr/include/glibmm-2.4/glibmm/pattern.h \
- /usr/include/glibmm-2.4/glibmm/property.h \
- /usr/include/glibmm-2.4/glibmm/random.h \
- /usr/include/glibmm-2.4/glibmm/regex.h \
- /usr/include/glibmm-2.4/glibmm/shell.h \
- /usr/include/glibmm-2.4/glibmm/spawn.h \
- /usr/include/glibmm-2.4/glibmm/stringutils.h \
- /usr/include/glibmm-2.4/glibmm/threadpool.h \
- /usr/include/glibmm-2.4/glibmm/timer.h \
- /usr/include/glibmm-2.4/glibmm/timezone.h \
- /usr/include/glibmm-2.4/glibmm/uriutils.h \
- /usr/include/glibmm-2.4/glibmm/valuearray.h \
- /usr/include/glibmm-2.4/glibmm/vectorutils.h \
- /usr/include/c++/4.8/iostream midi.hh sysex_parser.hh
+ /usr/include/gtkmm-3.0/gtkmm/menushell.h midi.hh sysex_parser.hh \
+ /usr/include/c++/4.8/iostream
 
 /usr/include/stdc-predef.h:
 
 refactor.hh:
 
-/usr/include/gtkmm-3.0/gtkmm/button.h:
-
-/usr/include/glibmm-2.4/glibmm/ustring.h:
+/usr/include/glibmm-2.4/glibmm.h:
 
 /usr/lib/x86_64-linux-gnu/glibmm-2.4/include/glibmmconfig.h:
 
-/usr/include/glibmm-2.4/glibmm/unicode.h:
+/usr/include/glibmm-2.4/glibmm/thread.h:
 
 /usr/include/glib-2.0/glib.h:
 
@@ -1213,6 +1211,14 @@ refactor.hh:
 
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
 
+/usr/include/glibmm-2.4/glibmm/error.h:
+
+/usr/include/glibmm-2.4/glibmm/exception.h:
+
+/usr/include/glibmm-2.4/glibmm/ustring.h:
+
+/usr/include/glibmm-2.4/glibmm/unicode.h:
+
 /usr/include/c++/4.8/cctype:
 
 /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h:
@@ -1361,6 +1367,8 @@ refactor.hh:
 
 /usr/include/c++/4.8/bits/sstream.tcc:
 
+/usr/include/glibmm-2.4/glibmm/timeval.h:
+
 /usr/include/sigc++-2.0/sigc++/sigc++.h:
 
 /usr/include/sigc++-2.0/sigc++/signal.h:
@@ -1433,39 +1441,17 @@ refactor.hh:
 
 /usr/include/sigc++-2.0/sigc++/functors/functors.h:
 
-/usr/include/gtkmm-3.0/gtkmm/bin.h:
+/usr/include/glibmm-2.4/glibmm/threads.h:
 
-/usr/include/gtkmm-3.0/gtkmm/container.h:
+/usr/include/glibmm-2.4/glibmm/arrayhandle.h:
 
-/usr/include/c++/4.8/vector:
+/usr/include/glibmm-2.4/glibmm/containerhandle_shared.h:
 
-/usr/include/c++/4.8/bits/stl_construct.h:
+/usr/include/glibmm-2.4/glibmm/refptr.h:
 
-/usr/include/c++/4.8/ext/alloc_traits.h:
+/usr/include/glibmm-2.4/glibmm/variant.h:
 
-/usr/include/c++/4.8/bits/stl_uninitialized.h:
-
-/usr/include/c++/4.8/bits/stl_vector.h:
-
-/usr/include/c++/4.8/bits/stl_bvector.h:
-
-/usr/include/c++/4.8/bits/vector.tcc:
-
-/usr/include/gtkmm-3.0/gtkmm/widget.h:
-
-/usr/lib/x86_64-linux-gnu/gtkmm-3.0/include/gtkmmconfig.h:
-
-/usr/lib/x86_64-linux-gnu/gdkmm-3.0/include/gdkmmconfig.h:
-
-/usr/lib/x86_64-linux-gnu/pangomm-1.4/include/pangommconfig.h:
-
-/usr/include/pangomm-1.4/pangomm/context.h:
-
-/usr/include/glibmm-2.4/glibmm/object.h:
-
-/usr/include/glibmm-2.4/glibmm/objectbase.h:
-
-/usr/include/glibmm-2.4/glibmm/class.h:
+/usr/include/glibmm-2.4/glibmm/varianttype.h:
 
 /usr/include/glib-2.0/glib-object.h:
 
@@ -1503,6 +1489,46 @@ refactor.hh:
 
 /usr/include/glib-2.0/gobject/gvaluetypes.h:
 
+/usr/include/c++/4.8/vector:
+
+/usr/include/c++/4.8/bits/stl_construct.h:
+
+/usr/include/c++/4.8/ext/alloc_traits.h:
+
+/usr/include/c++/4.8/bits/stl_uninitialized.h:
+
+/usr/include/c++/4.8/bits/stl_vector.h:
+
+/usr/include/c++/4.8/bits/stl_bvector.h:
+
+/usr/include/c++/4.8/bits/vector.tcc:
+
+/usr/include/glibmm-2.4/glibmm/variantiter.h:
+
+/usr/include/c++/4.8/utility:
+
+/usr/include/c++/4.8/bits/stl_relops.h:
+
+/usr/include/c++/4.8/map:
+
+/usr/include/c++/4.8/bits/stl_tree.h:
+
+/usr/include/c++/4.8/bits/stl_map.h:
+
+/usr/include/c++/4.8/bits/stl_multimap.h:
+
+/usr/include/c++/4.8/stdexcept:
+
+/usr/include/c++/4.8/typeinfo:
+
+/usr/include/glibmm-2.4/glibmm/variant_basictypes.h:
+
+/usr/include/glibmm-2.4/glibmm/wrap.h:
+
+/usr/include/glibmm-2.4/glibmm/objectbase.h:
+
+/usr/include/glibmm-2.4/glibmm/class.h:
+
 /usr/include/glibmm-2.4/glibmm/signalproxy.h:
 
 /usr/include/glibmm-2.4/glibmm/signalproxy_connectionnode.h:
@@ -1513,25 +1539,13 @@ refactor.hh:
 
 /usr/include/glibmm-2.4/glibmm/value.h:
 
-/usr/include/glibmm-2.4/glibmm/refptr.h:
-
 /usr/include/glibmm-2.4/glibmm/value_custom.h:
-
-/usr/include/c++/4.8/typeinfo:
 
 /usr/include/glibmm-2.4/glibmm/value_basictypes.h:
 
 /usr/include/glibmm-2.4/glibmm/quark.h:
 
 /usr/include/glibmm-2.4/glibmm/debug.h:
-
-/usr/include/c++/4.8/map:
-
-/usr/include/c++/4.8/bits/stl_tree.h:
-
-/usr/include/c++/4.8/bits/stl_map.h:
-
-/usr/include/c++/4.8/bits/stl_multimap.h:
 
 /usr/include/c++/4.8/memory:
 
@@ -1540,30 +1554,6 @@ refactor.hh:
 /usr/include/c++/4.8/bits/stl_raw_storage_iter.h:
 
 /usr/include/c++/4.8/backward/auto_ptr.h:
-
-/usr/include/glibmm-2.4/glibmm/wrap.h:
-
-/usr/include/glibmm-2.4/glibmm/utility.h:
-
-/usr/include/glibmm-2.4/glibmm/containerhandle_shared.h:
-
-/usr/include/glibmm-2.4/glibmm/variant.h:
-
-/usr/include/glibmm-2.4/glibmm/varianttype.h:
-
-/usr/include/glibmm-2.4/glibmm/variantiter.h:
-
-/usr/include/glibmm-2.4/glibmm/error.h:
-
-/usr/include/glibmm-2.4/glibmm/exception.h:
-
-/usr/include/c++/4.8/utility:
-
-/usr/include/c++/4.8/bits/stl_relops.h:
-
-/usr/include/c++/4.8/stdexcept:
-
-/usr/include/glibmm-2.4/glibmm/variant_basictypes.h:
 
 /usr/include/c++/4.8/algorithm:
 
@@ -1595,9 +1585,121 @@ refactor.hh:
 
 /usr/include/c++/4.8/bits/deque.tcc:
 
-/usr/include/glibmm-2.4/glibmm/arrayhandle.h:
+/usr/include/glibmm-2.4/glibmm/balancedtree.h:
+
+/usr/include/glibmm-2.4/glibmm/base64.h:
+
+/usr/include/glibmm-2.4/glibmm/bytearray.h:
+
+/usr/include/sigc++-2.0/sigc++/slot.h:
+
+/usr/include/glibmm-2.4/glibmm/bytes.h:
+
+/usr/include/glibmm-2.4/glibmm/checksum.h:
+
+/usr/include/glibmm-2.4/glibmm/convert.h:
+
+/usr/include/glibmm-2.4/glibmm/date.h:
+
+/usr/include/c++/4.8/ctime:
+
+/usr/include/glibmm-2.4/glibmm/datetime.h:
+
+/usr/include/glibmm-2.4/glibmm/dispatcher.h:
+
+/usr/include/glibmm-2.4/glibmm/main.h:
+
+/usr/include/glibmm-2.4/glibmm/priorities.h:
+
+/usr/include/glibmm-2.4/glibmm/iochannel.h:
+
+/usr/include/glibmm-2.4/glibmm/exceptionhandler.h:
+
+/usr/include/glibmm-2.4/glibmm/fileutils.h:
+
+/usr/include/glibmm-2.4/glibmm/helperlist.h:
+
+/usr/include/glibmm-2.4/glibmm/containers.h:
+
+/usr/include/glibmm-2.4/glibmm/sarray.h:
+
+/usr/include/glibmm-2.4/glibmm/interface.h:
+
+/usr/include/glibmm-2.4/glibmm/object.h:
+
+/usr/include/glibmm-2.4/glibmm/utility.h:
+
+/usr/include/glibmm-2.4/glibmm/init.h:
+
+/usr/include/glibmm-2.4/glibmm/keyfile.h:
+
+/usr/include/glibmm-2.4/glibmm/streamiochannel.h:
 
 /usr/include/glibmm-2.4/glibmm/listhandle.h:
+
+/usr/include/glibmm-2.4/glibmm/markup.h:
+
+/usr/include/glibmm-2.4/glibmm/miscutils.h:
+
+/usr/include/glibmm-2.4/glibmm/module.h:
+
+/usr/include/glibmm-2.4/glibmm/nodetree.h:
+
+/usr/include/c++/4.8/stack:
+
+/usr/include/c++/4.8/bits/stl_stack.h:
+
+/usr/include/glibmm-2.4/glibmm/optioncontext.h:
+
+/usr/include/glibmm-2.4/glibmm/optionentry.h:
+
+/usr/include/glibmm-2.4/glibmm/optiongroup.h:
+
+/usr/include/glibmm-2.4/glibmm/pattern.h:
+
+/usr/include/glibmm-2.4/glibmm/property.h:
+
+/usr/include/glibmm-2.4/glibmm/random.h:
+
+/usr/include/glibmm-2.4/glibmm/regex.h:
+
+/usr/include/glibmm-2.4/glibmm/shell.h:
+
+/usr/include/glibmm-2.4/glibmm/slisthandle.h:
+
+/usr/include/glibmm-2.4/glibmm/spawn.h:
+
+/usr/include/glibmm-2.4/glibmm/stringutils.h:
+
+/usr/include/glibmm-2.4/glibmm/threadpool.h:
+
+/usr/include/glibmm-2.4/glibmm/timer.h:
+
+/usr/include/glibmm-2.4/glibmm/timezone.h:
+
+/usr/include/glibmm-2.4/glibmm/uriutils.h:
+
+/usr/include/glibmm-2.4/glibmm/valuearray.h:
+
+/usr/include/glibmm-2.4/glibmm/variantdict.h:
+
+/usr/include/glibmm-2.4/glibmm/vectorutils.h:
+
+/usr/include/gtkmm-3.0/gtkmm/button.h:
+
+/usr/include/gtkmm-3.0/gtkmm/bin.h:
+
+/usr/include/gtkmm-3.0/gtkmm/container.h:
+
+/usr/include/gtkmm-3.0/gtkmm/widget.h:
+
+/usr/lib/x86_64-linux-gnu/gtkmm-3.0/include/gtkmmconfig.h:
+
+/usr/lib/x86_64-linux-gnu/gdkmm-3.0/include/gdkmmconfig.h:
+
+/usr/lib/x86_64-linux-gnu/pangomm-1.4/include/pangommconfig.h:
+
+/usr/include/pangomm-1.4/pangomm/context.h:
 
 /usr/include/pangomm-1.4/pangomm/fontdescription.h:
 
@@ -1653,8 +1755,6 @@ refactor.hh:
 
 /usr/include/pangomm-1.4/pangomm/color.h:
 
-/usr/include/glibmm-2.4/glibmm/slisthandle.h:
-
 /usr/include/pangomm-1.4/pangomm/attrlist.h:
 
 /usr/include/pangomm-1.4/pangomm/attriter.h:
@@ -1666,8 +1766,6 @@ refactor.hh:
 /usr/include/cairomm-1.0/cairomm/context.h:
 
 /usr/include/cairomm-1.0/cairomm/surface.h:
-
-/usr/include/sigc++-2.0/sigc++/slot.h:
 
 /usr/include/cairomm-1.0/cairomm/enums.h:
 
@@ -1818,8 +1916,6 @@ refactor.hh:
 /usr/include/atkmm-1.6/atkmm/object.h:
 
 /usr/include/atkmm-1.6/atkmm/component.h:
-
-/usr/include/glibmm-2.4/glibmm/interface.h:
 
 /usr/include/atkmm-1.6/atkmm/relation.h:
 
@@ -2240,10 +2336,6 @@ refactor.hh:
 /usr/include/gdkmm-3.0/gdkmm/pixbufformat.h:
 
 /usr/include/giomm-2.4/giomm/inputstream.h:
-
-/usr/include/glibmm-2.4/glibmm/priorities.h:
-
-/usr/include/glibmm-2.4/glibmm/bytes.h:
 
 /usr/include/giomm-2.4/giomm/asyncresult.h:
 
@@ -2851,15 +2943,9 @@ refactor.hh:
 
 /usr/include/giomm-2.4/giomm/fileinfo.h:
 
-/usr/include/glibmm-2.4/glibmm/datetime.h:
-
-/usr/include/glibmm-2.4/glibmm/timeval.h:
-
 /usr/include/giomm-2.4/giomm/fileinputstream.h:
 
 /usr/include/giomm-2.4/giomm/seekable.h:
-
-/usr/include/glibmm-2.4/glibmm/iochannel.h:
 
 /usr/include/giomm-2.4/giomm/fileiostream.h:
 
@@ -2878,10 +2964,6 @@ refactor.hh:
 /usr/include/giomm-2.4/giomm/mount.h:
 
 /usr/include/giomm-2.4/giomm/error.h:
-
-/usr/include/glibmm-2.4/glibmm/variantdict.h:
-
-/usr/include/glibmm-2.4/glibmm/optiongroup.h:
 
 /usr/include/giomm-2.4/giomm/dbusconnection.h:
 
@@ -2951,96 +3033,14 @@ refactor.hh:
 
 /usr/include/gtkmm-3.0/gtkmm/textiter.h:
 
-/usr/include/glibmm-2.4/glibmm/exceptionhandler.h:
-
 /usr/include/gtkmm-3.0/gtkmm/textattributes.h:
 
 /usr/include/gtkmm-3.0/gtkmm/menu.h:
 
 /usr/include/gtkmm-3.0/gtkmm/menushell.h:
 
-/usr/include/glibmm-2.4/glibmm.h:
-
-/usr/include/glibmm-2.4/glibmm/thread.h:
-
-/usr/include/glibmm-2.4/glibmm/threads.h:
-
-/usr/include/glibmm-2.4/glibmm/balancedtree.h:
-
-/usr/include/glibmm-2.4/glibmm/base64.h:
-
-/usr/include/glibmm-2.4/glibmm/bytearray.h:
-
-/usr/include/glibmm-2.4/glibmm/checksum.h:
-
-/usr/include/glibmm-2.4/glibmm/convert.h:
-
-/usr/include/glibmm-2.4/glibmm/date.h:
-
-/usr/include/c++/4.8/ctime:
-
-/usr/include/glibmm-2.4/glibmm/dispatcher.h:
-
-/usr/include/glibmm-2.4/glibmm/main.h:
-
-/usr/include/glibmm-2.4/glibmm/fileutils.h:
-
-/usr/include/glibmm-2.4/glibmm/helperlist.h:
-
-/usr/include/glibmm-2.4/glibmm/containers.h:
-
-/usr/include/glibmm-2.4/glibmm/sarray.h:
-
-/usr/include/glibmm-2.4/glibmm/init.h:
-
-/usr/include/glibmm-2.4/glibmm/keyfile.h:
-
-/usr/include/glibmm-2.4/glibmm/streamiochannel.h:
-
-/usr/include/glibmm-2.4/glibmm/markup.h:
-
-/usr/include/glibmm-2.4/glibmm/miscutils.h:
-
-/usr/include/glibmm-2.4/glibmm/module.h:
-
-/usr/include/glibmm-2.4/glibmm/nodetree.h:
-
-/usr/include/c++/4.8/stack:
-
-/usr/include/c++/4.8/bits/stl_stack.h:
-
-/usr/include/glibmm-2.4/glibmm/optioncontext.h:
-
-/usr/include/glibmm-2.4/glibmm/optionentry.h:
-
-/usr/include/glibmm-2.4/glibmm/pattern.h:
-
-/usr/include/glibmm-2.4/glibmm/property.h:
-
-/usr/include/glibmm-2.4/glibmm/random.h:
-
-/usr/include/glibmm-2.4/glibmm/regex.h:
-
-/usr/include/glibmm-2.4/glibmm/shell.h:
-
-/usr/include/glibmm-2.4/glibmm/spawn.h:
-
-/usr/include/glibmm-2.4/glibmm/stringutils.h:
-
-/usr/include/glibmm-2.4/glibmm/threadpool.h:
-
-/usr/include/glibmm-2.4/glibmm/timer.h:
-
-/usr/include/glibmm-2.4/glibmm/timezone.h:
-
-/usr/include/glibmm-2.4/glibmm/uriutils.h:
-
-/usr/include/glibmm-2.4/glibmm/valuearray.h:
-
-/usr/include/glibmm-2.4/glibmm/vectorutils.h:
-
-/usr/include/c++/4.8/iostream:
-
 midi.hh:
 
 sysex_parser.hh:
+
+/usr/include/c++/4.8/iostream:

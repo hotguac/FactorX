@@ -1,19 +1,5 @@
-/*#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <unistd.h>
-#include <sndfile.h>
-#include <pthread.h>
-#include <getopt.h>
-#include <jack/jack.h>
-#include <jack/ringbuffer.h>
-*/
-
 #include "jack_stuff.h"
 #include "midi.hh"
-
-//#include "refactor.hh"
 
 #include <iostream>
 
@@ -24,6 +10,8 @@ MidiFactor::MidiFactor()
 {
 	// initialize the jack midi connection
 	int result = init();
+	std::cout << input_port_name(0) << '\n';
+	std::cout << output_port_name(0) << '\n';
 }
 
 MidiFactor::~MidiFactor()
@@ -42,11 +30,49 @@ int MidiFactor::pull_current(char *buffer, int bsize)
 
 int MidiFactor::send_sysex(char *buffer, int bsize)
 {
-    int result;
+	int result;
 
-    std::cout << "in midifactor send_immediate" << '\n';
+	std::cout << "in midifactor send_immediate" << '\n';
 
-    result = send_immediate(buffer, bsize);
+	result = send_immediate(buffer, bsize);
 
-    return result;
+	return result;
+}
+
+std::string MidiFactor::get_input_ports()
+{
+	std::string name;
+	std::string result;
+
+	result = "";
+
+	int i = 0;
+	name = input_port_name(i);
+
+	while (name != "DONE") 
+		{
+			std::cout << "found " << name << '\n';
+			result = result + "|" + name;
+			i++;
+			name = input_port_name(i);
+		}
+
+	return result;
+}
+
+std::string MidiFactor::get_output_ports()
+{
+	return output_port_name(0);
+}
+
+bool set_input_port(std::string port_name)
+{
+	input_port(&port_name[0]);
+	return true;
+}
+
+bool set_output_port(std::string port_name)
+{
+	output_port(&port_name[0]);
+	return true;
 }

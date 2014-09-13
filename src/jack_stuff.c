@@ -46,7 +46,8 @@ jack_nframes_t nframes;
 jack_ringbuffer_t *recv_buffer;
 jack_ringbuffer_t *send_buffer;
 
-const char **port_names;
+const char **port_names_input;
+const char **port_names_output;
 
 pthread_mutex_t msg_thread_lock = PTHREAD_MUTEX_INITIALIZER;
 
@@ -119,7 +120,7 @@ int process(jack_nframes_t nframes, void *arg)
 	sysex_msg m;
 
 	if (mqlen > 0) {
-	    /*printf("now read ringbuffer send_buffer\n");*/
+		/*printf("now read ringbuffer send_buffer\n"); */
 		jack_ringbuffer_read(send_buffer, (char *)&m,
 				     sizeof(sysex_msg));
 
@@ -139,7 +140,7 @@ int process(jack_nframes_t nframes, void *arg)
 
 int send_immediate(char *buffer, int bsize)
 {
-    printf("in send_immediate\n");
+	printf("in send_immediate\n");
 
 	pthread_mutex_lock(&msg_thread_lock);
 
@@ -191,32 +192,77 @@ void jack_shutdown()
 	}
 }
 
-int get_midi_ports()
+char *input_port_name(int port)
 {
 	int i;
 
-	if ((port_names =
+	fprintf(stderr,"in input_port_name port = %d\n",port);
+
+	if ((port_names_input =
 	     jack_get_ports(client, NULL, "midi", JackPortIsInput)) == NULL) {
 		fprintf(stderr, "Cannot find any ports to send to\n");
 		exit(1);
 	}
 
-	for (i = 0; port_names[i] != NULL; i++) {
-		fprintf(stderr, "refactor: found input port  %s\n",
-			port_names[i]);
-		if (i > 10) {
+	for (i = 0; port >= i; i++) {
+		fprintf(stderr, "refactor: found input port %d: %s\n",
+			i, port_names_input[i]);
+		if (port_names_input[i] == NULL) {
 			break;
 		}
 	}
 
-	return 0;
+	fprintf(stderr, "i = %d and port = %d\n",i,port);
+
+	if (i > port)
+		return port_names_input[port];
+	else
+		return "DONE";
+}
+
+char *output_port_name(int port)
+{
+	int i;
+
+	if ((port_names_output =
+	     jack_get_ports(client, NULL, "midi", JackPortIsOutput)) == NULL) {
+		fprintf(stderr, "Cannot find any ports to read from\n");
+		exit(1);
+	}
+
+	for (i = 0; port > i; i++) {
+		fprintf(stderr, "refactor: found output port  %s\n",
+			port_names_output[i]);
+		if (port_names_output[i] == NULL) {
+			break;
+		}
+	}
+
+	if (i == port)
+		return port_names_output[i];
+	else
+		return NULL;
+}
+
+int input_port(char *port_name)
+{
+	fprintf(stderr, "Input Port : %s requested\n", port_name);
+
+	return 1;
+}
+
+int output_port(char *port_name)
+{
+	fprintf(stderr, "Output Port : %s requested\n", port_name);
+
+	return 1;
 }
 
 int setup_ports()
 {
 	fprintf(stderr, "\treFactor: in setup_ports()\n");
 
-	get_midi_ports();
+	//get_midi_ports();
 
 	inputPort =
 	    jack_port_register(client, "input", JACK_DEFAULT_MIDI_TYPE,

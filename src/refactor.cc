@@ -15,7 +15,7 @@ Refactor::Refactor()
 	set_border_width(12);
 
 	// load UI from glade file.  Skip the top level window container because Refactor is a top level window
-	builder = Gtk::Builder::create_from_file("basic.glade", "boxTop");
+	builder = Gtk::Builder::create_from_file("reFactor.glade", "boxTop");
 
 	builder->get_widget("boxTop", pTop);
 	add(*pTop);
@@ -23,11 +23,26 @@ Refactor::Refactor()
 	// Now set up the signal handlers
 	attach_signal_handlers();
 	attachOutput();
+	populate_jack_io_menu();
 }
 
 Refactor::~Refactor()
 {
-	delete pTop;
+	//delete pTop;
+}
+
+bool Refactor::populate_jack_io_menu()
+{
+ 	std::string input_names;
+	std::string output_names;
+
+	input_names = midiFactor.get_input_ports();
+	std::cout << input_names << '\n';
+
+	output_names = midiFactor.get_output_ports();
+	std::cout << output_names << '\n';
+
+	return true;
 }
 
 bool Refactor::attach_signal_handlers()
@@ -70,18 +85,19 @@ bool Refactor::on_pull_current(GdkEventButton * ev)
 	int result;
 	int offset;
 
-	buffer[0] = 0xF0; // start of sysex message
-	buffer[1] = 0x1C; // EVENTIDE
-	buffer[2] = 0x70; // H4000 formats
-	buffer[3] = 0;    // any matching device
-	buffer[4] = 0x4e; // SYSEXC_TJ_PROGRAM_WANT
-	buffer[5] = 0xF7; // end of sysex message
+	buffer[0] = 0xF0;	// start of sysex message
+	buffer[1] = 0x1C;	// EVENTIDE
+	buffer[2] = 0x70;	// H4000 formats
+	buffer[3] = 0;		// any matching device
+	buffer[4] = 0x4e;	// SYSEXC_TJ_PROGRAM_WANT
+	buffer[5] = 0xF7;	// end of sysex message
 
 	cout << "calling midifactor send_immediate" << '\n';
 
 	result = midiFactor.send_sysex(buffer, 6);
 
-	// need to wait here
+	// need to wait here for the response
+	// change to a separate thread with a callback
 
 	sleep(5);
 
@@ -92,20 +108,17 @@ bool Refactor::on_pull_current(GdkEventButton * ev)
 	int i;
 	// calculate the offset of the second sysex message
 	// until I figure out how to not get the echoed request
-	for (i = 1; i < result; ++i)
-	    {
-		if (buffer[i] == -16)
-		    {
+	for (i = 1; i < result; ++i) {
+		if (buffer[i] == -16) {
 			offset = i;
 			std::cout << "found F0" << '\n';
-		    }
-	    }
+		}
+	}
 
 	std::cout << "offset = " << offset << '\n';
 
 	s = parser.parse_message(buffer + offset, result - offset);
 
-	//pOutputBuffer->set_text(s);
 	pOutputBuffer->insert_at_cursor(s);
 
 	return 0;
