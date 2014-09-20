@@ -35,6 +35,10 @@
 #include "jack_stuff.h"
 
 #define JACK_CLIENT_NAME "reFactor"
+#define SHORT_INPUT_PORT "input"
+#define LONG_INPUT_PORT "reFactor:input"
+#define SHORT_OUTPUT_PORT "output"
+#define LONG_OUTPUT_PORT "reFactor:output"
 
 /* JACK data */
 jack_client_t *client;
@@ -120,17 +124,14 @@ int process(jack_nframes_t nframes, void *arg)
 	sysex_msg m;
 
 	if (mqlen > 0) {
-		/*printf("now read ringbuffer send_buffer\n"); */
 		jack_ringbuffer_read(send_buffer, (char *)&m,
 				     sizeof(sysex_msg));
 
-		/* printf("get another_buffer\n"); */
 		unsigned char *another_buffer =
 		    jack_midi_event_reserve(port_buf, 0, m.size);
 
 		int i;
 
-		/* printf("copy buffers\n"); */
 		for (i = 0; i < m.size; ++i)
 			another_buffer[i] = m.buffer[i];
 	}
@@ -140,8 +141,6 @@ int process(jack_nframes_t nframes, void *arg)
 
 int send_immediate(char *buffer, int bsize)
 {
-	printf("in send_immediate\n");
-
 	pthread_mutex_lock(&msg_thread_lock);
 
 	sysex_msg m;
@@ -160,9 +159,7 @@ int send_immediate(char *buffer, int bsize)
 		m.buffer[i] = buffer[i];
 	}
 
-	printf("before writing to send_buffer\n");
 	jack_ringbuffer_write(send_buffer, (void *)&m, sizeof(sysex_msg));
-	printf("wrote to send_buffer\n");
 
 	pthread_mutex_unlock(&msg_thread_lock);
 }
@@ -196,8 +193,6 @@ char *input_port_name(int port)
 {
 	int i;
 
-	fprintf(stderr,"in input_port_name port = %d\n",port);
-
 	if ((port_names_input =
 	     jack_get_ports(client, NULL, "midi", JackPortIsInput)) == NULL) {
 		fprintf(stderr, "Cannot find any ports to send to\n");
@@ -205,14 +200,10 @@ char *input_port_name(int port)
 	}
 
 	for (i = 0; port >= i; i++) {
-		fprintf(stderr, "refactor: found input port %d: %s\n",
-			i, port_names_input[i]);
 		if (port_names_input[i] == NULL) {
 			break;
 		}
 	}
-
-	fprintf(stderr, "i = %d and port = %d\n",i,port);
 
 	if (i > port)
 		return port_names_input[port];
@@ -226,44 +217,52 @@ char *output_port_name(int port)
 
 	if ((port_names_output =
 	     jack_get_ports(client, NULL, "midi", JackPortIsOutput)) == NULL) {
-		fprintf(stderr, "Cannot find any ports to read from\n");
+		fprintf(stderr, "Cannot find any ports to send to\n");
 		exit(1);
 	}
 
-	for (i = 0; port > i; i++) {
-		fprintf(stderr, "refactor: found output port  %s\n",
-			port_names_output[i]);
+	for (i = 0; port >= i; i++) {
 		if (port_names_output[i] == NULL) {
 			break;
 		}
 	}
 
-	if (i == port)
-		return port_names_output[i];
+	if (i > port)
+		return port_names_output[port];
 	else
-		return NULL;
+		return "DONE";
 }
 
-int input_port(char *port_name)
+int connect_to_input(char *port_name)
 {
-	fprintf(stderr, "Input Port : %s requested\n", port_name);
+	int result;
 
-	return 1;
+	// first disconnect any existing connections
+	jack_port_disconnect(client, inputPort);
+
+	// now connect try to connect to requested port
+	result = jack_connect(client, port_name, LONG_INPUT_PORT);
+
+	return result;
 }
 
-int output_port(char *port_name)
+int connect_to_output(char *port_name)
 {
+	int result;
+
 	fprintf(stderr, "Output Port : %s requested\n", port_name);
 
-	return 1;
+	// first disconnect any existing connections
+	jack_port_disconnect(client, outputPort);
+
+	// now connect try to connect to requested port
+	result = jack_connect(client, LONG_OUTPUT_PORT, port_name);
+
+	return result;
 }
 
 int setup_ports()
 {
-	fprintf(stderr, "\treFactor: in setup_ports()\n");
-
-	//get_midi_ports();
-
 	inputPort =
 	    jack_port_register(client, "input", JACK_DEFAULT_MIDI_TYPE,
 			       JackPortIsInput, 0);
@@ -285,8 +284,6 @@ int setup_ports()
 
 int init()
 {
-	fprintf(stderr, "\treFactor: in init()\n");
-
 	client = jack_client_open(JACK_CLIENT_NAME, JackNullOption, NULL);
 
 	if (client == NULL) {
@@ -298,7 +295,6 @@ int init()
 	    jack_ringbuffer_create(DEFAULT_RB_SIZE * sizeof(sysex_msg));
 
 	if (recv_buffer) {
-		fprintf(stderr, "reFactor: created recv_buffer\n");
 		jack_ringbuffer_mlock(recv_buffer);
 	} else {
 		fprintf(stderr, "reFactor: Error allocating recv_buffer\n");
@@ -309,7 +305,6 @@ int init()
 	    jack_ringbuffer_create(DEFAULT_RB_SIZE * sizeof(sysex_msg));
 
 	if (send_buffer) {
-		fprintf(stderr, "reFactor: created send_buffer\n");
 		jack_ringbuffer_mlock(send_buffer);
 	} else {
 		fprintf(stderr, "reFactor: Error allocating send_buffer\n");
@@ -339,8 +334,6 @@ int get_current_patch(char *buffer, int bsize)
 
 	const int mqlen =
 	    jack_ringbuffer_read_space(recv_buffer) / sizeof(sysex_msg);
-
-	printf("get_current patch mqlen = %d messages\n", mqlen);
 
 	int msg_num;
 	for (msg_num = 0; msg_num < mqlen; ++msg_num) {

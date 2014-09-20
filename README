@@ -3,8 +3,12 @@ reFactor Patch Librarian for Eventide's modFactor pedal
 done
 - sends a sysex message requesting the current patch
 - receives and parses (somewhat) the returned patch
+- ui menu for jack presents midi input and output ports
+- selecting ports from menus disconnects any existing connection for that
+port and connects the selected port
 
 to do
+- refactor out much of the ui code to eliminate brute force coding
 - a whole bunch of stuff, including figuring out the fields that I don't
 understand yet
 - modify patches

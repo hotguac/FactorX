@@ -10,8 +10,6 @@ MidiFactor::MidiFactor()
 {
 	// initialize the jack midi connection
 	int result = init();
-	std::cout << input_port_name(0) << '\n';
-	std::cout << output_port_name(0) << '\n';
 }
 
 MidiFactor::~MidiFactor()
@@ -32,8 +30,6 @@ int MidiFactor::send_sysex(char *buffer, int bsize)
 {
 	int result;
 
-	std::cout << "in midifactor send_immediate" << '\n';
-
 	result = send_immediate(buffer, bsize);
 
 	return result;
@@ -51,8 +47,11 @@ std::string MidiFactor::get_input_ports()
 
 	while (name != "DONE") 
 		{
-			std::cout << "found " << name << '\n';
-			result = result + "|" + name;
+			if (result == "")
+				result = name;
+			else
+				result = result + "|" + name;
+
 			i++;
 			name = input_port_name(i);
 		}
@@ -62,17 +61,36 @@ std::string MidiFactor::get_input_ports()
 
 std::string MidiFactor::get_output_ports()
 {
-	return output_port_name(0);
+	std::string name;
+	std::string result;
+
+	result = "";
+
+	int i = 0;
+	name = output_port_name(i);
+
+	while (name != "DONE") 
+		{
+			if (result == "")
+				result = name;
+			else
+				result = result + "|" + name;
+
+			i++;
+			name = output_port_name(i);
+		}
+
+	return result;
 }
 
-bool set_input_port(std::string port_name)
+bool MidiFactor::set_input_port(std::string port_name)
 {
-	input_port(&port_name[0]);
+	connect_to_input(&port_name[0]);
 	return true;
 }
 
-bool set_output_port(std::string port_name)
+bool MidiFactor::set_output_port(std::string port_name)
 {
-	output_port(&port_name[0]);
+	connect_to_output(&port_name[0]);
 	return true;
 }

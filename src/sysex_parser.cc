@@ -13,7 +13,7 @@ using Glib::ustring;
 
 Parser::Parser()
 {
-	std::cout << "**\treFactor constructor" << std::endl;
+	//std::cout << "**\treFactor constructor" << std::endl;
 }
 
 Parser::~Parser()

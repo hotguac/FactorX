@@ -73,8 +73,8 @@ int send_immediate(char *buffer, int bsize);
 char *input_port_name(int port);
 char *output_port_name(int port);
 
-int input_port(char *buffer);
-int output_port(char *buffer);
+int connect_to_input(char *buffer);
+int connect_to_output(char *buffer);
 
 END_C_DECLS
 /* Synchronization between process thread and disk thread. */

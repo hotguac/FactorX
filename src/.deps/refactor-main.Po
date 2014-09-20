@@ -939,6 +939,12 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/gtkmm-3.0/gtkmm/menuitem.h \
  /usr/include/gtkmm-3.0/gtkmm/accellabel.h \
  /usr/include/gtkmm-3.0/gtkmm/label.h /usr/include/gtkmm-3.0/gtkmm/misc.h \
+ /usr/include/gtkmm-3.0/gtkmm/radiomenuitem.h \
+ /usr/include/gtkmm-3.0/gtkmm/checkmenuitem.h \
+ /usr/include/gtkmm-3.0/gtkmm/radiobutton.h \
+ /usr/include/gtkmm-3.0/gtkmm/checkbutton.h \
+ /usr/include/gtkmm-3.0/gtkmm/togglebutton.h \
+ /usr/include/gtkmm-3.0/gtkmm/radiobuttongroup.h \
  /usr/include/gtkmm-3.0/gtkmm/textview.h \
  /usr/include/gtkmm-3.0/gtkmm/scrollable.h \
  /usr/include/gtkmm-3.0/gtkmm/adjustment.h \
@@ -3014,6 +3020,18 @@ refactor.hh:
 /usr/include/gtkmm-3.0/gtkmm/label.h:
 
 /usr/include/gtkmm-3.0/gtkmm/misc.h:
+
+/usr/include/gtkmm-3.0/gtkmm/radiomenuitem.h:
+
+/usr/include/gtkmm-3.0/gtkmm/checkmenuitem.h:
+
+/usr/include/gtkmm-3.0/gtkmm/radiobutton.h:
+
+/usr/include/gtkmm-3.0/gtkmm/checkbutton.h:
+
+/usr/include/gtkmm-3.0/gtkmm/togglebutton.h:
+
+/usr/include/gtkmm-3.0/gtkmm/radiobuttongroup.h:
 
 /usr/include/gtkmm-3.0/gtkmm/textview.h:
 
