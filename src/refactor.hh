@@ -53,18 +53,10 @@ protected:
 
 	// signal handlers for input and output
 	bool on_input_none_assigned(GdkEventButton * ev);
-	bool on_input1_assigned(GdkEventButton * ev);
-	bool on_input2_assigned(GdkEventButton * ev);
-	bool on_input3_assigned(GdkEventButton * ev);
-	bool on_input4_assigned(GdkEventButton * ev);
-	bool on_input5_assigned(GdkEventButton * ev);
+	bool on_input_assigned(GdkEventButton * ev);
 
 	bool on_output_none_assigned(GdkEventButton * ev);
-	bool on_output1_assigned(GdkEventButton * ev);
-	bool on_output2_assigned(GdkEventButton * ev);
-	bool on_output3_assigned(GdkEventButton * ev);
-	bool on_output4_assigned(GdkEventButton * ev);
-	bool on_output5_assigned(GdkEventButton * ev);
+	bool on_output_assigned(GdkEventButton * ev);
 
 	//Member widgets:
 	Gtk::Button * pButton;
@@ -111,7 +103,7 @@ protected:
 	Gtk::RadioMenuItem * pInput_3;
 	Gtk::RadioMenuItem * pInput_4;
 	Gtk::RadioMenuItem * pInput_5;
-	
+
 };
 
 #endif // GTKMM_REFACTOR_H

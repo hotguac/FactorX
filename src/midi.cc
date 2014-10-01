@@ -45,16 +45,15 @@ std::string MidiFactor::get_input_ports()
 	int i = 0;
 	name = input_port_name(i);
 
-	while (name != "DONE") 
-		{
-			if (result == "")
-				result = name;
-			else
-				result = result + "|" + name;
+	while (name != "DONE") {
+		if (result == "")
+			result = name;
+		else
+			result = result + "|" + name;
 
-			i++;
-			name = input_port_name(i);
-		}
+		i++;
+		name = input_port_name(i);
+	}
 
 	return result;
 }
@@ -69,16 +68,15 @@ std::string MidiFactor::get_output_ports()
 	int i = 0;
 	name = output_port_name(i);
 
-	while (name != "DONE") 
-		{
-			if (result == "")
-				result = name;
-			else
-				result = result + "|" + name;
+	while (name != "DONE") {
+		if (result == "")
+			result = name;
+		else
+			result = result + "|" + name;
 
-			i++;
-			name = output_port_name(i);
-		}
+		i++;
+		name = output_port_name(i);
+	}
 
 	return result;
 }
