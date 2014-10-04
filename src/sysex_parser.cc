@@ -34,9 +34,9 @@ HeaderType Parser::parse_header()
 		} else if ((buffer[1] != 28) || (buffer[2] != 112)) {	//'p')
 			//|| (buffer[3] != 1)) {
 			result = header_type_bad_device;
-			std::stringstream strStream(std::stringstream::
-						    in | std::stringstream::
-						    out);
+			std::stringstream strStream(std::
+						    stringstream::in | std::
+						    stringstream::out);
 			short asc;
 
 			asc = buffer[1];
@@ -75,8 +75,8 @@ string Parser::parse_current()
 	string s;
 	string param_value;
 
-	std::stringstream strStream(std::stringstream::in | std::
-				    stringstream::out);
+	std::stringstream strStream(std::stringstream::in | std::stringstream::
+				    out);
 
 	int i;
 	short asc;
@@ -292,8 +292,8 @@ std::string Parser::segment_get_next_field()
 std::string Parser::segment_get_next()
 {
 	string result = "";
-	std::stringstream strStream(std::stringstream::in | std::
-				    stringstream::out);
+	std::stringstream strStream(std::stringstream::in | std::stringstream::
+				    out);
 	int i;
 	int j;
 	short asc;
@@ -332,8 +332,8 @@ string Parser::parse_message(char *in_buffer, int in_length)
 	buffer = in_buffer;
 	length = in_length;
 
-	std::stringstream strStream(std::stringstream::in | std::
-				    stringstream::out);
+	std::stringstream strStream(std::stringstream::in | std::stringstream::
+				    out);
 
 	HeaderType message_type;
 

@@ -237,6 +237,8 @@ int connect_to_input(char *port_name)
 {
 	int result;
 
+	fprintf(stderr, "Connect to input Port : %s requested\n", port_name);
+
 	// first disconnect any existing connections
 	jack_port_disconnect(client, inputPort);
 
@@ -250,7 +252,7 @@ int connect_to_output(char *port_name)
 {
 	int result;
 
-	fprintf(stderr, "Output Port : %s requested\n", port_name);
+	fprintf(stderr, "Connect to output Port : %s requested\n", port_name);
 
 	// first disconnect any existing connections
 	jack_port_disconnect(client, outputPort);

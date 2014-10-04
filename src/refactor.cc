@@ -38,12 +38,12 @@ bool Refactor::populate_jack_io_menu()
 	size_t pos = 0;
 	std::string token;
 	int escape;
-	Gtk::MenuItem *next;
-	Gtk::Menu *jack_output;
-	Gtk::Menu *jack_input;
+	Gtk::MenuItem * next;
+	Gtk::Menu * jack_output;
+	Gtk::Menu * jack_input;
 
-	Gtk::RadioMenuItem *input_none;
-	Gtk::RadioMenuItem *output_none;
+	Gtk::RadioMenuItem * input_none;
+	Gtk::RadioMenuItem * output_none;
 	Gtk::RadioMenuItem::Group input_group;
 	Gtk::RadioMenuItem::Group output_group;
 
@@ -59,70 +59,102 @@ bool Refactor::populate_jack_io_menu()
 	input_none->set_group(input_group);
 	output_none->set_group(output_group);
 
+	output_none->signal_toggled().connect(sigc::bind <
+					      Gtk::RadioMenuItem *
+					      >(sigc::
+						mem_fun(*this,
+							&Refactor::
+							on_output_assigned),
+						output_none));
+	input_none->signal_toggled().connect(sigc::bind <
+					     Gtk::RadioMenuItem *
+					     >(sigc::
+					       mem_fun(*this,
+						       &Refactor::
+						       on_input_assigned),
+					       input_none));
+
 	pos = input_names.find(delimiter);
 
 	escape = 0;
-	while (((pos = input_names.find(delimiter)) != std::string::npos) && escape < 3)
-	{
+	while (((pos = input_names.find(delimiter)) != std::string::npos)
+	       && escape < 3) {
 		escape++;
 		token = input_names.substr(0, pos);
 		std::cout << token << std::endl;
 		input_names.erase(0, pos + delimiter.length());
 
-		Gtk::RadioMenuItem *next = Gtk::manage(new Gtk::RadioMenuItem(input_group,token, true));
-		jack_input->add(*next);
+		Gtk::RadioMenuItem * next =
+		    Gtk::manage(new Gtk::
+				RadioMenuItem(output_group, token, true));
+		next->signal_toggled().connect(sigc::bind <
+					       Gtk::RadioMenuItem *
+					       >(sigc::
+						 mem_fun(*this,
+							 &Refactor::
+							 on_output_assigned),
+						 next));
+		jack_output->add(*next);
 		next->show();
 	}
 
 	pos = output_names.find(delimiter);
 
 	escape = 0;
-	while (((pos = output_names.find(delimiter)) != std::string::npos) && escape < 3)
-	{
+	while (((pos = output_names.find(delimiter)) != std::string::npos)
+	       && escape < 3) {
 		escape++;
 		token = output_names.substr(0, pos);
 		std::cout << token << std::endl;
 		output_names.erase(0, pos + delimiter.length());
 
-		Gtk::RadioMenuItem *next = Gtk::manage(new Gtk::RadioMenuItem(output_group,token, true));
-		//next->signal_activate().connect(sigc::mem_fun(*this, &Refactor::on_output_assigned));
-		jack_output->add(*next);
+		Gtk::RadioMenuItem * next =
+		    Gtk::manage(new Gtk::
+				RadioMenuItem(input_group, token, true));
+		next->signal_toggled().connect(sigc::bind <
+					       Gtk::RadioMenuItem *
+					       >(sigc::
+						 mem_fun(*this,
+							 &Refactor::
+							 on_input_assigned),
+						 next));
+		jack_input->add(*next);
 		next->show();
 	}
 
 	return true;
 }
 
-bool Refactor::on_output_assigned(GdkEventButton * ev)
+void Refactor::on_output_assigned(Gtk::RadioMenuItem * choice)
 {
 	std::cerr << "on_output_assigned()" << std::endl;
-	//midiFactor.set_output_port(pOutput_1->get_label());
+	midiFactor.set_output_port(choice->get_label());
 }
 
+void Refactor::on_input_assigned(Gtk::RadioMenuItem * choice)
+{
+	std::cerr << "on_input_assigned()" << std::endl;
+	midiFactor.set_input_port(choice->get_label());
+}
 
 bool Refactor::attach_signal_handlers()
 {
 	builder->get_widget("evbPullCurrentPatch", pPullCurrentPatch);
 	if (pPullCurrentPatch) {
-		pPullCurrentPatch->
-		    signal_button_press_event().connect(sigc::
-							mem_fun(*this,
-								&Refactor::
-								on_pull_current));
+		pPullCurrentPatch->signal_button_press_event().
+		    connect(sigc::mem_fun(*this, &Refactor::on_pull_current));
 	}
 
 	builder->get_widget("mnuQuit", pQuit);
 	if (pQuit) {
 		pQuit->signal_button_press_event().connect(sigc::mem_fun(*this,
-									 &Refactor::
-									 on_quit_clicked));
+									 &Refactor::on_quit_clicked));
 	}
 
 	builder->get_widget("mnuOpen", pOpen);
 	if (pOpen) {
 		pOpen->signal_button_press_event().connect(sigc::mem_fun(*this,
-									 &Refactor::
-									 on_open_clicked));
+									 &Refactor::on_open_clicked));
 	}
 
 	return 0;
@@ -233,22 +265,3 @@ bool Refactor::on_about_clicked(GdkEventButton * ev)
 {
 	std::cerr << "on_about_clicked()" << std::endl;
 }
-
-bool Refactor::on_input_none_assigned(GdkEventButton * ev)
-{
-	std::cerr << "on_input_none_assigned()" << std::endl;
-	midiFactor.set_input_port(pInput_none->get_label());
-}
-
-bool Refactor::on_input_assigned(GdkEventButton * ev)
-{
-	std::cerr << "on_input_assigned()" << std::endl;
-	//midiFactor.set_input_port(pInput_1->get_label());
-}
-
-bool Refactor::on_output_none_assigned(GdkEventButton * ev)
-{
-	std::cerr << "on_output_none_assigned()" << std::endl;
-	midiFactor.set_output_port(pOutput_none->get_label());
-}
-

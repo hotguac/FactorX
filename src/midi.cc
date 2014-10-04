@@ -83,12 +83,14 @@ std::string MidiFactor::get_output_ports()
 
 bool MidiFactor::set_input_port(std::string port_name)
 {
+	std::cout << "set input port to : " << port_name << std::endl;
 	connect_to_input(&port_name[0]);
 	return true;
 }
 
 bool MidiFactor::set_output_port(std::string port_name)
 {
+	std::cout << "set output port to : " << port_name << std::endl;
 	connect_to_output(&port_name[0]);
 	return true;
 }

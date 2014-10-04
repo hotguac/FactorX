@@ -52,11 +52,8 @@ protected:
 	bool on_about_clicked(GdkEventButton * ev);
 
 	// signal handlers for input and output
-	bool on_input_none_assigned(GdkEventButton * ev);
-	bool on_input_assigned(GdkEventButton * ev);
-
-	bool on_output_none_assigned(GdkEventButton * ev);
-	bool on_output_assigned(GdkEventButton * ev);
+	void on_input_assigned(Gtk::RadioMenuItem * choice);
+	void on_output_assigned(Gtk::RadioMenuItem * choice);
 
 	//Member widgets:
 	Gtk::Button * pButton;
