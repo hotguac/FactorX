@@ -27,6 +27,10 @@ protected:
 	MidiFactor midiFactor;
 	Parser parser;
 
+	//Timers
+	int m_timer_number;
+	bool on_timeout();
+
 	//Signal handlers event buttons
 	bool on_pull_current(GdkEventButton * ev);
 	bool on_push_current(GdkEventButton * ev);
@@ -74,8 +78,8 @@ protected:
 
 	Gtk::ImageMenuItem * pCopy;
 	Gtk::ImageMenuItem * pCut;
-	Gtk::ImageMenuItem * pCaste;
-	Gtk::ImageMenuItem * pCelete;
+	Gtk::ImageMenuItem * pPaste;
+	Gtk::ImageMenuItem * pDelete;
 
 	Gtk::ImageMenuItem * pAbout;
 
@@ -88,19 +92,7 @@ protected:
 	Gtk::Menu * pJack_output_menu;
 
 	Gtk::RadioMenuItem * pOutput_none;
-	Gtk::RadioMenuItem * pOutput_1;
-	Gtk::RadioMenuItem * pOutput_2;
-	Gtk::RadioMenuItem * pOutput_3;
-	Gtk::RadioMenuItem * pOutput_4;
-	Gtk::RadioMenuItem * pOutput_5;
-
-	Gtk::RadioMenuItem * pInput_none;
-	Gtk::RadioMenuItem * pInput_1;
-	Gtk::RadioMenuItem * pInput_2;
-	Gtk::RadioMenuItem * pInput_3;
-	Gtk::RadioMenuItem * pInput_4;
-	Gtk::RadioMenuItem * pInput_5;
-
+	Gtk::RadioMenuItem * pInput_none; 
 };
 
 #endif // GTKMM_REFACTOR_H

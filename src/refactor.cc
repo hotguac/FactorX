@@ -9,7 +9,8 @@
 
 using std::cout;
 
-Refactor::Refactor()
+Refactor::Refactor() :
+	m_timer_number(0)
 {
 	set_border_width(12);
 
@@ -186,10 +187,20 @@ bool Refactor::on_pull_current(GdkEventButton * ev)
 
 	result = midiFactor.send_sysex(buffer, 6);
 
-	// need to wait here for the response
-	// change to a separate thread with a callback
+	sigc::slot<bool> my_slot = sigc::mem_fun(*this, &Refactor::on_timeout);
+	Glib::signal_timeout().connect(my_slot, 500);
 
-	sleep(5);
+	return 0;
+}
+
+bool Refactor::on_timeout()
+{
+	int bsize = 4096;
+	char *buffer = new char[bsize];
+	std::string s;
+
+	int result;
+	int offset;
 
 	result = midiFactor.pull_current(buffer, bsize);
 
@@ -206,9 +217,13 @@ bool Refactor::on_pull_current(GdkEventButton * ev)
 
 	s = parser.parse_message(buffer + offset, result - offset);
 
-	pOutputBuffer->insert_at_cursor(s);
+	if (s != "Bad message") {
+		pOutputBuffer->insert_at_cursor(s);
+		return false;
+	} else {
+		return true;
+	}
 
-	return 0;
 }
 
 bool Refactor::on_open_clicked(GdkEventButton * ev)
