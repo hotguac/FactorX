@@ -92,7 +92,7 @@ protected:
 	Gtk::Menu * pJack_output_menu;
 
 	Gtk::RadioMenuItem * pOutput_none;
-	Gtk::RadioMenuItem * pInput_none; 
+	Gtk::RadioMenuItem * pInput_none;
 };
 
 #endif // GTKMM_REFACTOR_H

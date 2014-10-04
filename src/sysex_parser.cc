@@ -2,6 +2,7 @@
 
 #include <glibmm/ustring.h>
 
+//#include <array>
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
@@ -34,9 +35,9 @@ HeaderType Parser::parse_header()
 		} else if ((buffer[1] != 28) || (buffer[2] != 112)) {	//'p')
 			//|| (buffer[3] != 1)) {
 			result = header_type_bad_device;
-			std::stringstream strStream(std::
-						    stringstream::in | std::
-						    stringstream::out);
+			std::stringstream strStream(std::stringstream::
+						    in | std::stringstream::
+						    out);
 			short asc;
 
 			asc = buffer[1];
@@ -70,25 +71,26 @@ HeaderType Parser::parse_header()
 	return result;
 }
 
-string Parser::parse_current()
+std::string Parser::parse_seg1(std::string seg1)
+{
+	std::stringstream strStream(std::stringstream::in | std::
+				    stringstream::out);
+
+	std::cout << "next segment = " << seg1 << '\n';
+
+	strStream << "Seg1: " << seg1 << '\n';
+
+	return strStream.str();
+}
+
+std::string Parser::parse_seg2(std::string seg2)
 {
 	string s;
 	string param_value;
+	std::stringstream strStream(std::stringstream::in | std::
+				    stringstream::out);
 
-	std::stringstream strStream(std::stringstream::in | std::stringstream::
-				    out);
-
-	int i;
-	short asc;
-
-	bool started;
-
-	s = segment_get_next();
-	std::cout << "next segment = " << s << '\n';
-	strStream << "Seg1: '" << s << "'" << '\n';
-
-	s = segment_get_next();
-	std::cout << "next segment = " << s << '\n';
+	std::cout << "next segment = " << seg2 << '\n';
 
 	param_value = segment_get_next_field();
 	strStream << "Seg2: [Unknown1:'" << param_value << "] ";
@@ -128,16 +130,41 @@ string Parser::parse_current()
 
 	strStream << '\n';
 
-	s = segment_get_next();
-	std::cout << "next segment = " << s << '\n';
-	strStream << "Seg3: '" << s << "'" << '\n';
+	return strStream.str();
+}
 
-	s = segment_get_next();
-	std::cout << "next segment = " << s << '\n';
-	strStream << "Seg4: '" << s << "'" << '\n';
+std::string Parser::parse_seg3(std::string seg3)
+{
+	std::stringstream strStream(std::stringstream::in | std::
+				    stringstream::out);
 
-	s = segment_get_next();
-	std::cout << "next segment = " << s << '\n';
+	std::cout << "next segment = " << seg3 << '\n';
+
+	strStream << "Seg3: '" << seg3 << "'" << '\n';
+
+	return strStream.str();
+}
+
+std::string Parser::parse_seg4(std::string seg4)
+{
+	std::stringstream strStream(std::stringstream::in | std::
+				    stringstream::out);
+
+	std::cout << "next segment = " << seg4 << '\n';
+
+	strStream << "Seg4: '" << seg4 << "'" << '\n';
+
+	return strStream.str();
+}
+
+std::string Parser::parse_seg5(std::string seg3)
+{
+	string param_value;
+
+	std::stringstream strStream(std::stringstream::in | std::
+				    stringstream::out);
+
+	std::cout << "next segment = " << seg3 << '\n';
 
 	param_value = segment_get_next_field();
 	strStream << "Seg5: [DMOD:'" << param_value << "'] ";
@@ -230,14 +257,55 @@ string Parser::parse_current()
 
 	strStream << '\n';
 
-	// Seg 6
-	s = segment_get_next();
-	std::cout << "next segment = " << s << '\n';
-	strStream << "Seg6: '" << s << "'" << '\n';
+	return strStream.str();
+}
 
-	s = segment_get_next();
-	std::cout << "next segment = " << s << '\n';
-	strStream << "Seg7: '" << s << "'" << '\n';
+std::string Parser::parse_seg6(std::string seg6)
+{
+	std::stringstream strStream(std::stringstream::in | std::
+				    stringstream::out);
+
+	std::cout << "next segment = " << seg6 << '\n';
+
+	strStream << "Seg6: '" << seg6 << "'" << '\n';
+
+	return strStream.str();
+}
+
+std::string Parser::parse_seg7(std::string seg7)
+{
+	std::stringstream strStream(std::stringstream::in | std::
+				    stringstream::out);
+
+	std::cout << "next segment = " << seg7 << '\n';
+
+	strStream << "Seg7: '" << "[Patch Name]" << seg7 << "'" << '\n';
+
+	return strStream.str();
+}
+
+string Parser::parse_current()
+{
+	string s;
+	string param_value;
+
+	//std::array<std::string, 10> segments;
+
+	std::stringstream strStream(std::stringstream::in | std::
+				    stringstream::out);
+
+	int i;
+	short asc;
+
+	bool started;
+
+	strStream << parse_seg1(segment_get_next());
+	strStream << parse_seg2(segment_get_next());
+	strStream << parse_seg3(segment_get_next());
+	strStream << parse_seg4(segment_get_next());
+	strStream << parse_seg5(segment_get_next());
+	strStream << parse_seg6(segment_get_next());
+	strStream << parse_seg7(segment_get_next());
 
 	return strStream.str();
 }
@@ -292,8 +360,8 @@ std::string Parser::segment_get_next_field()
 std::string Parser::segment_get_next()
 {
 	string result = "";
-	std::stringstream strStream(std::stringstream::in | std::stringstream::
-				    out);
+	std::stringstream strStream(std::stringstream::in | std::
+				    stringstream::out);
 	int i;
 	int j;
 	short asc;
@@ -332,18 +400,12 @@ string Parser::parse_message(char *in_buffer, int in_length)
 	buffer = in_buffer;
 	length = in_length;
 
-	std::stringstream strStream(std::stringstream::in | std::stringstream::
-				    out);
+	std::stringstream strStream(std::stringstream::in | std::
+				    stringstream::out);
 
 	HeaderType message_type;
 
 	message_type = parse_header();
-
-	/*
-	   std::cout << "parse message length " << length << '\n';
-	   std::cout << "with buffer " << buffer << '\n';
-	   std::cout << "parse header returned " << message_type << '\n';
-	 */
 
 	switch (message_type) {
 	case header_type_current:

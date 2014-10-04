@@ -12,6 +12,8 @@ public:
 
 	std::string parse_message(char *buffer, int length);
 
+	//static const std::string bad_message = "Bad message";
+
 protected:
 	static const HeaderType header_type_current = 0;
 	static const HeaderType header_type_presets = 1;
@@ -34,6 +36,14 @@ protected:
 	char *buffer;
 	int length;
 	int position;
+
+	 std::string parse_seg1(std::string seg1);
+	 std::string parse_seg2(std::string seg2);
+	 std::string parse_seg3(std::string seg3);
+	 std::string parse_seg4(std::string seg4);
+	 std::string parse_seg5(std::string seg5);
+	 std::string parse_seg6(std::string seg6);
+	 std::string parse_seg7(std::string seg7);
 
 	 std::string current_segment;
 };

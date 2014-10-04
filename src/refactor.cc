@@ -9,8 +9,8 @@
 
 using std::cout;
 
-Refactor::Refactor() :
-	m_timer_number(0)
+Refactor::Refactor():
+m_timer_number(0)
 {
 	set_border_width(12);
 
@@ -62,17 +62,13 @@ bool Refactor::populate_jack_io_menu()
 
 	output_none->signal_toggled().connect(sigc::bind <
 					      Gtk::RadioMenuItem *
-					      >(sigc::
-						mem_fun(*this,
-							&Refactor::
-							on_output_assigned),
+					      >(sigc::mem_fun(*this,
+							      &Refactor::on_output_assigned),
 						output_none));
 	input_none->signal_toggled().connect(sigc::bind <
 					     Gtk::RadioMenuItem *
-					     >(sigc::
-					       mem_fun(*this,
-						       &Refactor::
-						       on_input_assigned),
+					     >(sigc::mem_fun(*this,
+							     &Refactor::on_input_assigned),
 					       input_none));
 
 	pos = input_names.find(delimiter);
@@ -86,14 +82,13 @@ bool Refactor::populate_jack_io_menu()
 		input_names.erase(0, pos + delimiter.length());
 
 		Gtk::RadioMenuItem * next =
-		    Gtk::manage(new Gtk::
-				RadioMenuItem(output_group, token, true));
+		    Gtk::
+		    manage(new Gtk::RadioMenuItem(output_group, token, true));
 		next->signal_toggled().connect(sigc::bind <
 					       Gtk::RadioMenuItem *
-					       >(sigc::
-						 mem_fun(*this,
-							 &Refactor::
-							 on_output_assigned),
+					       >(sigc::mem_fun
+						 (*this,
+						  &Refactor::on_output_assigned),
 						 next));
 		jack_output->add(*next);
 		next->show();
@@ -110,14 +105,13 @@ bool Refactor::populate_jack_io_menu()
 		output_names.erase(0, pos + delimiter.length());
 
 		Gtk::RadioMenuItem * next =
-		    Gtk::manage(new Gtk::
-				RadioMenuItem(input_group, token, true));
+		    Gtk::
+		    manage(new Gtk::RadioMenuItem(input_group, token, true));
 		next->signal_toggled().connect(sigc::bind <
 					       Gtk::RadioMenuItem *
-					       >(sigc::
-						 mem_fun(*this,
-							 &Refactor::
-							 on_input_assigned),
+					       >(sigc::mem_fun
+						 (*this,
+						  &Refactor::on_input_assigned),
 						 next));
 		jack_input->add(*next);
 		next->show();
@@ -142,20 +136,25 @@ bool Refactor::attach_signal_handlers()
 {
 	builder->get_widget("evbPullCurrentPatch", pPullCurrentPatch);
 	if (pPullCurrentPatch) {
-		pPullCurrentPatch->signal_button_press_event().
-		    connect(sigc::mem_fun(*this, &Refactor::on_pull_current));
+		pPullCurrentPatch->
+		    signal_button_press_event().connect(sigc::
+							mem_fun(*this,
+								&Refactor::
+								on_pull_current));
 	}
 
 	builder->get_widget("mnuQuit", pQuit);
 	if (pQuit) {
 		pQuit->signal_button_press_event().connect(sigc::mem_fun(*this,
-									 &Refactor::on_quit_clicked));
+									 &Refactor::
+									 on_quit_clicked));
 	}
 
 	builder->get_widget("mnuOpen", pOpen);
 	if (pOpen) {
 		pOpen->signal_button_press_event().connect(sigc::mem_fun(*this,
-									 &Refactor::on_open_clicked));
+									 &Refactor::
+									 on_open_clicked));
 	}
 
 	return 0;
@@ -187,7 +186,8 @@ bool Refactor::on_pull_current(GdkEventButton * ev)
 
 	result = midiFactor.send_sysex(buffer, 6);
 
-	sigc::slot<bool> my_slot = sigc::mem_fun(*this, &Refactor::on_timeout);
+	sigc::slot < bool > my_slot =
+	    sigc::mem_fun(*this, &Refactor::on_timeout);
 	Glib::signal_timeout().connect(my_slot, 500);
 
 	return 0;
