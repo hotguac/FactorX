@@ -945,18 +945,37 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/gtkmm-3.0/gtkmm/checkbutton.h \
  /usr/include/gtkmm-3.0/gtkmm/togglebutton.h \
  /usr/include/gtkmm-3.0/gtkmm/radiobuttongroup.h \
+ /usr/include/gtkmm-3.0/gtkmm/spinbutton.h \
+ /usr/include/gtkmm-3.0/gtkmm/entry.h \
+ /usr/include/gtkmm-3.0/gtkmm/editable.h \
+ /usr/include/gtkmm-3.0/gtkmm/menu.h \
+ /usr/include/gtkmm-3.0/gtkmm/menushell.h \
+ /usr/include/gtkmm-3.0/gtkmm/celleditable.h \
+ /usr/include/gtkmm-3.0/gtkmm/entrycompletion.h \
+ /usr/include/gtkmm-3.0/gtkmm/celllayout.h \
+ /usr/include/gtkmm-3.0/gtkmm/cellrenderer.h \
+ /usr/include/gtkmm-3.0/gtkmm/cellrenderer_generation.h \
+ /usr/include/gtkmm-3.0/gtkmm/cellrenderertext.h \
+ /usr/include/gtkmm-3.0/gtkmm/cellrendererpixbuf.h \
+ /usr/include/gtkmm-3.0/gtkmm/cellrenderertoggle.h \
+ /usr/include/gtkmm-3.0/gtkmm/cellrendereraccel.h \
+ /usr/include/gtkmm-3.0/gtkmm/treemodel.h \
+ /usr/include/gtkmm-3.0/gtkmm/treeiter.h \
+ /usr/include/gtkmm-3.0/gtkmm/treemodelcolumn.h \
+ /usr/include/gtkmm-3.0/gtkmm/adjustment.h \
+ /usr/include/gtkmm-3.0/gtkmm/image.h \
+ /usr/include/gdkmm-3.0/gdkmm/pixbufanimation.h \
+ /usr/include/gdkmm-3.0/gdkmm/pixbufanimationiter.h \
+ /usr/include/gtkmm-3.0/gtkmm/entrybuffer.h \
  /usr/include/gtkmm-3.0/gtkmm/textview.h \
  /usr/include/gtkmm-3.0/gtkmm/scrollable.h \
- /usr/include/gtkmm-3.0/gtkmm/adjustment.h \
  /usr/include/gtkmm-3.0/gtkmm/textbuffer.h \
  /usr/include/gtkmm-3.0/gtkmm/texttagtable.h \
  /usr/include/gtkmm-3.0/gtkmm/texttag.h \
  /usr/include/gtkmm-3.0/gtkmm/textchildanchor.h \
  /usr/include/gtkmm-3.0/gtkmm/textmark.h \
  /usr/include/gtkmm-3.0/gtkmm/textiter.h \
- /usr/include/gtkmm-3.0/gtkmm/textattributes.h \
- /usr/include/gtkmm-3.0/gtkmm/menu.h \
- /usr/include/gtkmm-3.0/gtkmm/menushell.h midi.hh sysex_parser.hh \
+ /usr/include/gtkmm-3.0/gtkmm/textattributes.h midi.hh sysex_parser.hh \
  /usr/include/c++/4.8/iostream
 
 /usr/include/stdc-predef.h:
@@ -3033,11 +3052,53 @@ refactor.hh:
 
 /usr/include/gtkmm-3.0/gtkmm/radiobuttongroup.h:
 
+/usr/include/gtkmm-3.0/gtkmm/spinbutton.h:
+
+/usr/include/gtkmm-3.0/gtkmm/entry.h:
+
+/usr/include/gtkmm-3.0/gtkmm/editable.h:
+
+/usr/include/gtkmm-3.0/gtkmm/menu.h:
+
+/usr/include/gtkmm-3.0/gtkmm/menushell.h:
+
+/usr/include/gtkmm-3.0/gtkmm/celleditable.h:
+
+/usr/include/gtkmm-3.0/gtkmm/entrycompletion.h:
+
+/usr/include/gtkmm-3.0/gtkmm/celllayout.h:
+
+/usr/include/gtkmm-3.0/gtkmm/cellrenderer.h:
+
+/usr/include/gtkmm-3.0/gtkmm/cellrenderer_generation.h:
+
+/usr/include/gtkmm-3.0/gtkmm/cellrenderertext.h:
+
+/usr/include/gtkmm-3.0/gtkmm/cellrendererpixbuf.h:
+
+/usr/include/gtkmm-3.0/gtkmm/cellrenderertoggle.h:
+
+/usr/include/gtkmm-3.0/gtkmm/cellrendereraccel.h:
+
+/usr/include/gtkmm-3.0/gtkmm/treemodel.h:
+
+/usr/include/gtkmm-3.0/gtkmm/treeiter.h:
+
+/usr/include/gtkmm-3.0/gtkmm/treemodelcolumn.h:
+
+/usr/include/gtkmm-3.0/gtkmm/adjustment.h:
+
+/usr/include/gtkmm-3.0/gtkmm/image.h:
+
+/usr/include/gdkmm-3.0/gdkmm/pixbufanimation.h:
+
+/usr/include/gdkmm-3.0/gdkmm/pixbufanimationiter.h:
+
+/usr/include/gtkmm-3.0/gtkmm/entrybuffer.h:
+
 /usr/include/gtkmm-3.0/gtkmm/textview.h:
 
 /usr/include/gtkmm-3.0/gtkmm/scrollable.h:
-
-/usr/include/gtkmm-3.0/gtkmm/adjustment.h:
 
 /usr/include/gtkmm-3.0/gtkmm/textbuffer.h:
 
@@ -3052,10 +3113,6 @@ refactor.hh:
 /usr/include/gtkmm-3.0/gtkmm/textiter.h:
 
 /usr/include/gtkmm-3.0/gtkmm/textattributes.h:
-
-/usr/include/gtkmm-3.0/gtkmm/menu.h:
-
-/usr/include/gtkmm-3.0/gtkmm/menushell.h:
 
 midi.hh:
 

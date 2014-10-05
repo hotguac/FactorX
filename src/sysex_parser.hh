@@ -12,7 +12,23 @@ public:
 
 	std::string parse_message(char *buffer, int length);
 
-	//static const std::string bad_message = "Bad message";
+	struct Patch {
+		std::string patch_name;
+		std::string effect;
+		double intensity;
+		 std::string type;
+		double depth;
+		double speed;
+		 std::string shape;
+		double xnob;
+
+		double dmod;
+		double smod;
+		double mod_rate;
+		 std::string mod_source;
+	};
+
+	Patch current;
 
 protected:
 	static const HeaderType header_type_current = 0;
@@ -46,6 +62,7 @@ protected:
 	 std::string parse_seg7(std::string seg7);
 
 	 std::string current_segment;
+
 };
 
 #endif // SYSEX_PARSER_H

@@ -24,11 +24,47 @@ m_timer_number(0)
 	attach_signal_handlers();
 	attachOutput();
 	populate_jack_io_menu();
+	get_screen_fields();
 }
 
 Refactor::~Refactor()
 {
 	//delete pTop;
+}
+
+void Refactor::get_screen_fields()
+{
+	builder->get_widget("depth", pDepth);
+	pDepth->get_adjustment()->set_lower(0);
+	pDepth->get_adjustment()->set_upper(100);
+	pDepth->get_adjustment()->set_value(0.0);
+	pDepth->get_adjustment()->set_page_increment(1);
+	pDepth->get_adjustment()->set_step_increment(0.1);
+	pDepth->update();
+
+	builder->get_widget("dmod", pDmod);
+	pDmod->get_adjustment()->set_lower(0);
+	pDmod->get_adjustment()->set_upper(100);
+	pDmod->get_adjustment()->set_value(0.0);
+	pDmod->get_adjustment()->set_page_increment(1);
+	pDmod->get_adjustment()->set_step_increment(0.1);
+	pDmod->update();
+
+	builder->get_widget("speed", pSpeed);
+	pSpeed->get_adjustment()->set_lower(0);
+	pSpeed->get_adjustment()->set_upper(100);
+	pSpeed->get_adjustment()->set_value(0.0);
+	pSpeed->get_adjustment()->set_page_increment(1);
+	pSpeed->get_adjustment()->set_step_increment(0.1);
+	pSpeed->update();
+
+	builder->get_widget("smod", pSmod);
+	pSmod->get_adjustment()->set_lower(0);
+	pSmod->get_adjustment()->set_upper(100);
+	pSmod->get_adjustment()->set_value(0.0);
+	pSmod->get_adjustment()->set_page_increment(1);
+	pSmod->get_adjustment()->set_step_increment(0.1);
+	pSmod->update();
 }
 
 bool Refactor::populate_jack_io_menu()
@@ -63,12 +99,15 @@ bool Refactor::populate_jack_io_menu()
 	output_none->signal_toggled().connect(sigc::bind <
 					      Gtk::RadioMenuItem *
 					      >(sigc::mem_fun(*this,
-							      &Refactor::on_output_assigned),
+							      &Refactor::
+							      on_output_assigned),
 						output_none));
 	input_none->signal_toggled().connect(sigc::bind <
 					     Gtk::RadioMenuItem *
-					     >(sigc::mem_fun(*this,
-							     &Refactor::on_input_assigned),
+					     >(sigc::
+					       mem_fun(*this,
+						       &Refactor::
+						       on_input_assigned),
 					       input_none));
 
 	pos = input_names.find(delimiter);
@@ -82,13 +121,14 @@ bool Refactor::populate_jack_io_menu()
 		input_names.erase(0, pos + delimiter.length());
 
 		Gtk::RadioMenuItem * next =
-		    Gtk::
-		    manage(new Gtk::RadioMenuItem(output_group, token, true));
+		    Gtk::manage(new Gtk::
+				RadioMenuItem(output_group, token, true));
 		next->signal_toggled().connect(sigc::bind <
 					       Gtk::RadioMenuItem *
-					       >(sigc::mem_fun
-						 (*this,
-						  &Refactor::on_output_assigned),
+					       >(sigc::
+						 mem_fun(*this,
+							 &Refactor::
+							 on_output_assigned),
 						 next));
 		jack_output->add(*next);
 		next->show();
@@ -105,13 +145,14 @@ bool Refactor::populate_jack_io_menu()
 		output_names.erase(0, pos + delimiter.length());
 
 		Gtk::RadioMenuItem * next =
-		    Gtk::
-		    manage(new Gtk::RadioMenuItem(input_group, token, true));
+		    Gtk::manage(new Gtk::
+				RadioMenuItem(input_group, token, true));
 		next->signal_toggled().connect(sigc::bind <
 					       Gtk::RadioMenuItem *
-					       >(sigc::mem_fun
-						 (*this,
-						  &Refactor::on_input_assigned),
+					       >(sigc::
+						 mem_fun(*this,
+							 &Refactor::
+							 on_input_assigned),
 						 next));
 		jack_input->add(*next);
 		next->show();
@@ -136,25 +177,20 @@ bool Refactor::attach_signal_handlers()
 {
 	builder->get_widget("evbPullCurrentPatch", pPullCurrentPatch);
 	if (pPullCurrentPatch) {
-		pPullCurrentPatch->
-		    signal_button_press_event().connect(sigc::
-							mem_fun(*this,
-								&Refactor::
-								on_pull_current));
+		pPullCurrentPatch->signal_button_press_event().
+		    connect(sigc::mem_fun(*this, &Refactor::on_pull_current));
 	}
 
 	builder->get_widget("mnuQuit", pQuit);
 	if (pQuit) {
 		pQuit->signal_button_press_event().connect(sigc::mem_fun(*this,
-									 &Refactor::
-									 on_quit_clicked));
+									 &Refactor::on_quit_clicked));
 	}
 
 	builder->get_widget("mnuOpen", pOpen);
 	if (pOpen) {
 		pOpen->signal_button_press_event().connect(sigc::mem_fun(*this,
-									 &Refactor::
-									 on_open_clicked));
+									 &Refactor::on_open_clicked));
 	}
 
 	return 0;
@@ -219,11 +255,28 @@ bool Refactor::on_timeout()
 
 	if (s != "Bad message") {
 		pOutputBuffer->insert_at_cursor(s);
+		// update screen controls here
+		update_shown();
 		return false;
 	} else {
 		return true;
 	}
 
+}
+
+void Refactor::update_shown()
+{
+	pDepth->get_adjustment()->set_value(parser.current.depth);
+	pDepth->update();
+
+	pDmod->get_adjustment()->set_value(parser.current.dmod);
+	pDmod->update();
+
+	pSpeed->get_adjustment()->set_value(parser.current.speed);
+	pSpeed->update();
+
+	pSmod->get_adjustment()->set_value(parser.current.smod);
+	pSmod->update();
 }
 
 bool Refactor::on_open_clicked(GdkEventButton * ev)

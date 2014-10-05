@@ -10,6 +10,7 @@
 #include <gtkmm/eventbox.h>
 #include <gtkmm/imagemenuitem.h>
 #include <gtkmm/radiomenuitem.h>
+#include <gtkmm/spinbutton.h>
 #include <gtkmm/textview.h>
 #include <gtkmm/textbuffer.h>
 
@@ -30,6 +31,15 @@ protected:
 	//Timers
 	int m_timer_number;
 	bool on_timeout();
+
+	//Screen updates
+	Gtk::SpinButton * pDepth;
+	Gtk::SpinButton * pDmod;
+	Gtk::SpinButton * pSpeed;
+	Gtk::SpinButton * pSmod;
+
+	void get_screen_fields();
+	void update_shown();
 
 	//Signal handlers event buttons
 	bool on_pull_current(GdkEventButton * ev);

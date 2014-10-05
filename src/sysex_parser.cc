@@ -35,9 +35,9 @@ HeaderType Parser::parse_header()
 		} else if ((buffer[1] != 28) || (buffer[2] != 112)) {	//'p')
 			//|| (buffer[3] != 1)) {
 			result = header_type_bad_device;
-			std::stringstream strStream(std::stringstream::
-						    in | std::stringstream::
-						    out);
+			std::stringstream strStream(std::
+						    stringstream::in | std::
+						    stringstream::out);
 			short asc;
 
 			asc = buffer[1];
@@ -73,8 +73,8 @@ HeaderType Parser::parse_header()
 
 std::string Parser::parse_seg1(std::string seg1)
 {
-	std::stringstream strStream(std::stringstream::in | std::
-				    stringstream::out);
+	std::stringstream strStream(std::stringstream::in | std::stringstream::
+				    out);
 
 	std::cout << "next segment = " << seg1 << '\n';
 
@@ -87,8 +87,8 @@ std::string Parser::parse_seg2(std::string seg2)
 {
 	string s;
 	string param_value;
-	std::stringstream strStream(std::stringstream::in | std::
-				    stringstream::out);
+	std::stringstream strStream(std::stringstream::in | std::stringstream::
+				    out);
 
 	std::cout << "next segment = " << seg2 << '\n';
 
@@ -135,8 +135,8 @@ std::string Parser::parse_seg2(std::string seg2)
 
 std::string Parser::parse_seg3(std::string seg3)
 {
-	std::stringstream strStream(std::stringstream::in | std::
-				    stringstream::out);
+	std::stringstream strStream(std::stringstream::in | std::stringstream::
+				    out);
 
 	std::cout << "next segment = " << seg3 << '\n';
 
@@ -147,8 +147,8 @@ std::string Parser::parse_seg3(std::string seg3)
 
 std::string Parser::parse_seg4(std::string seg4)
 {
-	std::stringstream strStream(std::stringstream::in | std::
-				    stringstream::out);
+	std::stringstream strStream(std::stringstream::in | std::stringstream::
+				    out);
 
 	std::cout << "next segment = " << seg4 << '\n';
 
@@ -161,16 +161,18 @@ std::string Parser::parse_seg5(std::string seg3)
 {
 	string param_value;
 
-	std::stringstream strStream(std::stringstream::in | std::
-				    stringstream::out);
+	std::stringstream strStream(std::stringstream::in | std::stringstream::
+				    out);
 
 	std::cout << "next segment = " << seg3 << '\n';
 
 	param_value = segment_get_next_field();
 	strStream << "Seg5: [DMOD:'" << param_value << "'] ";
+	current.dmod =::atof(param_value.c_str());
 
 	param_value = segment_get_next_field();
 	strStream << "[SMOD:'" << param_value << "'] ";
+	current.smod =::atof(param_value.c_str());
 
 	param_value = segment_get_next_field();
 	strStream << "[ModRate:'" << param_value << "'] ";
@@ -226,9 +228,11 @@ std::string Parser::parse_seg5(std::string seg3)
 
 	param_value = segment_get_next_field();
 	strStream << "[SPEED:'" << param_value << "'] ";
+	current.speed =::atof(param_value.c_str());
 
 	param_value = segment_get_next_field();
 	strStream << "[DEPTH:'" << param_value << "'] ";
+	current.depth =::atof(param_value.c_str());
 
 	param_value = segment_get_next_field();
 	strStream << "[TYPE:'";
@@ -262,8 +266,8 @@ std::string Parser::parse_seg5(std::string seg3)
 
 std::string Parser::parse_seg6(std::string seg6)
 {
-	std::stringstream strStream(std::stringstream::in | std::
-				    stringstream::out);
+	std::stringstream strStream(std::stringstream::in | std::stringstream::
+				    out);
 
 	std::cout << "next segment = " << seg6 << '\n';
 
@@ -274,8 +278,8 @@ std::string Parser::parse_seg6(std::string seg6)
 
 std::string Parser::parse_seg7(std::string seg7)
 {
-	std::stringstream strStream(std::stringstream::in | std::
-				    stringstream::out);
+	std::stringstream strStream(std::stringstream::in | std::stringstream::
+				    out);
 
 	std::cout << "next segment = " << seg7 << '\n';
 
@@ -291,8 +295,8 @@ string Parser::parse_current()
 
 	//std::array<std::string, 10> segments;
 
-	std::stringstream strStream(std::stringstream::in | std::
-				    stringstream::out);
+	std::stringstream strStream(std::stringstream::in | std::stringstream::
+				    out);
 
 	int i;
 	short asc;
@@ -360,8 +364,8 @@ std::string Parser::segment_get_next_field()
 std::string Parser::segment_get_next()
 {
 	string result = "";
-	std::stringstream strStream(std::stringstream::in | std::
-				    stringstream::out);
+	std::stringstream strStream(std::stringstream::in | std::stringstream::
+				    out);
 	int i;
 	int j;
 	short asc;
@@ -400,8 +404,8 @@ string Parser::parse_message(char *in_buffer, int in_length)
 	buffer = in_buffer;
 	length = in_length;
 
-	std::stringstream strStream(std::stringstream::in | std::
-				    stringstream::out);
+	std::stringstream strStream(std::stringstream::in | std::stringstream::
+				    out);
 
 	HeaderType message_type;
 
