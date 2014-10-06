@@ -7,6 +7,7 @@
 #include <gtkmm/window.h>
 #include <gtkmm/statusbar.h>
 #include <gtkmm/builder.h>
+#include <gtkmm/comboboxtext.h>
 #include <gtkmm/eventbox.h>
 #include <gtkmm/imagemenuitem.h>
 #include <gtkmm/radiomenuitem.h>
@@ -37,6 +38,17 @@ protected:
 	Gtk::SpinButton * pDmod;
 	Gtk::SpinButton * pSpeed;
 	Gtk::SpinButton * pSmod;
+	Gtk::SpinButton * pModRate;
+	Gtk::SpinButton * pIntensity;
+	Gtk::SpinButton * pType;
+	Gtk::SpinButton * pShape;
+	Gtk::SpinButton * pModSource;
+	Gtk::SpinButton * pXnob;
+
+	Gtk::ComboBoxText * pXnobDrob;
+
+	Gtk::ComboBoxText * pGroup;
+	Gtk::ComboBoxText * pModSourceDrop;
 
 	void get_screen_fields();
 	void update_shown();

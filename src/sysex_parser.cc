@@ -78,7 +78,16 @@ std::string Parser::parse_seg1(std::string seg1)
 
 	std::cout << "next segment = " << seg1 << '\n';
 
+	string param_value;
+
 	strStream << "Seg1: " << seg1 << '\n';
+
+	// unknown first field
+	param_value = segment_get_next_field();
+
+	// second field is effect group
+	param_value = segment_get_next_field();
+	current.group =::atoi(param_value.c_str());
 
 	return strStream.str();
 }
@@ -176,8 +185,11 @@ std::string Parser::parse_seg5(std::string seg3)
 
 	param_value = segment_get_next_field();
 	strStream << "[ModRate:'" << param_value << "'] ";
+	current.mod_rate =::atof(param_value.c_str());
 
 	param_value = segment_get_next_field();
+	current.mod_source =::atof(param_value.c_str());
+
 	strStream << "[ModSource:'";
 
 	int x = atoi(param_value.c_str());
@@ -222,9 +234,11 @@ std::string Parser::parse_seg5(std::string seg3)
 
 	param_value = segment_get_next_field();
 	strStream << "[xnob FLT:'" << param_value << "'] ";
+	current.xnob =::atof(param_value.c_str());
 
 	param_value = segment_get_next_field();
-	strStream << "[unknown:'" << param_value << "'] ";
+	strStream << "[SHAPE:'" << param_value << "'] ";
+	current.shape =::atof(param_value.c_str());
 
 	param_value = segment_get_next_field();
 	strStream << "[SPEED:'" << param_value << "'] ";
@@ -238,6 +252,7 @@ std::string Parser::parse_seg5(std::string seg3)
 	strStream << "[TYPE:'";
 
 	x = atoi(param_value.c_str());
+	current.type =::atof(param_value.c_str());
 
 	switch (x) {
 	case 0:
@@ -258,6 +273,7 @@ std::string Parser::parse_seg5(std::string seg3)
 
 	param_value = segment_get_next_field();
 	strStream << "[INTENSITY:'" << param_value << "'] ";
+	current.intensity =::atof(param_value.c_str());
 
 	strStream << '\n';
 

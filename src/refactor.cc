@@ -65,6 +65,91 @@ void Refactor::get_screen_fields()
 	pSmod->get_adjustment()->set_page_increment(1);
 	pSmod->get_adjustment()->set_step_increment(0.1);
 	pSmod->update();
+
+	builder->get_widget("modrate", pModRate);
+	pModRate->get_adjustment()->set_lower(0);
+	pModRate->get_adjustment()->set_upper(100);
+	pModRate->get_adjustment()->set_value(0.0);
+	pModRate->get_adjustment()->set_page_increment(1);
+	pModRate->get_adjustment()->set_step_increment(0.1);
+	pModRate->update();
+
+	builder->get_widget("intensity", pIntensity);
+	pIntensity->get_adjustment()->set_lower(0);
+	pIntensity->get_adjustment()->set_upper(100);
+	pIntensity->get_adjustment()->set_value(0.0);
+	pIntensity->get_adjustment()->set_page_increment(1);
+	pIntensity->get_adjustment()->set_step_increment(0.1);
+	pIntensity->update();
+
+	builder->get_widget("type", pType);
+	pType->get_adjustment()->set_lower(0);
+	pType->get_adjustment()->set_upper(100);
+	pType->get_adjustment()->set_value(0.0);
+	pType->get_adjustment()->set_page_increment(1);
+	pType->get_adjustment()->set_step_increment(0.1);
+	pType->update();
+
+	builder->get_widget("shape", pShape);
+	pShape->get_adjustment()->set_lower(0);
+	pShape->get_adjustment()->set_upper(200);
+	pShape->get_adjustment()->set_value(0.0);
+	pShape->get_adjustment()->set_page_increment(1);
+	pShape->get_adjustment()->set_step_increment(0.1);
+	pShape->update();
+
+	builder->get_widget("xnob", pXnob);
+	pXnob->get_adjustment()->set_lower(0);
+	pXnob->get_adjustment()->set_upper(200);
+	pXnob->get_adjustment()->set_value(0.0);
+	pXnob->get_adjustment()->set_page_increment(1);
+	pXnob->get_adjustment()->set_step_increment(0.1);
+	pXnob->update();
+
+	builder->get_widget("mod_source", pModSource);
+	pModSource->get_adjustment()->set_lower(0);
+	pModSource->get_adjustment()->set_upper(100);
+	pModSource->get_adjustment()->set_value(0.0);
+	pModSource->get_adjustment()->set_page_increment(1);
+	pModSource->get_adjustment()->set_step_increment(0.1);
+	pModSource->update();
+
+	builder->get_widget("group", pGroup);
+}
+
+void Refactor::update_shown()
+{
+	pDepth->get_adjustment()->set_value(parser.current.depth);
+	pDepth->update();
+
+	pDmod->get_adjustment()->set_value(parser.current.dmod);
+	pDmod->update();
+
+	pSpeed->get_adjustment()->set_value(parser.current.speed);
+	pSpeed->update();
+
+	pSmod->get_adjustment()->set_value(parser.current.smod);
+	pSmod->update();
+
+	pModRate->get_adjustment()->set_value(parser.current.mod_rate);
+	pModRate->update();
+
+	pIntensity->get_adjustment()->set_value(parser.current.intensity);
+	pIntensity->update();
+
+	pType->get_adjustment()->set_value(parser.current.type);
+	pType->update();
+
+	pShape->get_adjustment()->set_value(parser.current.shape);
+	pShape->update();
+
+	pXnob->get_adjustment()->set_value(parser.current.xnob);
+	pXnob->update();
+
+	pModSource->get_adjustment()->set_value(parser.current.mod_source);
+	pModSource->update();
+
+	pGroup->set_active(parser.current.group);
 }
 
 bool Refactor::populate_jack_io_menu()
@@ -262,21 +347,6 @@ bool Refactor::on_timeout()
 		return true;
 	}
 
-}
-
-void Refactor::update_shown()
-{
-	pDepth->get_adjustment()->set_value(parser.current.depth);
-	pDepth->update();
-
-	pDmod->get_adjustment()->set_value(parser.current.dmod);
-	pDmod->update();
-
-	pSpeed->get_adjustment()->set_value(parser.current.speed);
-	pSpeed->update();
-
-	pSmod->get_adjustment()->set_value(parser.current.smod);
-	pSmod->update();
 }
 
 bool Refactor::on_open_clicked(GdkEventButton * ev)
