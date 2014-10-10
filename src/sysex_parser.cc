@@ -88,8 +88,18 @@ std::string Parser::parse_seg1(std::string seg1)
 	// second field is effect group
 	param_value = segment_get_next_field();
 	current.group =::atoi(param_value.c_str());
+	current.abs_group = current.group;
 
 	return strStream.str();
+}
+
+int Parser::convert_abs(std::string value)
+{
+	int x;
+
+	x = strtol(value.substr(0,3).c_str(), NULL, 16);
+
+	return x;
 }
 
 std::string Parser::parse_seg2(std::string seg2)
@@ -106,33 +116,43 @@ std::string Parser::parse_seg2(std::string seg2)
 
 	param_value = segment_get_next_field();
 	strStream << "[DMOD:'" << param_value << "] ";
+	current.abs_dmod = convert_abs(param_value);
 
 	param_value = segment_get_next_field();
 	strStream << "[SMOD:'" << param_value << "] ";
+	current.abs_smod = convert_abs(param_value);
 
 	param_value = segment_get_next_field();
 	strStream << "[ModRate:'" << param_value << "] ";
+	current.abs_mod_rate = convert_abs(param_value);
 
 	param_value = segment_get_next_field();
 	strStream << "[ModSource:'" << param_value << "] ";
+	current.abs_mod_source = convert_abs(param_value);
 
 	param_value = segment_get_next_field();
 	strStream << "[xnob:'" << param_value << "] ";
+	current.abs_xnob = convert_abs(param_value);
 
 	param_value = segment_get_next_field();
-	strStream << "[unknown:'" << param_value << "] ";
+	strStream << "[Shape]'" << param_value << "] ";
+	current.abs_shape = convert_abs(param_value);
 
 	param_value = segment_get_next_field();
 	strStream << "[SPEED:'" << param_value << "] ";
+	current.abs_speed = convert_abs(param_value);
 
 	param_value = segment_get_next_field();
 	strStream << "[DEPTH:'" << param_value << "] ";
+	current.abs_depth = convert_abs(param_value);
 
 	param_value = segment_get_next_field();
 	strStream << "[TYPE:'" << param_value << "] ";
+	current.abs_type = convert_abs(param_value);
 
 	param_value = segment_get_next_field();
-	strStream << "[ITENSITY:'" << param_value << "] ";
+	strStream << "[INTENSITY:'" << param_value << "] ";
+	current.abs_intensity = convert_abs(param_value);
 
 	param_value = segment_get_next_field();
 	strStream << "[Unknown2:'" << param_value << "]";

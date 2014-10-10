@@ -42,6 +42,14 @@ void Refactor::get_screen_fields()
 	pDepth->get_adjustment()->set_step_increment(0.1);
 	pDepth->update();
 
+	builder->get_widget("abs_depth", pAbs_Depth);
+	pAbs_Depth->get_adjustment()->set_lower(0);
+	pAbs_Depth->get_adjustment()->set_upper(32000);
+	pAbs_Depth->get_adjustment()->set_value(0.0);
+	pAbs_Depth->get_adjustment()->set_page_increment(100);
+	pAbs_Depth->get_adjustment()->set_step_increment(1);
+	pAbs_Depth->update();
+
 	builder->get_widget("dmod", pDmod);
 	pDmod->get_adjustment()->set_lower(0);
 	pDmod->get_adjustment()->set_upper(100);
@@ -49,6 +57,14 @@ void Refactor::get_screen_fields()
 	pDmod->get_adjustment()->set_page_increment(1);
 	pDmod->get_adjustment()->set_step_increment(0.1);
 	pDmod->update();
+
+	builder->get_widget("abs_dmod", pAbs_Dmod);
+	pAbs_Dmod->get_adjustment()->set_lower(0);
+	pAbs_Dmod->get_adjustment()->set_upper(32000);
+	pAbs_Dmod->get_adjustment()->set_value(0.0);
+	pAbs_Dmod->get_adjustment()->set_page_increment(100);
+	pAbs_Dmod->get_adjustment()->set_step_increment(1);
+	pAbs_Dmod->update();
 
 	builder->get_widget("speed", pSpeed);
 	pSpeed->get_adjustment()->set_lower(0);
@@ -58,6 +74,14 @@ void Refactor::get_screen_fields()
 	pSpeed->get_adjustment()->set_step_increment(0.1);
 	pSpeed->update();
 
+	builder->get_widget("abs_speed", pAbs_Speed);
+	pAbs_Speed->get_adjustment()->set_lower(0);
+	pAbs_Speed->get_adjustment()->set_upper(32000);
+	pAbs_Speed->get_adjustment()->set_value(0.0);
+	pAbs_Speed->get_adjustment()->set_page_increment(100);
+	pAbs_Speed->get_adjustment()->set_step_increment(1);
+	pAbs_Speed->update();
+
 	builder->get_widget("smod", pSmod);
 	pSmod->get_adjustment()->set_lower(0);
 	pSmod->get_adjustment()->set_upper(100);
@@ -65,6 +89,14 @@ void Refactor::get_screen_fields()
 	pSmod->get_adjustment()->set_page_increment(1);
 	pSmod->get_adjustment()->set_step_increment(0.1);
 	pSmod->update();
+
+	builder->get_widget("abs_smod", pAbs_Smod);
+	pAbs_Smod->get_adjustment()->set_lower(0);
+	pAbs_Smod->get_adjustment()->set_upper(32000);
+	pAbs_Smod->get_adjustment()->set_value(0.0);
+	pAbs_Smod->get_adjustment()->set_page_increment(100);
+	pAbs_Smod->get_adjustment()->set_step_increment(1);
+	pAbs_Smod->update();
 
 	builder->get_widget("modrate", pModRate);
 	pModRate->get_adjustment()->set_lower(0);
@@ -74,6 +106,14 @@ void Refactor::get_screen_fields()
 	pModRate->get_adjustment()->set_step_increment(0.1);
 	pModRate->update();
 
+	builder->get_widget("abs_modrate", pAbs_ModRate);
+	pAbs_ModRate->get_adjustment()->set_lower(0);
+	pAbs_ModRate->get_adjustment()->set_upper(32000);
+	pAbs_ModRate->get_adjustment()->set_value(0.0);
+	pAbs_ModRate->get_adjustment()->set_page_increment(100);
+	pAbs_ModRate->get_adjustment()->set_step_increment(1);
+	pAbs_ModRate->update();
+
 	builder->get_widget("intensity", pIntensity);
 	pIntensity->get_adjustment()->set_lower(0);
 	pIntensity->get_adjustment()->set_upper(100);
@@ -81,6 +121,14 @@ void Refactor::get_screen_fields()
 	pIntensity->get_adjustment()->set_page_increment(1);
 	pIntensity->get_adjustment()->set_step_increment(0.1);
 	pIntensity->update();
+
+	builder->get_widget("abs_intensity", pAbs_Intensity);
+	pAbs_Intensity->get_adjustment()->set_lower(0);
+	pAbs_Intensity->get_adjustment()->set_upper(32000);
+	pAbs_Intensity->get_adjustment()->set_value(0.0);
+	pAbs_Intensity->get_adjustment()->set_page_increment(100);
+	pAbs_Intensity->get_adjustment()->set_step_increment(1);
+	pAbs_Intensity->update();
 
 	builder->get_widget("type", pType);
 	pType->get_adjustment()->set_lower(0);
@@ -90,6 +138,14 @@ void Refactor::get_screen_fields()
 	pType->get_adjustment()->set_step_increment(0.1);
 	pType->update();
 
+	builder->get_widget("abs_type", pAbs_Type);
+	pAbs_Type->get_adjustment()->set_lower(0);
+	pAbs_Type->get_adjustment()->set_upper(32000);
+	pAbs_Type->get_adjustment()->set_value(0.0);
+	pAbs_Type->get_adjustment()->set_page_increment(100);
+	pAbs_Type->get_adjustment()->set_step_increment(1);
+	pAbs_Type->update();
+
 	builder->get_widget("shape", pShape);
 	pShape->get_adjustment()->set_lower(0);
 	pShape->get_adjustment()->set_upper(200);
@@ -97,6 +153,14 @@ void Refactor::get_screen_fields()
 	pShape->get_adjustment()->set_page_increment(1);
 	pShape->get_adjustment()->set_step_increment(0.1);
 	pShape->update();
+
+	builder->get_widget("abs_shape", pAbs_Shape);
+	pAbs_Shape->get_adjustment()->set_lower(0);
+	pAbs_Shape->get_adjustment()->set_upper(32000);
+	pAbs_Shape->get_adjustment()->set_value(0.0);
+	pAbs_Shape->get_adjustment()->set_page_increment(100);
+	pAbs_Shape->get_adjustment()->set_step_increment(1);
+	pAbs_Shape->update();
 
 	builder->get_widget("xnob", pXnob);
 	pXnob->get_adjustment()->set_lower(0);
@@ -106,6 +170,14 @@ void Refactor::get_screen_fields()
 	pXnob->get_adjustment()->set_step_increment(0.1);
 	pXnob->update();
 
+	builder->get_widget("abs_xnob", pAbs_Xnob);
+	pAbs_Xnob->get_adjustment()->set_lower(0);
+	pAbs_Xnob->get_adjustment()->set_upper(32000);
+	pAbs_Xnob->get_adjustment()->set_value(0.0);
+	pAbs_Xnob->get_adjustment()->set_page_increment(100);
+	pAbs_Xnob->get_adjustment()->set_step_increment(1);
+	pAbs_Xnob->update();
+
 	builder->get_widget("mod_source", pModSource);
 	pModSource->get_adjustment()->set_lower(0);
 	pModSource->get_adjustment()->set_upper(100);
@@ -113,6 +185,22 @@ void Refactor::get_screen_fields()
 	pModSource->get_adjustment()->set_page_increment(1);
 	pModSource->get_adjustment()->set_step_increment(0.1);
 	pModSource->update();
+
+	builder->get_widget("abs_mod_source", pAbs_ModSource);
+	pAbs_ModSource->get_adjustment()->set_lower(0);
+	pAbs_ModSource->get_adjustment()->set_upper(32000);
+	pAbs_ModSource->get_adjustment()->set_value(0.0);
+	pAbs_ModSource->get_adjustment()->set_page_increment(100);
+	pAbs_ModSource->get_adjustment()->set_step_increment(1);
+	pAbs_ModSource->update();
+
+	builder->get_widget("abs_group", pAbs_Group);
+	pAbs_Group->get_adjustment()->set_lower(0);
+	pAbs_Group->get_adjustment()->set_upper(32000);
+	pAbs_Group->get_adjustment()->set_value(0.0);
+	pAbs_Group->get_adjustment()->set_page_increment(100);
+	pAbs_Group->get_adjustment()->set_step_increment(1);
+	pAbs_Group->update();
 
 	builder->get_widget("group", pGroup);
 }
@@ -122,33 +210,64 @@ void Refactor::update_shown()
 	pDepth->get_adjustment()->set_value(parser.current.depth);
 	pDepth->update();
 
+	pAbs_Depth->get_adjustment()->set_value(parser.current.abs_depth);
+	pAbs_Depth->update();
+
 	pDmod->get_adjustment()->set_value(parser.current.dmod);
 	pDmod->update();
+
+	pAbs_Dmod->get_adjustment()->set_value(parser.current.abs_dmod);
+	pAbs_Dmod->update();
 
 	pSpeed->get_adjustment()->set_value(parser.current.speed);
 	pSpeed->update();
 
+	pAbs_Speed->get_adjustment()->set_value(parser.current.abs_speed);
+	pAbs_Speed->update();
+
 	pSmod->get_adjustment()->set_value(parser.current.smod);
 	pSmod->update();
+
+	pAbs_Smod->get_adjustment()->set_value(parser.current.abs_smod);
+	pAbs_Smod->update();
 
 	pModRate->get_adjustment()->set_value(parser.current.mod_rate);
 	pModRate->update();
 
+	pAbs_ModRate->get_adjustment()->set_value(parser.current.abs_mod_rate);
+	pAbs_ModRate->update();
+
 	pIntensity->get_adjustment()->set_value(parser.current.intensity);
 	pIntensity->update();
+
+	pAbs_Intensity->get_adjustment()->set_value(parser.current.abs_intensity);
+	pAbs_Intensity->update();
 
 	pType->get_adjustment()->set_value(parser.current.type);
 	pType->update();
 
+	pAbs_Type->get_adjustment()->set_value(parser.current.abs_type);
+	pAbs_Type->update();
+
 	pShape->get_adjustment()->set_value(parser.current.shape);
 	pShape->update();
+
+	pAbs_Shape->get_adjustment()->set_value(parser.current.abs_shape);
+	pAbs_Shape->update();
 
 	pXnob->get_adjustment()->set_value(parser.current.xnob);
 	pXnob->update();
 
+	pAbs_Xnob->get_adjustment()->set_value(parser.current.abs_xnob);
+	pAbs_Xnob->update();
+
 	pModSource->get_adjustment()->set_value(parser.current.mod_source);
 	pModSource->update();
 
+	pAbs_ModSource->get_adjustment()->set_value(parser.current.abs_mod_source);
+	pAbs_ModSource->update();
+
+	pAbs_Group->get_adjustment()->set_value(parser.current.abs_group);
 	pGroup->set_active(parser.current.group);
 }
 

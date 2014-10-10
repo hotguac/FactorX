@@ -35,15 +35,26 @@ protected:
 
 	//Screen updates
 	Gtk::SpinButton * pDepth;
+	Gtk::SpinButton * pAbs_Depth;
 	Gtk::SpinButton * pDmod;
+	Gtk::SpinButton * pAbs_Dmod;
 	Gtk::SpinButton * pSpeed;
+	Gtk::SpinButton * pAbs_Speed;
 	Gtk::SpinButton * pSmod;
+	Gtk::SpinButton * pAbs_Smod;
 	Gtk::SpinButton * pModRate;
+	Gtk::SpinButton * pAbs_ModRate;
 	Gtk::SpinButton * pIntensity;
+	Gtk::SpinButton * pAbs_Intensity;
 	Gtk::SpinButton * pType;
+	Gtk::SpinButton * pAbs_Type;
 	Gtk::SpinButton * pShape;
+	Gtk::SpinButton * pAbs_Shape;
 	Gtk::SpinButton * pModSource;
+	Gtk::SpinButton * pAbs_ModSource;
 	Gtk::SpinButton * pXnob;
+	Gtk::SpinButton * pAbs_Xnob;
+	Gtk::SpinButton * pAbs_Group;
 
 	Gtk::ComboBoxText * pXnobDrob;
 

@@ -26,6 +26,19 @@ public:
 		double smod;
 		double mod_rate;
 		double mod_source;
+
+		int abs_group;
+		int abs_type;
+		int abs_intensity;
+		int abs_depth;
+		int abs_speed;
+		int abs_shape;
+		int abs_xnob;
+
+		int abs_dmod;
+		int abs_smod;
+		int abs_mod_rate;
+		int abs_mod_source;
 	};
 
 	Patch current;
@@ -52,6 +65,8 @@ protected:
 	char *buffer;
 	int length;
 	int position;
+
+	int convert_abs(std::string value);
 
 	std::string parse_seg1(std::string seg1);
 	std::string parse_seg2(std::string seg2);
