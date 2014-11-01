@@ -13,8 +13,8 @@ public:
 	int pull_current(char *buffer, int bsize);
 	int send_sysex(char *buffer, int bsize);
 
-	 std::string get_input_ports();
-	 std::string get_output_ports();
+	std::string get_input_ports();
+	std::string get_output_ports();
 
 	bool set_input_port(std::string);
 	bool set_output_port(std::string);

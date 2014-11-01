@@ -1,16 +1,9 @@
 #include "sysex_parser.hh"
 
-#include <glibmm/ustring.h>
-
-//#include <array>
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
 #include <string>
-
-using std::cout;
-using std::string;
-using Glib::ustring;
 
 Parser::Parser()
 {
@@ -24,7 +17,7 @@ Parser::~Parser()
 
 HeaderType Parser::parse_header()
 {
-	string s;
+	std::string s;
 	HeaderType result;
 
 	result = header_type_bad_message;
@@ -42,11 +35,11 @@ HeaderType Parser::parse_header()
 
 			asc = buffer[1];
 			strStream << "1<" << asc << ">";
-			cout << strStream.str() << '\n';
+			std::cout << strStream.str() << '\n';
 
 			asc = buffer[2];
 			strStream << "2<" << asc << ">";
-			cout << strStream.str() << '\n';
+			std::cout << strStream.str() << '\n';
 
 		} else {
 			switch (buffer[4]) {
@@ -78,7 +71,7 @@ std::string Parser::parse_seg1(std::string seg1)
 
 	std::cout << "next segment = " << seg1 << '\n';
 
-	string param_value;
+	std::string param_value;
 
 	strStream << "Seg1: " << seg1 << '\n';
 
@@ -104,8 +97,8 @@ int Parser::convert_abs(std::string value)
 
 std::string Parser::parse_seg2(std::string seg2)
 {
-	string s;
-	string param_value;
+	std::string s;
+	std::string param_value;
 	std::stringstream strStream(std::stringstream::in | std::stringstream::
 				    out);
 
@@ -188,7 +181,7 @@ std::string Parser::parse_seg4(std::string seg4)
 
 std::string Parser::parse_seg5(std::string seg3)
 {
-	string param_value;
+	std::string param_value;
 
 	std::stringstream strStream(std::stringstream::in | std::stringstream::
 				    out);
@@ -324,10 +317,10 @@ std::string Parser::parse_seg7(std::string seg7)
 	return strStream.str();
 }
 
-string Parser::parse_current()
+std::string Parser::parse_current()
 {
-	string s;
-	string param_value;
+	std::string s;
+	std::string param_value;
 
 	//std::array<std::string, 10> segments;
 
@@ -378,9 +371,9 @@ Seg7: 'Big Clone'
 
 std::string Parser::segment_get_next_field()
 {
-	string temp;
+	std::string temp;
 	std::size_t position;
-	string result;
+	std::string result;
 
 	temp = current_segment;
 
@@ -388,7 +381,7 @@ std::string Parser::segment_get_next_field()
 
 	result = temp.substr(0, position);
 
-	current_segment = temp.substr(position + 1, string::npos);
+	current_segment = temp.substr(position + 1, std::string::npos);
 
 	if ((position == 0) && (current_segment.length() > 0)) {
 		result = segment_get_next_field();
@@ -399,7 +392,7 @@ std::string Parser::segment_get_next_field()
 
 std::string Parser::segment_get_next()
 {
-	string result = "";
+	std::string result = "";
 	std::stringstream strStream(std::stringstream::in | std::stringstream::
 				    out);
 	int i;
@@ -435,7 +428,7 @@ std::string Parser::segment_get_next()
 	return result;
 }
 
-string Parser::parse_message(char *in_buffer, int in_length)
+std::string Parser::parse_message(char *in_buffer, int in_length)
 {
 	buffer = in_buffer;
 	length = in_length;

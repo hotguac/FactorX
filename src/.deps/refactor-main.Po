@@ -984,8 +984,7 @@ refactor-main.o: main.cc /usr/include/stdc-predef.h refactor.hh \
  /usr/include/gtkmm-3.0/gtkmm/textchildanchor.h \
  /usr/include/gtkmm-3.0/gtkmm/textmark.h \
  /usr/include/gtkmm-3.0/gtkmm/textiter.h \
- /usr/include/gtkmm-3.0/gtkmm/textattributes.h midi.hh sysex_parser.hh \
- /usr/include/c++/4.8/iostream
+ /usr/include/gtkmm-3.0/gtkmm/textattributes.h midi.hh sysex_parser.hh
 
 /usr/include/stdc-predef.h:
 
@@ -3144,5 +3143,3 @@ refactor.hh:
 midi.hh:
 
 sysex_parser.hh:
-
-/usr/include/c++/4.8/iostream:

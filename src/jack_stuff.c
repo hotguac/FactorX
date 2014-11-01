@@ -1,36 +1,9 @@
 /*
-  Copyright (C) 2001 Paul Davis
-  Copyright (C) 2003 Jack O'Quin
+  Copyright (C) 2014 Joe Kokosa
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+*/
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
-  * 2002/08/23 - modify for libsndfile 1.0.0 <andy@alsaplayer.org>
-  * 2003/05/26 - use ringbuffers - joq
-
-  */
-
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <errno.h>
-#include <unistd.h>
-#include <pthread.h>
-#include <time.h>
-#include <sys/time.h>
-
-#include <getopt.h>
 
 #include "jack_stuff.h"
 
@@ -55,23 +28,9 @@ const char **port_names_output;
 
 pthread_mutex_t msg_thread_lock = PTHREAD_MUTEX_INITIALIZER;
 
-pthread_cond_t recv_ready = PTHREAD_COND_INITIALIZER;
-pthread_cond_t send_ready = PTHREAD_COND_INITIALIZER;
-
-long overruns = 0;
-
-int firstTime = 1;
-
-unsigned long long time_us()
-{
-	struct timeval time;
-	gettimeofday(&time, NULL);
-	return time.tv_sec * 1000 * 1000 + time.tv_usec;
-}
-
 int process(jack_nframes_t nframes, void *arg)
 {
-	int chn;
+	//int chn;
 	size_t i;
 	jack_thread_info_t *info = (jack_thread_info_t *) arg;
 
@@ -356,6 +315,3 @@ int get_current_patch(char *buffer, int bsize)
 
 	return level;
 }
-
-/// copied from mididuino.googlecode.com/midi-jack.h
-// end of copied code

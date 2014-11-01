@@ -2,12 +2,6 @@
 #include "sysex_parser.hh"
 
 #include <iostream>
-#include <glibmm/ustring.h>
-#include <sstream>
-#include <string>
-#include <gtkmm/radiomenuitem.h>
-
-using std::cout;
 
 Refactor::Refactor():
 m_timer_number(0)
