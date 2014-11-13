@@ -361,24 +361,33 @@ bool Refactor::populate_jack_io_menu()
 
 void Refactor::on_output_assigned(Gtk::RadioMenuItem * choice)
 {
-	std::cerr << "on_output_assigned()" << std::endl;
+	//std::cerr << "on_output_assigned()" << std::endl;
 	midiFactor.set_output_port(choice->get_label());
 }
 
 void Refactor::on_input_assigned(Gtk::RadioMenuItem * choice)
 {
-	std::cerr << "on_input_assigned()" << std::endl;
+	//std::cerr << "on_input_assigned()" << std::endl;
 	midiFactor.set_input_port(choice->get_label());
 }
 
 bool Refactor::attach_signal_handlers()
 {
+	// Pull Current Patch Button
 	builder->get_widget("evbPullCurrentPatch", pPullCurrentPatch);
 	if (pPullCurrentPatch) {
 		pPullCurrentPatch->signal_button_press_event().
 		    connect(sigc::mem_fun(*this, &Refactor::on_pull_current));
 	}
 
+	// Send Current Patch Button
+	builder->get_widget("evbPushCurrentPatch", pPushCurrentPatch);
+	if (pPushCurrentPatch) {
+		pPushCurrentPatch->signal_button_press_event().
+		    connect(sigc::mem_fun(*this, &Refactor::on_push_current));
+	}
+
+	// Quit Menu Option
 	builder->get_widget("mnuQuit", pQuit);
 	if (pQuit) {
 		pQuit->signal_button_press_event().connect(sigc::mem_fun(*this,
@@ -402,11 +411,18 @@ bool Refactor::attachOutput()
 	pOutput->set_buffer(pOutputBuffer);
 }
 
+bool Refactor::on_push_current(GdkEventButton * ev)
+{
+	int result;
+
+	result = midiFactor.send_sysex(buffer, 6);
+}
+
 bool Refactor::on_pull_current(GdkEventButton * ev)
 {
-	int bsize = 4096;
-	char *buffer = new char[bsize];
-	std::string s;
+	//int bsize = 4096;
+	//char *buffer = new char[bsize];
+	//std::string s;
 
 	int result;
 	int offset;
@@ -422,6 +438,7 @@ bool Refactor::on_pull_current(GdkEventButton * ev)
 
 	sigc::slot < bool > my_slot =
 	    sigc::mem_fun(*this, &Refactor::on_timeout);
+
 	Glib::signal_timeout().connect(my_slot, 500);
 
 	return 0;
@@ -429,8 +446,6 @@ bool Refactor::on_pull_current(GdkEventButton * ev)
 
 bool Refactor::on_timeout()
 {
-	int bsize = 4096;
-	char *buffer = new char[bsize];
 	std::string s;
 
 	int result;
@@ -445,7 +460,7 @@ bool Refactor::on_timeout()
 	for (i = 1; i < result; ++i) {
 		if (buffer[i] == -16) {
 			offset = i;
-			std::cout << "found F0" << '\n';
+			//std::cout << "found F0" << '\n';
 		}
 	}
 

@@ -4,6 +4,36 @@
 #include <string>
 
 typedef signed short int HeaderType;
+static const char BUFFER_END = 0;
+static const char SEGMENT_END = 13;
+/*
+next segment = [5] 4 3
+next segment =  4 1b80 0 3ff0 cc9 0 0 4095 4095 0 4095 0
+next segment =  0 0 0 0 0 0 0 0 1476 7fe0 63be 0 0 0 0 0 0 0 0 0
+next segment =  0 0 0 0
+next segment =  21.29 0 8 6 0.68 0 13.77 0.57 0.45 31.68 65000 65000
+next segment = C_1e2f
+next segment = Talking Back
+next segment = [5] 5 3
+next segment =  5 0 0 3ff0 cc9 0 3ff0 4095 4095 0 7fe0 0
+next segment =  0 0 0 0 0 0 0 0 1476 7fe0 63be 0 0 0 0 0 0 0 0 0
+next segment =  0 0 0 0
+next segment =  21.29 0 8 6 0.68 0 13.77 0.57 0.45 31.68 65000 65000
+next segment = C_81eb
+next segment = Talking Back
+ */
+
+class HeaderSeg {
+public:
+	int unknown1;
+	int unknown2;
+	int unknown3;
+};
+
+class FineSeg {
+public:
+	int x;
+};
 
 class Parser {
 public:

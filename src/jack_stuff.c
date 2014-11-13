@@ -1,6 +1,5 @@
 /*
   Copyright (C) 2014 Joe Kokosa
-
 */
 
 #include <string.h>
@@ -293,11 +292,11 @@ int get_current_patch(char *buffer, int bsize)
 
 	pthread_mutex_lock(&msg_thread_lock);
 
-	const int mqlen =
+	const int num_messages =
 	    jack_ringbuffer_read_space(recv_buffer) / sizeof(sysex_msg);
 
 	int msg_num;
-	for (msg_num = 0; msg_num < mqlen; ++msg_num) {
+	for (msg_num = 0; msg_num < num_messages; ++msg_num) {
 		size_t j;
 		sysex_msg m;
 

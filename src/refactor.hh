@@ -29,6 +29,9 @@ protected:
 	MidiFactor midiFactor;
 	Parser parser;
 
+	int bsize = 4096;
+	char *buffer = new char[bsize];
+
 	//Timers
 	int m_timer_number;
 	bool on_timeout();

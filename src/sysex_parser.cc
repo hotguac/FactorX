@@ -401,7 +401,8 @@ std::string Parser::segment_get_next()
 
 	i = position;
 
-	while ((buffer[i] != 0) && (buffer[i] != 13) && (i < length)) {
+	while ((buffer[i] != BUFFER_END)
+	       && (buffer[i] != SEGMENT_END) && (i < length)) {
 		++i;
 	}
 
