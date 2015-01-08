@@ -10,6 +10,7 @@
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/eventbox.h>
 #include <gtkmm/imagemenuitem.h>
+#include <gtkmm/progressbar.h>
 #include <gtkmm/radiomenuitem.h>
 #include <gtkmm/spinbutton.h>
 #include <gtkmm/textview.h>
@@ -29,7 +30,7 @@ protected:
 	MidiFactor midiFactor;
 	Parser parser;
 
-	int bsize = 4096;
+	const static int bsize = 4096;
 	char *buffer = new char[bsize];
 
 	//Timers
@@ -38,26 +39,27 @@ protected:
 
 	//Screen updates
 	Gtk::SpinButton * pDepth;
-	Gtk::SpinButton * pAbs_Depth;
 	Gtk::SpinButton * pDmod;
-	Gtk::SpinButton * pAbs_Dmod;
 	Gtk::SpinButton * pSpeed;
-	Gtk::SpinButton * pAbs_Speed;
 	Gtk::SpinButton * pSmod;
-	Gtk::SpinButton * pAbs_Smod;
 	Gtk::SpinButton * pModRate;
-	Gtk::SpinButton * pAbs_ModRate;
 	Gtk::SpinButton * pIntensity;
-	Gtk::SpinButton * pAbs_Intensity;
 	Gtk::SpinButton * pType;
-	Gtk::SpinButton * pAbs_Type;
 	Gtk::SpinButton * pShape;
-	Gtk::SpinButton * pAbs_Shape;
 	Gtk::SpinButton * pModSource;
-	Gtk::SpinButton * pAbs_ModSource;
 	Gtk::SpinButton * pXnob;
-	Gtk::SpinButton * pAbs_Xnob;
-	Gtk::SpinButton * pAbs_Group;
+
+	Gtk::ProgressBar * pAbs_Group_Bar;
+	Gtk::ProgressBar * pAbs_Depth_Bar;
+	Gtk::ProgressBar * pAbs_Speed_Bar;
+	Gtk::ProgressBar * pAbs_Smod_Bar;
+	Gtk::ProgressBar * pAbs_ModRate_Bar;
+	Gtk::ProgressBar * pAbs_Intensity_Bar;
+	//Gtk::ProgressBar * pAbs_Type_Bar;
+	Gtk::ProgressBar * pAbs_Shape_Bar;
+	Gtk::ProgressBar * pAbs_ModSource_Bar;
+	Gtk::ProgressBar * pAbs_Xnob_Bar;
+	Gtk::ProgressBar * pAbs_Dmod_Bar;
 
 	Gtk::ComboBoxText * pXnobDrob;
 
@@ -129,6 +131,9 @@ protected:
 
 	Gtk::RadioMenuItem * pOutput_none;
 	Gtk::RadioMenuItem * pInput_none;
+
+	// utility functions
+	std::string getexepath();
 };
 
 #endif // GTKMM_REFACTOR_H

@@ -14,7 +14,7 @@ def configure(conf):
     conf.check_cfg(package='jack', args='--cflags --libs', uselib_store='JACK', mandatory=1)
 
 def build(bld):
-    bld(rule='cp ${SRC} ${TGT}', source='src/reFactor.glade', target='reFactor.glade')
+    bld(rule='cp ${SRC} ${TGT}', source='src/factorx.glade', target='factorx.glade')
 
     bld.objects(source='src/jack_stuff.c',
 		target='jackstuff',

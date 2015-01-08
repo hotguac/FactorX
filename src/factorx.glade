@@ -653,65 +653,13 @@
                           <object class="GtkSpinButton" id="type">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
+                            <property name="editable">False</property>
                             <property name="text" translatable="yes">0.00</property>
                             <property name="digits">2</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="top_attach">1</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBoxText" id="type_drop">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="active">1</property>
-                            <property name="active_id">1</property>
-                            <items>
-                              <item translatable="yes">none</item>
-                            </items>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="top_attach">1</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBoxText" id="shape_drop">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="top_attach">6</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBoxText" id="mod_source_drop">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="top_attach">8</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBoxText" id="xnob_drop">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="top_attach">9</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
@@ -759,154 +707,134 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="abs_group">
+                          <object class="GtkProgressBar" id="abs_group_bar">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="fraction">0.25</property>
                           </object>
                           <packing>
-                            <property name="left_attach">3</property>
+                            <property name="left_attach">2</property>
                             <property name="top_attach">0</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="abs_type">
+                          <object class="GtkProgressBar" id="abs_depth_bar">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="fraction">0.42999999999999999</property>
                           </object>
                           <packing>
-                            <property name="left_attach">3</property>
-                            <property name="top_attach">1</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="abs_depth">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">3</property>
+                            <property name="left_attach">2</property>
                             <property name="top_attach">2</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="abs_dmod">
+                          <object class="GtkProgressBar" id="abs_dmod_bar">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="fraction">0.29999999999999999</property>
                           </object>
                           <packing>
-                            <property name="left_attach">3</property>
+                            <property name="left_attach">2</property>
                             <property name="top_attach">3</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="abs_speed">
+                          <object class="GtkProgressBar" id="abs_speed_bar">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="fraction">0.20000000000000001</property>
                           </object>
                           <packing>
-                            <property name="left_attach">3</property>
+                            <property name="left_attach">2</property>
                             <property name="top_attach">4</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="abs_smod">
+                          <object class="GtkProgressBar" id="abs_smod_bar">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="fraction">0.29999999999999999</property>
                           </object>
                           <packing>
-                            <property name="left_attach">3</property>
+                            <property name="left_attach">2</property>
                             <property name="top_attach">5</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="abs_shape">
+                          <object class="GtkProgressBar" id="abs_modrate_bar">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="fraction">0.59999999999999998</property>
                           </object>
                           <packing>
-                            <property name="left_attach">3</property>
-                            <property name="top_attach">6</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="abs_modrate">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">3</property>
+                            <property name="left_attach">2</property>
                             <property name="top_attach">7</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="abs_mod_source">
+                          <object class="GtkProgressBar" id="abs_intensity_bar">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="fraction">0.59999999999999998</property>
                           </object>
                           <packing>
-                            <property name="left_attach">3</property>
-                            <property name="top_attach">8</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="abs_xnob">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">3</property>
-                            <property name="top_attach">9</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="abs_intensity">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">3</property>
+                            <property name="left_attach">2</property>
                             <property name="top_attach">10</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
-                          <placeholder/>
+                          <object class="GtkProgressBar" id="abs_mod_source_bar">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="fraction">0.69999999999999996</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">2</property>
+                            <property name="top_attach">8</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
                         </child>
                         <child>
-                          <placeholder/>
+                          <object class="GtkProgressBar" id="abs_xnob_bar">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="fraction">0.80000000000000004</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">2</property>
+                            <property name="top_attach">9</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
                         </child>
                         <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
+                          <object class="GtkProgressBar" id="abs_shape_bar">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="fraction">0.40000000000000002</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">2</property>
+                            <property name="top_attach">6</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
                         </child>
                         <child>
                           <placeholder/>
